@@ -1,13 +1,15 @@
 # Linear Regression Analysis Plot
 
 import seaborn as sns
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
+from statsmodels.graphics.gofplots import ProbPlot
 
 # [Improvement: define a linear regression class]
 # - Dataframe, selected predictors and response
 # - Fitted into alinear regression model
-# - Create linear regression plot and model assumption diagonostic plots
+# - Create linear regression plot and model assumption diagnostic plots
 
 def matrix_plot(dataframe, huelabel):
     '''
@@ -56,8 +58,19 @@ def resid_plot(dataframe, model, response_name):
     plot.set_ylabel('Residuals')
     return
 
-def qq_plot():
+def normal_qq_plot(model):
     '''
-    QQ Plot
+    Normal QQ Plot
     '''
+    resid_norm = model.get_influence().resid_studentized_internal
+    qq = ProbPlot(resid_norm)
+    plot = qq.qqplot(alpha=0.5, line='45', lw=1)
+    plot.axes[0].set_title('Normal Q-Q')
+    plot.axes[0].set_xlabel('Theoretical Quantiles')
+    plot.axes[0].set_ylabel('Standardized Residuals');
     return
+
+# Scale-Location Plot
+# Residuals vs Leverage Plot
+
+# [Improvement: Set same colors and text size for diagnostic plots]
