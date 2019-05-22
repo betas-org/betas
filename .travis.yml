@@ -1,3 +1,5 @@
+dist: xenial #required to build python 3.7
+
 # what language the build will be configured for
 language: python
 
