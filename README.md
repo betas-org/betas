@@ -1,4 +1,5 @@
-# betas
+![logo](docs/logo.png)
+#
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
@@ -10,5 +11,8 @@ See the docs directory for:
 - Project Component Specification
 - Technology Review
 
-![logo](docs/logo.png)
-
+`betas` package includes:
+- Binary Classification
+- Linear Regression Analsis
+- PCA
+- Clusting
