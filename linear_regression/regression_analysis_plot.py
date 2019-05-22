@@ -1,5 +1,6 @@
 # Linear Regression Analysis Plot
 
+import numpy as np
 import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -49,13 +50,12 @@ def resid_plot(dataframe, model, response_name):
     '''
     # [Improvement: Tell how to observe this plot]
     fitted = model.fittedvalues
-    plot = plt.figure()
-    plot = sns.residplot(fitted, response_name, data=dataframe, lowess=True,
+    sns.residplot(fitted, response_name, data=dataframe, lowess=True,
                          scatter_kws={'alpha': 0.5},
                          line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
-    plot.set_title('Residuals vs Fitted')
-    plot.set_xlabel('Fitted values')
-    plot.set_ylabel('Residuals')
+    plt.title('Residuals vs Fitted')
+    plt.xlabel('Fitted values')
+    plt.ylabel('Residuals')
     return
 
 def normal_qq_plot(model):
@@ -64,13 +64,44 @@ def normal_qq_plot(model):
     '''
     resid_norm = model.get_influence().resid_studentized_internal
     qq = ProbPlot(resid_norm)
-    plot = qq.qqplot(alpha=0.5, line='45', lw=1)
-    plot.axes[0].set_title('Normal Q-Q')
-    plot.axes[0].set_xlabel('Theoretical Quantiles')
-    plot.axes[0].set_ylabel('Standardized Residuals');
+    qq.qqplot(alpha=0.5, line='45', lw=1)
+    plt.title('Normal Q-Q')
+    plt.xlabel('Theoretical Quantiles')
+    plt.ylabel('Standardized Residuals');
     return
 
-# Scale-Location Plot
-# Residuals vs Leverage Plot
+
+def scale_location_plot(model):
+    '''
+    Scale-Location Plot
+    Check if the residuals suffer from non-constant variance, aka heteroscedasticity.
+    '''
+    fitted = model.fittedvalues  
+    resid_norm = model.get_influence().resid_studentized_internal
+    resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
+    plt.scatter(fitted, resid_norm_abs_sqrt, alpha=0.5);
+    sns.regplot(fitted, resid_norm_abs_sqrt,
+                       scatter=False, ci=False, lowess=True,
+                       line_kws={'color': 'red', 'lw': 1, 'alpha': 0.8});
+    plt.title('Scale-Location')
+    plt.xlabel('Fitted values')
+    plt.ylabel('Absolute squared normalized residuals');
+    return
+
+
+def resid_lever_plot(model):
+    '''
+    Residuals vs Leverage Plot
+    '''
+    model_leverage = model.get_influence().hat_matrix_diag
+    resid_norm = model.get_influence().resid_studentized_internal
+    plt.scatter(model_leverage, resid_norm, alpha=0.5);
+    sns.regplot(model_leverage, resid_norm, scatter=False, ci=False, lowess=True,
+                line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
+    plt.title('Residuals vs Leverage')
+    plt.xlabel('Leverage')
+    plt.ylabel('Standardized Residuals');
+    return
 
 # [Improvement: Set same colors and text size for diagnostic plots]
+
