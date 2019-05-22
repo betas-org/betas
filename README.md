@@ -6,4 +6,5 @@ See the docs directory for:
 - Project Component Specification
 - Technology Review
 
-![logo](logo.png)
+![logo](docs/logo.png)
+
