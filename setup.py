@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'betas',
   packages = ['betas'],
-  version = 'v0.1.1',      
+  version = 'v0.1.2',      
   license = 'MIT',
   description = 'This package allows users to visualize model performance, model fit, or model assumptions with one line of code by creating an instance of a plotting class and reusing that instance for various plotting methods.',
   author = 'Joel Stremmel, Yiming Liu, Cathy Jia, Monique Bi, Arjun Singh',
   author_email = 'jstremme@uw.edu, liuy379@uw.edu, cathyjia@uw.edu, mybi@uw.edu, arjuns13@uw.edu',
   url = 'https://github.com/betas-org/betas',
-  download_url = 'https://github.com/betas-org/betas/archive/v0.1.1.tar.gz',
+  download_url = 'https://github.com/betas-org/betas/archive/v0.1.2.tar.gz',
   keywords = ['data science', 'machine learning', 'data visualization', 'visualization', 'model performance', 'model evaluation'],
   install_requires = [
           'numpy',
