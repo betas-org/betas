@@ -13,6 +13,9 @@ See the docs directory for:
 
 `betas` package includes:
 - Binary Classification
-- Linear Regression Analsis
+- Linear Regression Analysis
+  - Data frame overview
+  - Linear regression model
+  - Model assumption diagnostics
 - PCA
 - Clusting
