@@ -8,21 +8,25 @@ import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
 
 
-# [Improvement: define a linear regression class]
 class regression_analysis_plot(object):
     '''
     Dataframe, selected predictors and response
-    Fitted into alinear regression model
-    Create linear regression plot and model assumption diagnostic plots
-    
-    Input:
-        - A dataframe
-        - choose predictor(s)
-        - choose response
+    Fitted into a linear regression model
+    Create plots for:
+        - Data overview
+        - Linear regression model
+        - Model assumption diagnostics
     '''
-
+    
     
     def __init__(self, dataframe, predictors=None, response=None):
+        '''
+        Constructor
+        Input:
+            - dataframe: A dataframe
+            - predictors: Predictor(s) (default=None)
+            - response: Response (default=None)
+        '''
         self.dataframe = dataframe
         self.predictors = predictors
         self.response = response
@@ -55,18 +59,24 @@ class regression_analysis_plot(object):
         return self.response
     
     
-    def matrix_plot(self):
+    def matrix_plot(self, label=None):
         '''
-        matrix plot
+        Matrix scatter plot
+        Input:
+            - label: A categorical label shown in plot legend (default=None)
         '''
         df = self.get_dataframe()
-        huelabel = self.get_response()
+        if label != None: # priority: label argument
+            huelabel = label
+        else:
+            Y = self.get_response()
+            huelabel = self.get_response()
         sns.pairplot(df, hue=huelabel, palette='Set1')
 
         
     def corr_heatmap(self):
         '''
-        Correlation Heat Map
+        Correlation heat map
         '''
         df = self.get_dataframe()
         sns.heatmap(df.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
@@ -74,16 +84,44 @@ class regression_analysis_plot(object):
         
     def reg_plot(self, X, Y):
         '''
-        Regression Plot
-        Select 2 metrics to plot
+        Regression plot
+        Input:
+            - X: A variable on x-axis
+            - Y: A variable on y-axis
         '''
         df = self.get_dataframe()
         sns.regplot(x=X, y=Y, data=df)
-
-        
+    
+    
+    def box_plot(self, X, Y):
+        '''
+        Box plot
+        Input:
+            - X: A variable on x-axis
+            - Y: A variable on y-axis
+        '''
+        df = self.get_dataframe()
+        sns.boxplot(x=X, y=Y, data=df)
+    
+    
+    def dist_plot(self, X, Y):
+        '''
+        Distribution plot with probability density function (PDF) curves
+        Input:
+            - X: A variable on x-axis
+            - Y: A categoricle variable shown in plot legend
+        '''
+        df = self.get_dataframe()
+        sns.FacetGrid(df, hue=Y, height=4).map(sns.distplot, X).add_legend()
+    
+    
     def reg(self, X, Y, report=False):
         '''
         Regression model report
+        Input:
+            - X: A variable on x-axis
+            - Y: A variable on y-axis
+            - report: A boolean indicating whether to print the model report (default=False)
         '''
         df = self.get_dataframe()
         pred = df[X]
@@ -97,11 +135,14 @@ class regression_analysis_plot(object):
     
     def resid_plot(self, X=None, Y=None):
         '''
-        Residuals VS Fitted Plot
+        Residuals VS fitted plot
+        Input:
+            - X: A variable on x-axis (default=None)
+            - Y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
-        if X != None and Y != None:
+        if X != None and Y != None: # priority: arguments X, Y
             model = self.reg(X, Y)
         else:
             X = self.get_predictors()
@@ -121,12 +162,13 @@ class regression_analysis_plot(object):
         
     def qq_plot(self, X=None, Y=None):
         '''
-        Normal QQ Plot
+        Normal qq plot
+            - X: A variable on x-axis (default=None)
+            - Y: A variable on y-axis (default=None)
         '''
-        # fix color
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
-        if X != None and Y != None:
+        if X != None and Y != None: # priority: arguments X, Y
             model = self.reg(X, Y)
         else:
             X = self.get_predictors()
@@ -137,7 +179,7 @@ class regression_analysis_plot(object):
                 raise ValueError('No predictors or response assigned')
         resid_norm = model.get_influence().resid_studentized_internal
         qq = ProbPlot(resid_norm)
-        qq.qqplot(alpha=0.5, line='45', lw=1)
+        qq.qqplot(color='#2077B4', alpha=0.5, line='45', lw=0.5)
         plt.title('Normal Q-Q')
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')
@@ -145,12 +187,15 @@ class regression_analysis_plot(object):
 
     def scale_location_plot(self, X=None, Y=None):
         '''
-        Scale-Location Plot
-        Check if the residuals suffer from non-constant variance, aka heteroscedasticity.
+        Scale-location plot
+        Check if the residuals suffer from non-constant variance, i.e., heteroscedasticity
+        Input:
+            - X: A variable on x-axis (default=None)
+            - Y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
-        if X != None and Y != None:
+        if X != None and Y != None: # priority: arguments X, Y
             model = self.reg(X, Y)
         else:
             X = self.get_predictors()
@@ -163,8 +208,8 @@ class regression_analysis_plot(object):
         resid_norm = model.get_influence().resid_studentized_internal
         resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
         plt.scatter(fitted, resid_norm_abs_sqrt, alpha=0.5)
-        sns.regplot(fitted, resid_norm_abs_sqrt,scatter=False, ci=False, lowess=True,
-                    line_kws={'color': 'red', 'lw': 1, 'alpha': 0.8});
+        sns.regplot(fitted, resid_norm_abs_sqrt, scatter=False, ci=False, lowess=True,
+                    line_kws={'color': 'red', 'lw': 1, 'alpha': 1});
         plt.title('Scale-Location')
         plt.xlabel('Fitted values')
         plt.ylabel('Absolute squared normalized residuals')
@@ -172,11 +217,14 @@ class regression_analysis_plot(object):
         
     def resid_lever_plot(self, X=None, Y=None):
         '''
-        Residuals vs Leverage Plot
+        Residuals vs leverage plot
+        Input:
+            - X: A variable on x-axis (default=None)
+            - Y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
-        if X != None and Y != None:
+        if X != None and Y != None: # priority: arguments X, Y
             model = self.reg(X, Y)
         else:
             X = self.get_predictors()
@@ -193,6 +241,3 @@ class regression_analysis_plot(object):
         plt.title('Residuals vs Leverage')
         plt.xlabel('Leverage')
         plt.ylabel('Standardized Residuals')
-
-# [Improvement: Set same colors and text size for diagnostic plots]
-
