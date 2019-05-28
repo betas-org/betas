@@ -3,7 +3,6 @@ This module includes a class to create regression analysis plots
 '''
 import numpy as np
 import seaborn as sns
-#import matplotlib as mpl
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
@@ -156,7 +155,6 @@ class regression_analysis_plot(object):
             - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        # dataframe = self.get_dataframe()
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
@@ -183,7 +181,6 @@ class regression_analysis_plot(object):
             - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        # dataframe = self.get_dataframe()
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
@@ -211,7 +208,6 @@ class regression_analysis_plot(object):
             - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        # dataframe = self.get_dataframe()
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
