@@ -1,4 +1,6 @@
-# Linear Regression Analysis Plot
+'''
+This module includes a class to create regression analysis plots
+'''
 
 import numpy as np
 import seaborn as sns
@@ -10,20 +12,19 @@ from statsmodels.graphics.gofplots import ProbPlot
 
 class regression_analysis_plot(object):
     '''
-    Dataframe, selected predictors and response
-    Fitted into a linear regression model
-    Create plots for:
+    A class to create regression analysis plots based on a input dataframe,
+    selected predictor variable(s) and a response variable.
+    Plot types basically includes:
         - Data overview
         - Linear regression model
         - Model assumption diagnostics
     '''
     
-    
     def __init__(self, dataframe, predictors=None, response=None):
         '''
-        Constructor
+        A constructor to initialize the object
         Input:
-            - dataframe: A dataframe
+            - dataframe: A pandas dataframe with proper column names
             - predictors: Predictor(s) (default=None)
             - response: Response (default=None)
         '''
@@ -31,39 +32,35 @@ class regression_analysis_plot(object):
         self.predictors = predictors
         self.response = response
 
-
     def get_dataframe(self):
         '''
         Get dataframe to plot
         Output:
-            - dataframe
+            - A pandas dataframe
         '''
         return self.dataframe
-
     
     def get_predictors(self):
         '''
         Get predictor variable(s)
         Output:
-            - A list of string indicating predictor variable(s)
+            - A list of string indicating the predictor variable(s)
         '''
         return self.predictors
-    
     
     def get_response(self):
         '''
         Get response variable
         Output:
-            - A string indicating response variable
+            - A string indicating the response variable
         '''
         return self.response
-    
     
     def matrix_plot(self, label=None):
         '''
         Matrix scatter plot
         Input:
-            - label: A categorical label shown in plot legend (default=None)
+            - label: A categorical label for plot legend (default=None)
         '''
         df = self.get_dataframe()
         if label != None: # priority: label argument
@@ -73,25 +70,22 @@ class regression_analysis_plot(object):
             huelabel = self.get_response()
         sns.pairplot(df, hue=huelabel, palette='Set1')
 
-        
     def corr_heatmap(self):
         '''
-        Correlation heat map
+        A heat map for observing the correlations among all predictors
         '''
         df = self.get_dataframe()
         sns.heatmap(df.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
-
-        
+    
     def reg_plot(self, X, Y):
         '''
-        Regression plot
+        Scatter plot with regression line
         Input:
             - X: A variable on x-axis
             - Y: A variable on y-axis
         '''
         df = self.get_dataframe()
         sns.regplot(x=X, y=Y, data=df)
-    
     
     def box_plot(self, X, Y):
         '''
@@ -103,7 +97,6 @@ class regression_analysis_plot(object):
         df = self.get_dataframe()
         sns.boxplot(x=X, y=Y, data=df)
     
-    
     def dist_plot(self, X, Y):
         '''
         Distribution plot with probability density function (PDF) curves
@@ -114,14 +107,13 @@ class regression_analysis_plot(object):
         df = self.get_dataframe()
         sns.FacetGrid(df, hue=Y, height=4).map(sns.distplot, X).add_legend()
     
-    
     def reg(self, X, Y, report=False):
         '''
         Regression model report
         Input:
             - X: A variable on x-axis
             - Y: A variable on y-axis
-            - report: A boolean indicating whether to print the model report (default=False)
+            - report: A boolean indicating if print model report (default=False)
         '''
         df = self.get_dataframe()
         pred = df[X]
@@ -132,7 +124,6 @@ class regression_analysis_plot(object):
             print(model.summary())
         return model
 
-    
     def resid_plot(self, X=None, Y=None):
         '''
         Residuals VS fitted plot
@@ -159,7 +150,6 @@ class regression_analysis_plot(object):
         plt.xlabel('Fitted values')
         plt.ylabel('Residuals')
 
-        
     def qq_plot(self, X=None, Y=None):
         '''
         Normal qq plot
@@ -184,11 +174,11 @@ class regression_analysis_plot(object):
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')
 
-
     def scale_location_plot(self, X=None, Y=None):
         '''
         Scale-location plot
-        Check if the residuals suffer from non-constant variance, i.e., heteroscedasticity
+        Goal: Check if the residuals suffer from non-constant variance, i.e.,
+              heteroscedasticity
         Input:
             - X: A variable on x-axis (default=None)
             - Y: A variable on y-axis (default=None)
@@ -214,7 +204,6 @@ class regression_analysis_plot(object):
         plt.xlabel('Fitted values')
         plt.ylabel('Absolute squared normalized residuals')
 
-        
     def resid_lever_plot(self, X=None, Y=None):
         '''
         Residuals vs leverage plot
