@@ -1,7 +1,8 @@
 """
 Basic Dash.
-To run: python app_basic.py
+To run: python app_dash.py
 """
+
 from dash.dependencies import Input, Output
 import pandas as pd
 import numpy as np
