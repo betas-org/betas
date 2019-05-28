@@ -9,7 +9,7 @@ import plotly.graph_objs as go
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from data import load_data, classify
+from tool import load_data, classify
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
