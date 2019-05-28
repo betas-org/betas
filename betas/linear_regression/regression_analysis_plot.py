@@ -1,10 +1,9 @@
 '''
 This module includes a class to create regression analysis plots
 '''
-
 import numpy as np
 import seaborn as sns
-import matplotlib as mpl
+#import matplotlib as mpl
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
@@ -19,7 +18,7 @@ class regression_analysis_plot(object):
         - Linear regression model
         - Model assumption diagnostics
     '''
-    
+
     def __init__(self, dataframe, predictors=None, response=None):
         '''
         A constructor to initialize the object
@@ -39,7 +38,7 @@ class regression_analysis_plot(object):
             - A pandas dataframe
         '''
         return self.dataframe
-    
+
     def get_predictors(self):
         '''
         Get predictor variable(s)
@@ -47,7 +46,7 @@ class regression_analysis_plot(object):
             - A list of string indicating the predictor variable(s)
         '''
         return self.predictors
-    
+
     def get_response(self):
         '''
         Get response variable
@@ -55,171 +54,171 @@ class regression_analysis_plot(object):
             - A string indicating the response variable
         '''
         return self.response
-    
+
     def matrix_plot(self, label=None):
         '''
         Matrix scatter plot
         Input:
             - label: A categorical label for plot legend (default=None)
         '''
-        df = self.get_dataframe()
-        if label != None: # priority: label argument
+        dataframe = self.get_dataframe()
+        if label is not None: # priority: label argument
             huelabel = label
         else:
-            Y = self.get_response()
+            #Y = self.get_response()
             huelabel = self.get_response()
-        sns.pairplot(df, hue=huelabel, palette='Set1')
+        sns.pairplot(dataframe, hue=huelabel, palette='Set1')
 
     def corr_heatmap(self):
         '''
         A heat map for observing the correlations among all predictors
         '''
-        df = self.get_dataframe()
-        sns.heatmap(df.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
-    
-    def reg_plot(self, X, Y):
+        dataframe = self.get_dataframe()
+        sns.heatmap(dataframe.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
+
+    def reg_plot(self, var_x, var_y):
         '''
         Scatter plot with regression line
         Input:
-            - X: A variable on x-axis
-            - Y: A variable on y-axis
+            - var_x: A variable on x-axis
+            - var_y: A variable on y-axis
         '''
-        df = self.get_dataframe()
-        sns.regplot(x=X, y=Y, data=df)
-    
-    def box_plot(self, X, Y):
+        dataframe = self.get_dataframe()
+        sns.regplot(x=var_x, y=var_y, data=dataframe)
+
+    def box_plot(self, var_x, var_y):
         '''
         Box plot
         Input:
-            - X: A variable on x-axis
-            - Y: A variable on y-axis
+            - var_x: A variable on x-axis
+            - var_y: A variable on y-axis
         '''
-        df = self.get_dataframe()
-        sns.boxplot(x=X, y=Y, data=df)
-    
-    def dist_plot(self, X, Y):
+        dataframe = self.get_dataframe()
+        sns.boxplot(x=var_x, y=var_y, data=dataframe)
+
+    def dist_plot(self, var_x, var_y):
         '''
         Distribution plot with probability density function (PDF) curves
         Input:
-            - X: A variable on x-axis
-            - Y: A categoricle variable shown in plot legend
+            - var_x: A variable on x-axis
+            - var_y: A categoricle variable shown in plot legend
         '''
-        df = self.get_dataframe()
-        sns.FacetGrid(df, hue=Y, height=4).map(sns.distplot, X).add_legend()
-    
-    def reg(self, X, Y, report=False):
+        dataframe = self.get_dataframe()
+        sns.FacetGrid(dataframe, hue=var_y, height=4).map(sns.distplot, var_x).add_legend()
+
+    def reg(self, var_x, var_y, report=False):
         '''
         Regression model report
         Input:
-            - X: A variable on x-axis
-            - Y: A variable on y-axis
+            - var_x: A variable on x-axis
+            - var_y: A variable on y-axis
             - report: A boolean indicating if print model report (default=False)
         '''
-        df = self.get_dataframe()
-        pred = df[X]
-        resp = df[Y]
+        dataframe = self.get_dataframe()
+        pred = dataframe[var_x]
+        resp = dataframe[var_y]
         model = sm.OLS(resp, sm.add_constant(pred))
         model = model.fit()
-        if report == True:
+        if report is True:
             print(model.summary())
         return model
 
-    def resid_plot(self, X=None, Y=None):
+    def resid_plot(self, var_x=None, var_y=None):
         '''
         Residuals VS fitted plot
         Input:
-            - X: A variable on x-axis (default=None)
-            - Y: A variable on y-axis (default=None)
+            - var_x: A variable on x-axis (default=None)
+            - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
-        if X != None and Y != None: # priority: arguments X, Y
-            model = self.reg(X, Y)
+        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+            model = self.reg(var_x, var_y)
         else:
-            X = self.get_predictors()
-            Y = self.get_response()
-            if X != None and Y != None:
-                model = self.reg(X, Y)
+            var_x = self.get_predictors()
+            var_y = self.get_response()
+            if var_x is not None and var_y is not None:
+                model = self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
         fitted = model.fittedvalues
-        sns.residplot(fitted, Y, data=dataframe, lowess=True,
+        sns.residplot(fitted, var_y, data=dataframe, lowess=True,
                       scatter_kws={'alpha': 0.5},
                       line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Residuals vs Fitted')
         plt.xlabel('Fitted values')
         plt.ylabel('Residuals')
 
-    def qq_plot(self, X=None, Y=None):
+    def qq_plot(self, var_x=None, var_y=None):
         '''
         Normal qq plot
-            - X: A variable on x-axis (default=None)
-            - Y: A variable on y-axis (default=None)
+            - var_x: A variable on x-axis (default=None)
+            - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        dataframe = self.get_dataframe()
-        if X != None and Y != None: # priority: arguments X, Y
-            model = self.reg(X, Y)
+        # dataframe = self.get_dataframe()
+        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+            model = self.reg(var_x, var_y)
         else:
-            X = self.get_predictors()
-            Y = self.get_response()
-            if X != None and Y != None:
-                model = self.reg(X, Y)
+            var_x = self.get_predictors()
+            var_y = self.get_response()
+            if var_x is not None and var_y is not None:
+                model = self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
         resid_norm = model.get_influence().resid_studentized_internal
-        qq = ProbPlot(resid_norm)
-        qq.qqplot(color='#2077B4', alpha=0.5, line='45', lw=0.5)
+        qq_plt = ProbPlot(resid_norm)
+        qq_plt.qqplot(color='#2077B4', alpha=0.5, line='45', lw=0.5)
         plt.title('Normal Q-Q')
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')
 
-    def scale_location_plot(self, X=None, Y=None):
+    def scale_location_plot(self, var_x=None, var_y=None):
         '''
         Scale-location plot
         Goal: Check if the residuals suffer from non-constant variance, i.e.,
               heteroscedasticity
         Input:
-            - X: A variable on x-axis (default=None)
-            - Y: A variable on y-axis (default=None)
+            - var_x: A variable on x-axis (default=None)
+            - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        dataframe = self.get_dataframe()
-        if X != None and Y != None: # priority: arguments X, Y
-            model = self.reg(X, Y)
+        # dataframe = self.get_dataframe()
+        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+            model = self.reg(var_x, var_y)
         else:
-            X = self.get_predictors()
-            Y = self.get_response()
-            if X != None and Y != None:
-                model = self.reg(X, Y)
+            var_x = self.get_predictors()
+            var_y = self.get_response()
+            if var_x is not None and var_y is not None:
+                model = self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
-        fitted = model.fittedvalues  
+        fitted = model.fittedvalues
         resid_norm = model.get_influence().resid_studentized_internal
         resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
         plt.scatter(fitted, resid_norm_abs_sqrt, alpha=0.5)
         sns.regplot(fitted, resid_norm_abs_sqrt, scatter=False, ci=False, lowess=True,
-                    line_kws={'color': 'red', 'lw': 1, 'alpha': 1});
+                    line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Scale-Location')
         plt.xlabel('Fitted values')
         plt.ylabel('Absolute squared normalized residuals')
 
-    def resid_lever_plot(self, X=None, Y=None):
+    def resid_lever_plot(self, var_x=None, var_y=None):
         '''
         Residuals vs leverage plot
         Input:
-            - X: A variable on x-axis (default=None)
-            - Y: A variable on y-axis (default=None)
+            - var_x: A variable on x-axis (default=None)
+            - var_y: A variable on y-axis (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
-        dataframe = self.get_dataframe()
-        if X != None and Y != None: # priority: arguments X, Y
-            model = self.reg(X, Y)
+        # dataframe = self.get_dataframe()
+        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+            model = self.reg(var_x, var_y)
         else:
-            X = self.get_predictors()
-            Y = self.get_response()
-            if X != None and Y != None:
-                model = self.reg(X, Y)
+            var_x = self.get_predictors()
+            var_y = self.get_response()
+            if var_x is not None and var_y is not None:
+                model = self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
         model_leverage = model.get_influence().hat_matrix_diag
