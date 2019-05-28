@@ -7,9 +7,11 @@ bokeh serve --show app_bokeh.py
 import numpy as np
 import pandas as pd
 from tool import load_data, classify
+from os.path import dirname, join
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
-from bokeh.models import ColumnDataSource, Legend, Slider, Label
+from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS
 from bokeh.models.tickers import FixedTicker
+from bokeh.models.widgets import Button, DataTable, TableColumn, NumberFormatter
 from bokeh.plotting import figure, curdoc
 from bokeh.layouts import gridplot, column, row
 
@@ -168,6 +170,12 @@ p_label.add_layout(label_1)
 p_label.add_layout(label_2)
 p_label.add_layout(label_3)
 
+download = ColumnDataSource(data=dict(
+    scores=target.scores,
+    actual_label=target.actual_label,
+    predict_label=target.pred_label,
+    group=target.group))
+
 
 def update_data(attrname, old, new):
     val = slider.value
@@ -203,11 +211,24 @@ def update_data(attrname, old, new):
     pr_vline.data=dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
     pr_hline.data=dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
 
+    download.data=dict(
+        scores=target.scores,
+        actual_label=target.actual_label,
+        predict_label=target.pred_label,
+        group=target.group)
+
+
 
 slider = Slider(title='Threshold', start=0, end=1, value=0.5, step=0.01)
 slider.on_change('value', update_data)
 
-grid = gridplot([[None, slider, None], [p_scatter, p_roc, p_label],
+
+
+button = Button(label="Download", button_type="success")
+button.callback = CustomJS(args=dict(source=download),
+                           code=open(join(dirname(__file__), "download.js")).read())
+
+grid = gridplot([[button, slider, None], [p_scatter, p_roc, p_label],
                  [column([p_bar, p_hist]), p_pr]])
 
 curdoc().add_root(grid)
