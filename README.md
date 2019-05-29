@@ -1,4 +1,4 @@
-![logo](docs/logo.png)
+![logo](docs/logo_black.png)
 #
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas.svg?branch=master)
@@ -6,16 +6,70 @@
 
 This package allows users to visualize model performance, model fit, or model assumptions with one line of code by creating an instance of a plotting class and reusing that instance for various plotting methods.
 
-See the docs directory for:
-- Functional Specification
-- Project Component Specification
-- Technology Review
+## Team Members
+Joel Stremmel
 
-`betas` package includes:
-- Binary Classification
-- Linear Regression Analysis
-  - Data frame overview
-  - Linear regression model
-  - Model assumption diagnostics
-- PCA
-- Clusting
+Yiming Liu
+
+Cathy Jia
+
+Monique Bi
+
+Arjun Singh
+
+## Data
+
+Data Set 1:
+
+Data Set 2:
+
+## Software and License
+**Programming Languages**
+
+Python
+
+JavaScript
+
+
+**Python Packages**
+
+numpy
+
+pandas
+
+matplotlib
+
+seaborn
+
+scikit-learn
+
+...
+
+
+**License Information**
+
+MIT License
+
+
+## Structure
+This package has the following structure:
+```
+betas/
+  |- betas/
+     |- Binary Classification/
+     |- Linear Regression Analysis/
+        |- app_dash.py
+        |- regression_analysis_plot.py
+        |- test_regression_analysis_plt.ipynb
+     |- PCA/
+        |- PCA_evaluate.py
+        |- Test_for_PCA_Evaluation_module.html
+        |- Test_for_PCA_Evaluation_module.ipynb
+  |- docs/
+     |- Functional_Specification.pdf
+     |- Project_Component_Specification.pdf
+     |- Technology_Review.pdf
+     |- logo_black.png
+```
+
+## Installation
