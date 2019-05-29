@@ -61,7 +61,7 @@ betas/
         |- app_dash.py
         |- regression_analysis_plot.py
         |- test_regression_analysis_plt.ipynb
-     |- PCA/
+     |- pca/
         |- PCA_evaluate.py
         |- Test_for_PCA_Evaluation_module.html
         |- Test_for_PCA_Evaluation_module.ipynb
@@ -70,6 +70,7 @@ betas/
      |- Project_Component_Specification.pdf
      |- Technology_Review.pdf
      |- logo_black.png
+     |- logo_white.png
 ```
 
 ## Installation
