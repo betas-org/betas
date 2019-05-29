@@ -8,7 +8,7 @@ import numpy as np
 import seaborn as sns
 import statsmodels.api as sm
 import plotly.graph_objs as go
-from scipy.stats import probplot
+from statsmodels.graphics.gofplots import ProbPlot
 
 import dash
 from dash.dependencies import Input, Output
@@ -76,6 +76,9 @@ app.layout = html.Div([
     [Input('predictors', 'value'),
      Input('response', 'value')])
 def update_resid_plot(predictors, response):
+    """
+    Residual Plot
+    """
     model = MYCLASS.reg(predictors, response)
     fitted = model.fittedvalues
     resid = model.resid
@@ -93,7 +96,6 @@ def update_resid_plot(predictors, response):
                 opacity=opacity
             )
         ),
-        
         go.Scatter(
             x=smooth[:, 0],
             y=smooth[:, 1],
@@ -109,7 +111,7 @@ def update_resid_plot(predictors, response):
     return {
         'data': traces,
         'layout': dict(
-            title='Residuals vs Fitted Plot',
+            title='Residuals vs Fitted',
             xaxis={'title': 'Fitted Values'},
             yaxis={'title': 'Residuals'},
             plot_bgcolor='#e6e6e6',
@@ -123,39 +125,44 @@ def update_resid_plot(predictors, response):
     [Input('predictors', 'value'),
      Input('response', 'value')])
 def update_qq_plot(predictors, response):
+    """
+    Normal QQ Plot
+    """
     model = MYCLASS.reg(predictors, response)
-    resid_norm = model.get_influence().resid_studentized_external
-    #theo = probplot(resid_norm, fit=False, plot=None)
+    resid_norm = model.get_influence().resid_studentized_internal
+    qq = ProbPlot(resid_norm)
+    theo = qq.theoretical_quantiles
+    sample = qq.sample_quantiles
     marker_size = 8
     opacity = 0.5
     traces = [
         go.Scatter(
-                   #x=theo,
-            x=resid_norm,
+            x=theo,
+            y=sample,
             mode='markers',
             name='data',
             marker=dict(
                 size=marker_size,
                 opacity=opacity
             )
-        )#,
-        
-              #go.Scatter(
-              #     x = smooth[0],
-              #     y = smooth[1],
-              #     mode = 'lines',
-              #     name = 'smoother',
-              #     line = dict(
-              #         width = 1,
-              #         color = 'red'
-              #     )
-              # )
-              ]
+        ),
+        go.Scatter(
+            x=theo,
+            y=theo,
+            type='scatter',
+            mode='lines',
+            name='line',
+            line=dict(
+                width=1,
+                color='red'
+            )
+        )
+    ]
         
     return {
         'data': traces,
         'layout': dict(
-            title='Normal Q-Q Plot (Debugging...)',
+            title='Normal Q-Q',
             xaxis={'title': 'Theoretical Quantiles'},
             yaxis={'title': 'Standardized Residuals'},
             plot_bgcolor='#e6e6e6',
@@ -169,6 +176,9 @@ def update_qq_plot(predictors, response):
     [Input('predictors', 'value'),
     Input('response', 'value')])
 def update_scale_loc_plot(predictors, response):
+    """
+    Scale-Location Plot
+    """
     model = MYCLASS.reg(predictors, response)
     fitted = model.fittedvalues
     resid_norm = model.get_influence().resid_studentized_internal
@@ -202,7 +212,7 @@ def update_scale_loc_plot(predictors, response):
     return {
         'data': traces,
         'layout': dict(
-            title='Scale-Location Plot',
+            title='Scale Location',
             xaxis={'title': 'Fitted values'},
             yaxis={'title': 'Absolute Squared Normalized Residuals'},
             plot_bgcolor='#e6e6e6',
@@ -216,6 +226,9 @@ def update_scale_loc_plot(predictors, response):
     [Input('predictors', 'value'),
     Input('response', 'value')])
 def update_resid_lever_plot(predictors, response):
+    """
+    Residual vs Leverage Plot
+    """
     model = MYCLASS.reg(predictors, response)
     model_leverage = model.get_influence().hat_matrix_diag
     resid_norm = model.get_influence().resid_studentized_internal
@@ -248,7 +261,7 @@ def update_resid_lever_plot(predictors, response):
     return {
         'data': traces,
         'layout': dict(
-            title='Residuals vs Leverage Plot',
+            title='Residuals vs Leverage',
             xaxis={'title': 'Leverage'},
             yaxis={'title': 'Standardized Residuals'},
             plot_bgcolor='#e6e6e6',
@@ -258,4 +271,4 @@ def update_resid_lever_plot(predictors, response):
     }
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
