@@ -1,4 +1,4 @@
-![logo](docs/logo_black.png)
+![logo](../../docs/logo_black.png)
 # Betas Documentation
 
 ## Linear Regression Model Diagnostics
@@ -45,7 +45,7 @@ Plot types basically includes:
 - `scale_loc_plot`: Creates a scale-location plot
 - `resid_lever_plot`: Creates a residuals vs leverage plot
 
-### Method Details
+### Methods Details
 
 ```
 __init__(self, dataframe, predictors=None, response=None)
@@ -74,6 +74,7 @@ Create a matrix scatter plot
 
 Parameters:
 - label: *string*, *optional*
+
     A categorical label for plot legend, selected from dataframe column names
 
 ```
@@ -88,8 +89,10 @@ Create a scatter plot with regression line
 
 Parameters:
 - var_x: *string*
+
     A variable on x-axis, selected from dataframe column names
 - var_y: *string*
+
     A variable on y-axis, selected from dataframe column names
 
 ```
@@ -99,8 +102,10 @@ Create a box plot
 
 Parameters:
 - var_x: *string*
+
     A variable on x-axis, selected from dataframe column names
 - var_y: *string*
+
     A variable on y-axis, selected from dataframe column names
 
 ```
@@ -110,8 +115,10 @@ Create a distribution plot with probability density function (PDF) curves
 
 Parameters:
 - var_x: *string*
+
     A variable on x-axis, selected from dataframe column names
 - var_y: *string*
+
     A variable on y-axis, selected from dataframe column names
 
 ```
@@ -121,8 +128,10 @@ Fit linear regress and print out regression model report
 
 Parameters:
 - var_x: *string*
+
     A variable on x-axis, selected from dataframe column names
 - var_y: *string*
+
     A variable on y-axis, selected from dataframe column names
 - report: *boolean*, *optional*
     A boolean indicating if print model report
@@ -134,8 +143,10 @@ Create a residuals VS fitted plot
 
 Parameters:
 - var_x: *array of string*, *optional*
+
     A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
+
     A response variable, selected from dataframe column names
 
 ```
@@ -145,8 +156,10 @@ Creates a normal qq plot
 
 Parameters:
 - var_x: *array of string*, *optional*
+
     A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
+
     A response variable, selected from dataframe column names
     
 ```
@@ -157,8 +170,10 @@ Goal: Check if the residuals suffer from non-constant variance, i.e., heterosced
 
 Parameters:
 - var_x: *array of string*, *optional*
+
     A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
+
     A response variable, selected from dataframe column names
 
 ```
@@ -168,6 +183,8 @@ Creates a residuals vs leverage plot
 
 Parameters:
 - var_x: *array of string*, *optional*
+
     A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
+
     A response variable, selected from dataframe column names
