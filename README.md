@@ -1,4 +1,4 @@
-![logo](docs/logo_white.png)
+![logo](docs/logo_black.png)
 #
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas.svg?branch=master)
