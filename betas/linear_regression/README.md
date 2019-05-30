@@ -1,4 +1,4 @@
-![logo](../../docs/logo_black.png)
+![logo](../../docs/logo_white.png)
 # Betas Documentation
 
 ## Linear Regression Model Diagnostics
