@@ -1,6 +1,6 @@
 """
 Basic Dash to present linear regression model assumptions diagnostics
-To run: python app_dash.py
+To run: python model_diagnostics.py
 """
 
 #import pandas as pd
@@ -15,7 +15,7 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-from regression_analysis_plot import regression_analysis_plot
+from analysis_plot import analysis_plot
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -26,10 +26,10 @@ lowess = sm.nonparametric.lowess
 DF = sns.load_dataset('iris')
 COLS = DF.columns
 # filter out non-numerical variables
-MYCLASS = regression_analysis_plot(DF)
+MYCLASS = analysis_plot(DF)
 
 app.layout = html.Div([
-    html.H1('Regression Model Diagnostics',
+    html.H1('Linear Regression Model Diagnostics',
             style={'textAlign': 'center'}),
     html.Div("Hi, there should be some instruction here. \
               Next step, how to understand the plots."),

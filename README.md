@@ -59,8 +59,8 @@ betas/
      |- Binary Classification/
      |- Linear Regression Analysis/
         |- app_dash.py
-        |- regression_analysis_plot.py
-        |- test_regression_analysis_plt.ipynb
+        |- analysis_plot.py
+        |- test_analysis_plt.ipynb
      |- pca/
         |- PCA_evaluate.py
         |- Test_for_PCA_Evaluation_module.html

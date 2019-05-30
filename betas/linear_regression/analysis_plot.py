@@ -1,5 +1,5 @@
 '''
-This module includes a class to create regression analysis plots
+This module includes a class to create linear regression analysis plots
 '''
 import numpy as np
 import seaborn as sns
@@ -8,7 +8,7 @@ import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
 
 
-class regression_analysis_plot(object):
+class analysis_plot(object):
     '''
     A class to create regression analysis plots based on a input dataframe,
     selected predictor variable(s) and a response variable.
@@ -32,7 +32,7 @@ class regression_analysis_plot(object):
 
     def get_dataframe(self):
         '''
-        Get dataframe to plot
+        Return the pandas dataframe
         Output:
             - A pandas dataframe
         '''
@@ -40,7 +40,7 @@ class regression_analysis_plot(object):
 
     def get_predictors(self):
         '''
-        Get predictor variable(s)
+        Return the list of predictor variable(s)
         Output:
             - A list of string indicating the predictor variable(s)
         '''
@@ -48,7 +48,7 @@ class regression_analysis_plot(object):
 
     def get_response(self):
         '''
-        Get response variable
+        Return the response variable
         Output:
             - A string indicating the response variable
         '''
@@ -56,7 +56,7 @@ class regression_analysis_plot(object):
 
     def matrix_plot(self, label=None):
         '''
-        Matrix scatter plot
+        Create a matrix scatter plot
         Input:
             - label: A categorical label for plot legend (default=None)
         '''
@@ -70,14 +70,14 @@ class regression_analysis_plot(object):
 
     def corr_heatmap(self):
         '''
-        A heat map for observing the correlations among all predictors
+        Create a heat map for observing the correlations among all predictors
         '''
         dataframe = self.get_dataframe()
         sns.heatmap(dataframe.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
 
     def reg_plot(self, var_x, var_y):
         '''
-        Scatter plot with regression line
+        Create a scatter plot with regression line
         Input:
             - var_x: A variable on x-axis
             - var_y: A variable on y-axis
@@ -87,7 +87,7 @@ class regression_analysis_plot(object):
 
     def box_plot(self, var_x, var_y):
         '''
-        Box plot
+        Create a box plot
         Input:
             - var_x: A variable on x-axis
             - var_y: A variable on y-axis
@@ -97,7 +97,7 @@ class regression_analysis_plot(object):
 
     def dist_plot(self, var_x, var_y):
         '''
-        Distribution plot with probability density function (PDF) curves
+        Create a distribution plot with probability density function (PDF) curves
         Input:
             - var_x: A variable on x-axis
             - var_y: A categoricle variable shown in plot legend
@@ -107,7 +107,7 @@ class regression_analysis_plot(object):
 
     def reg(self, var_x, var_y, report=False):
         '''
-        Regression model report
+        Fit linear regress and print out regression model report
         Input:
             - var_x: A variable on x-axis
             - var_y: A variable on y-axis
@@ -124,10 +124,10 @@ class regression_analysis_plot(object):
 
     def resid_plot(self, var_x=None, var_y=None):
         '''
-        Residuals VS fitted plot
+        Create a residuals VS fitted plot
         Input:
-            - var_x: A variable on x-axis (default=None)
-            - var_y: A variable on y-axis (default=None)
+            - var_x: A list of predictor variable(s) (default=None)
+            - var_y: A response variable (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
@@ -150,9 +150,10 @@ class regression_analysis_plot(object):
 
     def qq_plot(self, var_x=None, var_y=None):
         '''
-        Normal qq plot
-            - var_x: A variable on x-axis (default=None)
-            - var_y: A variable on y-axis (default=None)
+        Creates a normal qq plot
+        Input:
+            - var_x: A list of predictor variable(s) (default=None)
+            - var_y: A response variable (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
@@ -171,14 +172,14 @@ class regression_analysis_plot(object):
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')
 
-    def scale_location_plot(self, var_x=None, var_y=None):
+    def scale_loc_plot(self, var_x=None, var_y=None):
         '''
-        Scale-location plot
+        Creates a scale-location plot
         Goal: Check if the residuals suffer from non-constant variance, i.e.,
               heteroscedasticity
         Input:
-            - var_x: A variable on x-axis (default=None)
-            - var_y: A variable on y-axis (default=None)
+            - var_x: A list of predictor variable(s) (default=None)
+            - var_y: A response variable (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
@@ -202,10 +203,10 @@ class regression_analysis_plot(object):
 
     def resid_lever_plot(self, var_x=None, var_y=None):
         '''
-        Residuals vs leverage plot
+        Creates a residuals vs leverage plot
         Input:
-            - var_x: A variable on x-axis (default=None)
-            - var_y: A variable on y-axis (default=None)
+            - var_x: A list of predictor variable(s) (default=None)
+            - var_y: A response variable (default=None)
         '''
         # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
