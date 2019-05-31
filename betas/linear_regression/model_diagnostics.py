@@ -3,9 +3,8 @@ Basic Dash to present linear regression model assumptions diagnostics
 To run: python model_diagnostics.py
 """
 
-#import pandas as pd
+import pandas as pd
 import numpy as np
-import seaborn as sns
 import statsmodels.api as sm
 import plotly.graph_objs as go
 from statsmodels.graphics.gofplots import ProbPlot
@@ -22,23 +21,23 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 lowess = sm.nonparametric.lowess
 
-# temp dataset: iris
-DF = sns.load_dataset('iris')
+# Read csv dataset
+address = input('Please enter CSV data file url or path:\nUrl example: www.someplace.com/mydata.csv\nPath example: ./mydata.csv\n')
+DF = pd.read_csv(address, sep=',', index_col=0)
+DF = DF.select_dtypes(exclude=['object']) # keep only numeric columns
 COLS = DF.columns
-# filter out non-numerical variables
 MYCLASS = analysis_plot(DF)
 
+# Layout and Plots
 app.layout = html.Div([
-    html.H1('Linear Regression Model Diagnostics',
-            style={'textAlign': 'center'}),
-    html.Div("Hi, there should be some instruction here. \
-              Next step, how to understand the plots."),
+    html.H1('Linear Regression Model Diagnostics', style={'textAlign': 'center'}),
+    html.Div('Data Source: %s\n' % address),
     html.Div([
         html.Div([
             dcc.Dropdown(
                 id='predictors',
                 options=[{'label': i, 'value': i} for i in COLS],
-                value=[COLS[0]],
+                placeholder='Select predictor variable(s)',
                 multi=True
             )
         ], style={'width': '49%', 'display': 'inline-block'}),
@@ -46,7 +45,7 @@ app.layout = html.Div([
             dcc.Dropdown(
                 id='response',
                 options=[{'label': i, 'value': i} for i in COLS],
-                value=[COLS[1]]
+                placeholder='Select a response variable'
             )
         ], style={'width': '49%', 'display': 'inline-block'})
     ], style={
