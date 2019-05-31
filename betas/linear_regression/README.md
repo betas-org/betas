@@ -1,17 +1,22 @@
 ![logo](../../docs/logo_white.png)
 # Betas Documentation
 
-## Linear Regression Model Diagnostics
+## Linear Regression Model Diagnostics Tool
 
-1. Residuals VS fitted plot
-2. Normal qq plot
-3. Scale-location plot
-4. Residuals vs leverage plot
+There are four plots to check linear regression model assumptions
+- Residuals VS fitted plot
+- Normal qq plot
+- Scale-location plot
+- Residuals vs leverage plot
+
+1. Run the following code in Terminal:
 
 ```
 python model_diagnostics.py
 ```
-Open http://127.0.0.1:8050/ to use the model diagnostics plots
+
+2. Open <http://127.0.0.1:8050/> to use the model diagnostics tool
+3. Select metrics that you are interested in and explore the tool
 
 ## linear_regression.analysis_plot
 
@@ -38,7 +43,7 @@ Plot types basically includes:
 - `corr_heatmap`: Create a heat map for observing the correlations among all predictors
 - `reg_plot`: Create a scatter plot with regression line
 - `box_plot`: Create a box plot
-- `'dist_plot`: Create a distribution plot with probability density function (PDF) curves
+- `dist_plot`: Create a distribution plot with probability density function (PDF) curves
 - `reg`: Fit linear regress and print out regression model report
 - `resid_plot`: Create a residuals VS fitted plot
 - `qq_plot`: Creates a normal qq plot
@@ -47,27 +52,26 @@ Plot types basically includes:
 
 ### Methods Details
 
-```
+```python
 __init__(self, dataframe, predictors=None, response=None)
 ```
 
-```
+```python
 get_dataframe(self)
 ```
 Return the pandas dataframe
 
-
-```
+```python
 get_predictors(self)
 ```
 Return the list of predictor variable(s)
 
-```
+```python
 get_response(self)
 ```
 Return the response variable
 
-```
+```python
 matrix_plot(self, label=None)
 ```
 Create a matrix scatter plot
@@ -77,12 +81,12 @@ Parameters:
 
     A categorical label for plot legend, selected from dataframe column names
 
-```
+```python
 corr_heatmap(self)
 ```
 Create a heat map for observing the correlations among all predictors
 
-```
+```python
 reg_plot(self, var_x, var_y)
 ```
 Create a scatter plot with regression line
@@ -95,7 +99,7 @@ Parameters:
 
     A variable on y-axis, selected from dataframe column names
 
-```
+```python
 box_plot(self, var_x, var_y):
 ```
 Create a box plot
@@ -108,7 +112,7 @@ Parameters:
 
     A variable on y-axis, selected from dataframe column names
 
-```
+```python
 dist_plot(self, var_x, var_y):
 ```
 Create a distribution plot with probability density function (PDF) curves
@@ -121,7 +125,7 @@ Parameters:
 
     A variable on y-axis, selected from dataframe column names
 
-```
+```python
 reg(self, var_x, var_y, report=False):
 ```
 Fit linear regress and print out regression model report
@@ -136,7 +140,7 @@ Parameters:
 - report: *boolean*, *optional*
     A boolean indicating if print model report
 
-```
+```python
 resid_plot(self, var_x=None, var_y=None):
 ```
 Create a residuals VS fitted plot
@@ -149,7 +153,7 @@ Parameters:
 
     A response variable, selected from dataframe column names
 
-```
+```python
 qq_plot(self, var_x=None, var_y=None):
 ```
 Creates a normal qq plot
@@ -162,7 +166,7 @@ Parameters:
 
     A response variable, selected from dataframe column names
     
-```
+```python
 scale_loc_plot(self, var_x=None, var_y=None):
 ```
 Creates a scale-location plot
@@ -176,7 +180,7 @@ Parameters:
 
     A response variable, selected from dataframe column names
 
-```
+```python
 resid_lever_plot(self, var_x=None, var_y=None):
 ```
 Creates a residuals vs leverage plot
