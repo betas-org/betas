@@ -23,7 +23,7 @@ Data Set 1:
 
 Data Set 2:
 
-## Software and License
+## Software
 **Programming Languages**
 
 Python
@@ -46,7 +46,7 @@ scikit-learn
 ...
 
 
-**License Information**
+## License Information
 
 MIT License
 
@@ -56,21 +56,42 @@ This package has the following structure:
 ```
 betas/
   |- betas/
+     |- __init__.py
      |- Binary Classification/
-     |- Linear Regression Analysis/
+        |- app_bokeh.py
         |- app_dash.py
+        |- binary_score_plot.py
+        |- data.py
+        |- download.js
+        |- probability_plot.py
+        |- sample_probability_plot.ipynb
+        |- test_binary_score_plot.py
+        |- test_probability_plot.py
+        |- tool.py
+     |- Linear Regression Analysis/
+        |- README.md
+        |- test_analysis_plot.ipynb
+        |- model_diagnostics.py
         |- analysis_plot.py
         |- test_analysis_plt.ipynb
+        |- test_analysis_plt.html
      |- pca/
-        |- PCA_evaluate.py
-        |- Test_for_PCA_Evaluation_module.html
-        |- Test_for_PCA_Evaluation_module.ipynb
+        |- README.md
+        |- pca_evaluate.py
+        |- test_pca_evaluate.ipynb
+        |- test_pca_evaluate.html
   |- docs/
      |- Functional_Specification.pdf
      |- Project_Component_Specification.pdf
      |- Technology_Review.pdf
      |- logo_black.png
      |- logo_white.png
+  |- environment.yml
+  |- LICENSE.txt
+  |- README.md
+  |- requirements.txt
+  |- setup.cfg
+  |- setup.py
 ```
 
 ## Installation
