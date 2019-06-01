@@ -1,3 +1,0 @@
-from binary_classification.binary_score_plot import binary_score_plot, probability_plot
-from linear_regression.analysis_plot import analysis_plot
-
