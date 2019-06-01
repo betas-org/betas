@@ -24,6 +24,7 @@ lowess = sm.nonparametric.lowess
 # Read csv dataset
 address = input('Please enter CSV data file url or path:\nUrl example: www.someplace.com/mydata.csv\nPath example: ./mydata.csv\n')
 DF = pd.read_csv(address, sep=',', index_col=0)
+DF = DF.dropna() # remove missing data
 DF = DF.select_dtypes(exclude=['object']) # keep only numeric columns
 COLS = DF.columns
 MYCLASS = analysis_plot(DF)

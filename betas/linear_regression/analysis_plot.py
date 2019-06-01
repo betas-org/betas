@@ -64,7 +64,6 @@ class analysis_plot(object):
         if label is not None: # priority: label argument
             huelabel = label
         else:
-            #Y = self.get_response()
             huelabel = self.get_response()
         sns.pairplot(dataframe, hue=huelabel, palette='Set1')
 
@@ -105,22 +104,30 @@ class analysis_plot(object):
         dataframe = self.get_dataframe()
         sns.FacetGrid(dataframe, hue=var_y, height=4).map(sns.distplot, var_x).add_legend()
 
-    def reg(self, var_x, var_y, report=False):
+    def reg(self, var_x=None, var_y=None, report=False):
         '''
         Fit linear regress and print out regression model report
         Input:
-            - var_x: A variable on x-axis
-            - var_y: A variable on y-axis
+            - var_x: A list of predictor variable(s) (default=None)
+            - var_y: A response variable (default=None)
             - report: A boolean indicating if print model report (default=False)
         '''
         dataframe = self.get_dataframe()
-        pred = dataframe[var_x]
-        resp = dataframe[var_y]
-        model = sm.OLS(resp, sm.add_constant(pred))
-        model = model.fit()
-        if report is True:
-            print(model.summary())
-        return model
+        if var_x is not None and var_y is not None: # priority: arguments
+            pred = dataframe[var_x]
+            resp = dataframe[var_y]
+        else:
+            pred = dataframe[self.get_predictors()]
+            resp = dataframe[[self.get_response()]]
+        try:
+            model = sm.OLS(resp, sm.add_constant(pred))
+            model = model.fit()
+            if report is True:
+                print(model.summary())
+            return model
+        except:
+            print("TypeError: Predictor/Response data type cannot be casted. Please select again")
+
 
     def resid_plot(self, var_x=None, var_y=None):
         '''
