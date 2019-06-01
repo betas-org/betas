@@ -22,8 +22,8 @@ install:
     - pip install -r requirements.txt
 
 # a list of commands to run before the main script
-before_script:
-    - flake8 betas
+#before_script:
+#    - flake8 codebases
 
 # the actual commands to run
 script:
