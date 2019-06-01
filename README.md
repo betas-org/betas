@@ -1,8 +1,11 @@
 ![logo](docs/logo_black.png)
 #
 
-[![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas.svg?branch=master)
+[![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas)
 [![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
+![Language](https://img.shields.io/badge/language-python-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-black.svg)
+
 
 This package allows users to visualize model performance, model fit, or model assumptions with one line of code by creating an instance of a plotting class and reusing that instance for various plotting methods.
 
@@ -28,23 +31,23 @@ Data Set 2:
 
 Python
 
-JavaScript
-
-
 **Python Packages**
 
-numpy
+[numpy](http://www.numpy.org) >= 1.13.1
 
-pandas
+[pandas](https://pandas.pydata.org) >= 0.23.1
 
-matplotlib
+[matplotlib](https://matplotlib.org) >= 2.0.2
 
-seaborn
+[seaborn](https://seaborn.pydata.org) >= 0.9.0
 
-scikit-learn
+[scikit-learn](https://scikit-learn.org) >= 0.20.2
 
-...
+[statsmodels](https://www.statsmodels.org) >= 0.9.0
 
+[dash](https://dash.plot.ly) >= 0.43.0
+
+[bokeh](https://bokeh.pydata.org) >= 1.0.4
 
 ## License Information
 
