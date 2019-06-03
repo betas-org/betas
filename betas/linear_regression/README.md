@@ -22,7 +22,7 @@ python model_diagnostics.py
 ### Limitation
 This tool is designed for **CSV** data file only.
 
-## linear_regression.analysis_plot
+## analysis_plot
 
 ```
 class linear_regression.analysis_plot(dataframe, predictors=None, response=None)
@@ -43,6 +43,8 @@ Plot types basically includes:
 - `get_dataframe`: Return the pandas dataframe
 - `get_predictors`: Return the list of predictor variable(s)
 - `get_response`: Return the response variable
+- `set_predictors`: Set predictor variable(s)
+- `set_response`: Set response variable
 - `matrix_plot`: Create a matrix scatter plot
 - `corr_heatmap`: Create a heat map for observing the correlations among all predictors
 - `reg_plot`: Create a scatter plot with regression line
@@ -74,6 +76,26 @@ Return the list of predictor variable(s)
 get_response(self)
 ```
 Return the response variable
+
+```python
+set_predictors(self)
+```
+Set predictor variable(s)
+
+Parameters:
+- predictors: *array of string*
+
+    A list of predictor variable(s)
+
+```python
+set_response(self)
+```
+Set response variable
+
+Parameters:
+- response: *string*
+
+    Response variable
 
 ```python
 matrix_plot(self, label=None)
@@ -143,6 +165,9 @@ Parameters:
     A variable on y-axis, selected from dataframe column names
 - report: *boolean*, *optional*
     A boolean indicating if print model report
+
+Returns:
+- A fitted linear regresion model
 
 ```python
 resid_plot(self, var_x=None, var_y=None):

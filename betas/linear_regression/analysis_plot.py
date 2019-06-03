@@ -23,10 +23,17 @@ class analysis_plot(object):
         A constructor to initialize the object
         Input:
             - dataframe: A pandas dataframe with proper column names
-            - predictors: Predictor(s) (default=None)
-            - response: Response (default=None)
+            - predictors: A list of predictor variable(s) (default=None)
+            - response: A response variable (default=None)
         '''
         self.dataframe = dataframe
+        for pred in predictors:
+            if pred not in dataframe.columns:
+                raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+                return
+        if response not in dataframe.columns:
+            raise ValueError('Input response variable not existed in the given dataframe')
+            return
         self.predictors = predictors
         self.response = response
 
@@ -53,6 +60,31 @@ class analysis_plot(object):
             - A string indicating the response variable
         '''
         return self.response
+    
+    def set_predictors(self, predictors):
+        '''
+        Set predictor variable(s)
+        Input:
+            - predictors: A list of string indicating the predictor variable(s)
+        '''
+        dataframe = self.get_dataframe()
+        for pred in predictors:
+            if pred not in dataframe.columns:
+                raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+                return
+        self.predictors = predictors
+    
+    def set_response(self, response):
+        '''
+        Set response variable
+        Input:
+            - response: A string indicating the response variable
+        '''
+        dataframe = self.get_dataframe()
+        if response not in dataframe.columns:
+            raise ValueError('Input response variable not existed in the given dataframe')
+            return
+        self.response = response
 
     def matrix_plot(self, label=None):
         '''
@@ -136,7 +168,6 @@ class analysis_plot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        # [Improvement: Tell how to observe this plot]
         dataframe = self.get_dataframe()
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
@@ -162,7 +193,6 @@ class analysis_plot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
@@ -188,7 +218,6 @@ class analysis_plot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
