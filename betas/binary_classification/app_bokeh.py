@@ -11,14 +11,21 @@ from os.path import dirname, join
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS
 from bokeh.models.tickers import FixedTicker
-from bokeh.models.widgets import Button, DataTable, TableColumn, NumberFormatter
+from bokeh.models.widgets import Button, PreText
 from bokeh.plotting import figure, curdoc
 from bokeh.layouts import gridplot, column, row
 
 '''
 Scatterplot
 '''
-scores, actual_label = load_data()
+
+data_path = input('Path of Your Input File: ')
+# data_path = '/Users/allen/Documents/Data_515/binary_classification/bokeh_data.csv'
+data = pd.read_csv(data_path)
+
+scores = np.array(data.scores)
+actual_label = np.array(data.actual_label)
+
 target = classify(scores, actual_label, 0.5)
 hline = ColumnDataSource(data=dict(x=[-0.3, 1.3], y=[0.5, 0.5]))
 TP = ColumnDataSource(data=dict(x=target['position'][target.group == 'TP'],
@@ -62,6 +69,10 @@ diff = thresholds - threshold
 x_coord = fpr[abs(diff).argsort()[0]]
 y_coord = tpr[abs(diff).argsort()[0]]
 
+pre_roc = PreText(text='Optimal Threshold by ROC: ' +
+                  str(round(optimal_cutoff, 2)),
+                  width=100, height=20)
+
 roc_vline = ColumnDataSource(data=dict(x=[x_coord, x_coord], y=[0, y_coord]))
 roc_hline = ColumnDataSource(data=dict(x=[x_coord, 1], y=[y_coord, y_coord]))
 roc = ColumnDataSource(data=dict(x=fpr, y=tpr))
@@ -73,11 +84,14 @@ p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_roc.line('x', 'y', source=roc_hline, line_width=1.5, color='red',
            line_dash='dotdash')
+label_roc = Label(x=0.4, y=0.3, text='AUC: ' +
+                str(round((1 - x_coord) * y_coord, 3)), text_font_size='10pt')
 p_roc.xaxis.axis_label = 'False Positive Rate'
 p_roc.yaxis.axis_label = 'True Positive Rate'
 p_roc.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_roc.yaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_roc.title.text_font_size = "20px"
+p_roc.add_layout(label_roc)
 
 '''
 Precision and recall curve
@@ -85,8 +99,16 @@ Precision and recall curve
 precision, recall, thresholds_pr = precision_recall_curve(actual_label, scores)
 thresholds_pr = np.append(thresholds_pr, 1)
 diff_pr = thresholds_pr - threshold
+tf_pr = precision - recall
+optimal_cutoff_pr = thresholds_pr[abs(tf_pr).argsort()[0]]
 x_coord_pr = recall[abs(diff_pr).argsort()[0]]
 y_coord_pr = precision[abs(diff_pr).argsort()[0]]
+
+pre_pr = PreText(text='Optimal Threshold by PR: ' +
+                 str(round(optimal_cutoff_pr, 2)),
+                 width=100, height=20)
+
+
 pr_vline = ColumnDataSource(data=dict(x=[x_coord_pr, x_coord_pr],
                                       y=[0, y_coord_pr]))
 pr_hline = ColumnDataSource(data=dict(x=[0, x_coord_pr],
@@ -100,11 +122,14 @@ p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
            line_dash='dotdash')
+label_pr = Label(x=0.4, y=0.3, text='AUC: ' +
+                str(round(x_coord_pr * y_coord_pr, 3)), text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
 p_pr.yaxis.axis_label = 'Precision'
 p_pr.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_pr.yaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_pr.title.text_font_size = "20px"
+p_pr.add_layout(label_pr)
 
 
 '''
@@ -149,31 +174,9 @@ p_bar.xaxis.axis_label = 'Actual Label'
 p_bar.yaxis.axis_label = 'Frequency'
 # p_roc.title.text_font_size = "20px"
 
-'''
-Stats grid
-'''
-p_label = figure(x_range=(1, 2), y_range=(1, 4), title='', plot_height=200)
-p_label.axis.visible = False
-p_label.xgrid.visible = False
-p_label.ygrid.visible = False
-p_label.outline_line_color = None
-label_0 = Label(x=1, y=1.5, text='Current Threshold: ' +
-                str(round(optimal_cutoff, 3)), text_font_size='15pt')
-label_1 = Label(x=1, y=1, text='Current AUC: ' + str(round(roc_auc, 3)),
-                text_font_size='15pt')
-label_2 = Label(x=1, y=3, text='Optimal Threshold: ' +
-                str(round(optimal_cutoff, 3)), text_font_size='15pt')
-label_3 = Label(x=1, y=2.5, text='Optimal AUC: ' + str(round(roc_auc, 3)),
-                text_font_size='15pt')
-p_label.add_layout(label_0)
-p_label.add_layout(label_1)
-p_label.add_layout(label_2)
-p_label.add_layout(label_3)
 
 download = ColumnDataSource(data=dict(
     scores=target.scores,
-    actual_label=target.actual_label,
-    predict_label=target.pred_label,
     group=target.group))
 
 
@@ -197,29 +200,28 @@ def update_data(attrname, old, new):
     roc_vline.data = dict(x=[x_coord, x_coord], y=[0, y_coord])
     roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
     roc.data = dict(x=fpr, y=tpr)
+    label_roc.text = 'AUC: ' + str(round((1 - x_coord) * y_coord, 3))
     bar_data.data = dict(act=['0', '1'],
                          hit=[target.group.value_counts()['TN'],
                               target.group.value_counts()['TP']],
                          miss=[target.group.value_counts()['FP'],
                                target.group.value_counts()['FN']])
-    label_0.text = 'Current Threshold: ' + str(round(val, 3))
-    label_1.text = 'Current AUC: ' + str(round(y_coord * (1 - x_coord), 3))
 
     diff_pr = thresholds_pr - val
     x_coord_pr = recall[abs(diff_pr).argsort()[0]]
     y_coord_pr = precision[abs(diff_pr).argsort()[0]]
     pr_vline.data=dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
     pr_hline.data=dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
+    label_pr.text ='AUC: ' + str(round(x_coord_pr * y_coord_pr, 3))
 
     download.data=dict(
         scores=target.scores,
-        actual_label=target.actual_label,
-        predict_label=target.pred_label,
         group=target.group)
 
 
 
-slider = Slider(title='Threshold', start=0, end=1, value=0.5, step=0.01)
+slider = Slider(title='Threshold', start=0, end=1, value=optimal_cutoff,
+                step=0.01)
 slider.on_change('value', update_data)
 
 
@@ -228,7 +230,8 @@ button = Button(label="Download", button_type="success")
 button.callback = CustomJS(args=dict(source=download),
                            code=open(join(dirname(__file__), "download.js")).read())
 
-grid = gridplot([[button, slider, None], [p_scatter, p_roc, p_label],
+grid = gridplot([[button, slider, column([pre_roc, pre_pr])],
+                 [p_scatter, p_roc],
                  [column([p_bar, p_hist]), p_pr]])
 
 curdoc().add_root(grid)
