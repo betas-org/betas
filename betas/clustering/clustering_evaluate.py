@@ -6,17 +6,17 @@ optimal number of clusters
 
 import sklearn.cluster
 import matplotlib.pyplot as plt
-
+plt.style.use('seaborn')
 
 def get_cluster_vector(n_samples):
     """
     Function to create the vector of various cluster lenghts to evaluate
     Input:
-     - n_samples: total number of samples/examples in the dataset
+        - n_samples: total number of samples/examples in the dataset
     Output:
-     - n_clusters_vector: vector of various cluster lenghts to evaluate
+        - n_clusters_vector: vector of various cluster lenghts to evaluate
     """
-    upper_limit = n_samples/100
+    upper_limit = n_samples / 100
     n_clusters_vector = []
     i = 2
     while i < min(10, upper_limit):
@@ -37,8 +37,8 @@ def get_cost_from_kmeans(n_clusters_vector, data):
     Function to derive the objective values for k-means++ for the
     various values of number of clusters that are input
     Input:
-     - n_clusters_vector: vector of various cluster lenghts to evaluate
-     - X: input dataset/features
+        - n_clusters_vector: vector of various cluster lenghts to evaluate
+        - X: input dataset/features
     Output:
      - objVals: The list of final values of the inertia criterion (sum
       of squared distances to the closest centroid for all observations
@@ -53,42 +53,55 @@ def get_cost_from_kmeans(n_clusters_vector, data):
     return obj_vals
 
 
+# def visualize_kmeans(n_clusters_vector, obj_vals):
+#     """
+#     Function to visualize the results of running k-means++ on various
+#     number of clusters for a given dataset to assess the optimal number
+#     of clusters
+#     Input:
+#         - n_clusters_vector: vector of various cluster lenghts to evaluate
+#         - objVals: The list of final values of the inertia criterion (sum
+#           of squared distances to the closest centroid for all observations
+#           in the training set) for all values of number of clusters
+#     """
+#     fig, axx = plt.subplots(figsize=(10, 5))
+#     color = 'tab:red'
+#     axx.set_xlabel('Number of Clusters')
+#     axx.set_xticks(n_clusters_vector)
+#     axx.set_ylabel('Objective value from K-means++')
+#     axx.plot(n_clusters_vector, obj_vals, c=color)
+#     plt.title('Objective Value from K-Means++ vs. Number of Clusters')
+#     plt.tight_layout()  
+#     return fig
+
 def visualize_kmeans(n_clusters_vector, obj_vals):
     """
     Function to visualize the results of running k-means++ on various
     number of clusters for a given dataset to assess the optimal number
     of clusters
     Input:
-     - n_clusters_vector: vector of various cluster lenghts to evaluate
-     - objVals: The list of final values of the inertia criterion (sum
-      of squared distances to the closest centroid for all observations
-      in the training set) for all values of number of clusters
+        - n_clusters_vector: vector of various cluster lenghts to evaluate
+        - objVals: The list of final values of the inertia criterion (sum
+          of squared distances to the closest centroid for all observations
+          in the training set) for all values of number of clusters
     """
-    fig, axx = plt.subplots(figsize=(15, 15))
-    color = 'tab:red'
-    axx.set_xlabel('Number of Clusters', fontsize=30)
-    axx.set_xticks(n_clusters_vector)
-    axx.set_ylabel('Objective value from K-means++', fontsize=30)
-    
-    axx.plot(n_clusters_vector, obj_vals, c=color)
-    
-    plt.title('Objective value from K-means++ vs. Number of Clusters')
-    plt.tight_layout()  
+    fig = plt.figure(figsize=(10, 5))
+    plt.plot(n_clusters_vector, obj_vals)
+    plt.title('Misclassification Error vs PCA Dimensions')
+    plt.xlabel('Number of Clusters')
+    plt.ylabel('Objective value from K-means++')
     return fig
-
-
-
 
 def get_optimal_num_clusters(n_clusters_vector, obj_vals):
     """
     Function to find the optimal number of clusters for the given dataset
     Input:
-     - n_clusters_vector: vector of various cluster lenghts to evaluate
-     - objVals: The list of final values of the inertia criterion (sum
-      of squared distances to the closest centroid for all observations
-      in the training set) for all values of number of clusters
+        - n_clusters_vector: vector of various cluster lenghts to evaluate
+        - objVals: The list of final values of the inertia criterion (sum
+          of squared distances to the closest centroid for all observations
+          in the training set) for all values of number of clusters
     Output:
-     - optimal_num_clusters: optimal number of clusters for the given dataset
+        - optimal_num_clusters: optimal number of clusters for the given dataset
     """
     optimal_num_clusters = n_clusters_vector[0]
     epsilon = 0.05
@@ -105,9 +118,9 @@ def kmeans_viz_and_opt_clusters(input_features):
     clusters on the given input_features, visualize it and then
     return the optimal number of clusters
     Input:
-     - X: input dataset/features
+        - X: input dataset/features
     Output:
-     - optimal_num_clusters: optimal number of clusters for the given dataset
+        - optimal_num_clusters: optimal number of clusters for the given dataset
     """
     n_samples = input_features.shape[0]
     n_clusters_vector = get_cluster_vector(n_samples)
@@ -116,5 +129,4 @@ def kmeans_viz_and_opt_clusters(input_features):
     plt_clust = visualize_kmeans(n_clusters_vector, obj_vals)
     optimal_num_clusters = get_optimal_num_clusters(n_clusters_vector,
                                                     obj_vals)
-
     return plt_clust, optimal_num_clusters
