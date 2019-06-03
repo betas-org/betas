@@ -65,13 +65,18 @@ def visualize_kmeans(n_clusters_vector, obj_vals):
       in the training set) for all values of number of clusters
     """
     fig, axx = plt.subplots(figsize=(15, 15))
-    axx.plot(n_clusters_vector, obj_vals, c='red')
+    color = 'tab:red'
+    axx.set_xlabel('Number of Clusters', fontsize=30)
     axx.set_xticks(n_clusters_vector)
-    plt.xlabel('Number of Clusters')
-    plt.ylabel('Objective value from K-means++')
-
+    axx.set_ylabel('Objective value from K-means++', fontsize=30)
+    
+    axx.plot(n_clusters_vector, obj_vals, c=color)
+    
     plt.title('Objective value from K-means++ vs. Number of Clusters')
+    plt.tight_layout()  
     return fig
+
+
 
 
 def get_optimal_num_clusters(n_clusters_vector, obj_vals):
