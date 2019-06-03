@@ -149,7 +149,8 @@ def plot_pca_errors(missclassification_err_train, missclassification_err_test,
     return fig
 
 
-def pca_viz_and_opt_dimensions(train_features, train_labels, test_features, test_labels):
+def pca_viz_and_opt_dimensions(train_features, train_labels, test_features,
+                               test_labels):
     """
     Function that would be called eventually on the training and test data
     to generate the analysis of all the error values from different PCA
@@ -167,8 +168,9 @@ def pca_viz_and_opt_dimensions(train_features, train_labels, test_features, test
     min_error_train = error_train[0]
     min_error_test = error_test[0]
 
-    for i in range(1,len(dimensions)):
-        if(error_train[i]<min_error_train and error_test[i]<min_error_test):
+    for i in range(1, len(dimensions)):
+        if(error_train[i] < min_error_train and
+           error_test[i] < min_error_test):
             optimal_dimensions = dimensions[i]
             min_error_train = error_train[i]
             min_error_test = error_test[i]

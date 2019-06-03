@@ -1,36 +1,49 @@
-import os
+"""
+Test for the PCA Evaluate module
+"""
+
 import unittest
 
 import numpy as np
-import pca_evaluate
 from sklearn.model_selection import train_test_split
+import pca_evaluate
 
-class test_pca_eval(unittest.TestCase):
+
+class TestPcaEval(unittest.TestCase):
+    """
+    Testing the function to run the pca algo for various number of
+    dimensions on the given dataset
+    """
     def test_pca(self):
         """
-        Testing the function to run the pca algo for various number of
-        dimensions on the given dataset
+        features_1, features_2 and features_3 are data generated from
+        different normal distributions and they're all appended to for the
+        feature-set called 'features'
         """
-        #X1, X2 and X3 are data generated from different normal distributions and 
-        #they're all appended to for the feature-set called 'X'
-        X1 = np.random.normal(size=100)
-        X1 = X1.reshape(len(X1),1)
-        X = X1
-        for i in range(2,11):
-            X = np.concatenate((X, X1**i),axis=1)
+        features_1 = np.random.normal(size=100)
+        features_1 = features_1.reshape(len(features_1), 1)
+        features = features_1
+        for i in range(2, 11):
+            features = np.concatenate((features, features_1**i), axis=1)
 
-        X2 = np.random.normal(loc=1,scale=0.1, size=100)
-        X2 = X2.reshape(len(X2),1)
-        for i in range(1,11):
-            X = np.concatenate((X, X2**i),axis=1)
-    
-        X3 = np.random.normal(loc=2,scale=1.5, size=100)
-        X3 = X3.reshape(len(X3),1)
-        for i in range(1,11):
-            X = np.concatenate((X, X3**i),axis=1)
-        
-        train_features, test_features, train_labels, test_labels = train_test_split(X, y, random_state=0)
-        
-        fig, optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(train_features, train_labels,\
-                                                                          test_features, test_labels)
+        features_2 = np.random.normal(loc=1, scale=0.1, size=100)
+        features_2 = features_2.reshape(len(features_2), 1)
+        for i in range(1, 11):
+            features = np.concatenate((features, features_2**i), axis=1)
+
+        features_3 = np.random.normal(loc=2, scale=1.5, size=100)
+        features_3 = features_3.reshape(len(features_3), 1)
+        for i in range(1, 11):
+            features = np.concatenate((features, features_3**i), axis=1)
+
+        labels = np.random.randint(0, 2, size=100)
+
+        train_features, test_features, train_labels, test_labels =\
+            train_test_split(features, labels, random_state=0)
+
+        _fig, optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
+            train_features,
+            train_labels,
+            test_features,
+            test_labels)
         self.assertAlmostEqual(1, optimal_dimensions)
