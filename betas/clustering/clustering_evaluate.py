@@ -52,28 +52,6 @@ def get_cost_from_kmeans(n_clusters_vector, data):
         obj_vals.append(kmeans.inertia_)
     return obj_vals
 
-
-# def visualize_kmeans(n_clusters_vector, obj_vals):
-#     """
-#     Function to visualize the results of running k-means++ on various
-#     number of clusters for a given dataset to assess the optimal number
-#     of clusters
-#     Input:
-#         - n_clusters_vector: vector of various cluster lenghts to evaluate
-#         - objVals: The list of final values of the inertia criterion (sum
-#           of squared distances to the closest centroid for all observations
-#           in the training set) for all values of number of clusters
-#     """
-#     fig, axx = plt.subplots(figsize=(10, 5))
-#     color = 'tab:red'
-#     axx.set_xlabel('Number of Clusters')
-#     axx.set_xticks(n_clusters_vector)
-#     axx.set_ylabel('Objective value from K-means++')
-#     axx.plot(n_clusters_vector, obj_vals, c=color)
-#     plt.title('Objective Value from K-Means++ vs. Number of Clusters')
-#     plt.tight_layout()  
-#     return fig
-
 def visualize_kmeans(n_clusters_vector, obj_vals):
     """
     Function to visualize the results of running k-means++ on various

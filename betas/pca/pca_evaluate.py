@@ -128,23 +128,6 @@ def plot_pca_errors(misclassification_err_train, misclassification_err_test,
     - misclassification_err_test: error values from test data
     - dimensions: list of different dimensions
     """
-#     fig, ax1 = plt.subplots(figsize=(15, 15))
-#     color = 'tab:red'
-#     ax1.set_xlabel('PCA Dimensions')
-#     ax1.set_xticks(dimensions)
-#     ax1.set_ylabel('Training Misclassification Error', color=color)
-#     ax1.plot(dimensions, misclassification_err_train, color=color)
-#     ax1.tick_params(labelsize=15)
-
-#     ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-
-#     color = 'tab:blue'
-#     # we already handled the x-label with ax1
-#     ax2.set_ylabel('Test Misclassification Error', color=color)
-#     ax2.plot(dimensions, misclassification_err_test, color=color)
-#     ax2.tick_params(labelsize=15)
-
-#     fig.tight_layout()  # otherwise the right y-label is slightly clipped
     fig = plt.figure(figsize=(10, 5))
     plt.plot(dimensions, misclassification_err_train, label='Training Set')
     plt.plot(dimensions, misclassification_err_test, label='Test Set')
