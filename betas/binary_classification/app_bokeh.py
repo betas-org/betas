@@ -20,11 +20,12 @@ Scatterplot
 '''
 
 data_path = input('Path or url of the input csv: ')
-# data_path = '~/Downloads/spam_output.csv'
+# data_path = '~/Downloads/spam_score_label.csv'
 data = pd.read_csv(data_path)
 
 if data.shape[0] > 10000:
     data = data.sample(10000)
+
 
 scores = np.array(data.scores)
 actual_label = np.array(data.actual_label)
@@ -90,14 +91,17 @@ p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_roc.line('x', 'y', source=roc_hline, line_width=1.5, color='red',
            line_dash='dotdash')
-label_roc = Label(x=0.4, y=0.3, text='AUC: ' +
-                str(round((1 - x_coord) * y_coord, 3)), text_font_size='10pt')
+label_tpr = Label(x=0.4, y=0.3, text='TPR: ' +
+                str(round(y_coord, 3)), text_font_size='10pt')
+label_tnr = Label(x=0.4, y=0.2, text='TNR: ' +
+                str(round(1-x_coord, 3)), text_font_size='10pt')
 p_roc.xaxis.axis_label = 'False Positive Rate'
 p_roc.yaxis.axis_label = 'True Positive Rate'
 p_roc.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_roc.yaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_roc.title.text_font_size = "20px"
-p_roc.add_layout(label_roc)
+p_roc.add_layout(label_tpr)
+p_roc.add_layout(label_tnr)
 
 '''
 Precision and recall curve
@@ -128,14 +132,17 @@ p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
            line_dash='dotdash')
-label_pr = Label(x=0.4, y=0.3, text='AUC: ' +
-                str(round(x_coord_pr * y_coord_pr, 3)), text_font_size='10pt')
+label_pre = Label(x=0.4, y=0.3, text='Precision: ' +
+                str(round(y_coord_pr, 3)), text_font_size='10pt')
+label_rec = Label(x=0.4, y=0.2, text='Recall: ' +
+                str(round(x_coord_pr, 3)), text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
 p_pr.yaxis.axis_label = 'Precision'
 p_pr.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_pr.yaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_pr.title.text_font_size = "20px"
-p_pr.add_layout(label_pr)
+p_pr.add_layout(label_pre)
+p_pr.add_layout(label_rec)
 
 
 '''
@@ -206,7 +213,9 @@ def update_data(attrname, old, new):
     roc_vline.data = dict(x=[x_coord, x_coord], y=[0, y_coord])
     roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
     roc.data = dict(x=fpr, y=tpr)
-    label_roc.text = 'AUC: ' + str(round((1 - x_coord) * y_coord, 3))
+    label_tpr.text='TPR: ' + str(round(y_coord, 3))
+    label_tnr.text='TNR: ' + str(round(1-x_coord, 3))
+
     bar_data.data = dict(act=['0', '1'],
                          hit=[target.group.value_counts()['TN'],
                               target.group.value_counts()['TP']],
@@ -218,7 +227,8 @@ def update_data(attrname, old, new):
     y_coord_pr = precision[abs(diff_pr).argsort()[0]]
     pr_vline.data=dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
     pr_hline.data=dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
-    label_pr.text ='AUC: ' + str(round(x_coord_pr * y_coord_pr, 3))
+    label_pre.text='Precision: ' + str(round(y_coord_pr, 3))
+    label_rec.text='Recall: ' + str(round(x_coord_pr, 3))
 
     download.data=dict(
         scores=target.scores,
