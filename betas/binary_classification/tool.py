@@ -4,28 +4,10 @@ This module contains core functions of betas
 
 import numpy as np
 import pandas as pd
+from sklearn.metrics import precision_recall_curve, roc_curve, auc
 
 
-def load_data():
-    '''
-    Create sample data to test the functionality of other implementations
-    '''
-    scores = np.concatenate((np.random.uniform(low=0.9, high=1, size=150),
-                             np.random.uniform(low=0.8, high=0.9, size=75),
-                             np.random.uniform(low=0.7, high=0.8, size=50),
-                             np.random.uniform(low=0.5, high=0.7, size=25),
-                             np.random.uniform(low=0, high=0.1, size=150),
-                             np.random.uniform(low=0.1, high=0.2, size=75),
-                             np.random.uniform(low=0.2, high=0.3, size=50),
-                             np.random.uniform(low=0.3, high=0.5, size=25),
-                             np.random.uniform(low=0.5, high=1, size=30),
-                             np.random.uniform(low=0, high=0.5, size=30)))
-    actual_label = np.concatenate((np.ones(300), np.zeros(300), np.zeros(30),
-                                   np.ones(30)))
-    return scores, actual_label
-
-
-def classify(scores, actual_label, threshold=0.5):
+def classify(scores, labels, threshold=0.5):
     '''
     Convert model scores to groups based on threshold and actual labels
     Input:
@@ -34,9 +16,9 @@ def classify(scores, actual_label, threshold=0.5):
         - threshold to use
     '''
     pred_label = (scores > threshold) + 0
-    cal_1 = pred_label + actual_label
-    cal_2 = pred_label - actual_label
-    result = pd.DataFrame({'scores': scores, 'actual_label': actual_label,
+    cal_1 = pred_label + labels
+    cal_2 = pred_label - labels
+    result = pd.DataFrame({'scores': scores, 'actual_label': labels,
                            'pred_label': pred_label, 'group': ''})
     result.at[cal_1 == 2, 'group'] = 'TP'
     result.at[cal_1 == 0, 'group'] = 'TN'
@@ -46,3 +28,23 @@ def classify(scores, actual_label, threshold=0.5):
     noise = np.random.uniform(low=-0.3, high=0.3, size=len(result))
     result['position'] = result['actual_label'] + noise
     return result
+
+def optimalThreshold(scores, labels, by='roc'):
+    '''
+    Calculate the optimal threshold by auc of either ROC or PR curve
+    Input:
+        - 1D numpy array of model scores
+        - 1D numpy array of actual labels
+        - Curve to use
+    '''
+    if by == 'roc':
+        fpr, tpr, thresholds = roc_curve(labels, scores)
+        tnr = 1 - fpr
+        tf = tpr - tnr
+        optimal_threshold = thresholds[abs(tf).argsort()[0]]
+    else:
+        precision, recall, thresholds = precision_recall_curve(labels, scores)
+        thresholds = np.append(thresholds, 1)
+        tf = precision - recall
+        optimal_threshold = thresholds[abs(tf).argsort()[0]]
+    return optimal_threshold
