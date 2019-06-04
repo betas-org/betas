@@ -12,13 +12,30 @@ class binary_score_plot(object):
     metrics and plotting functions.
 
     Input:
-        - scores: 1D numpy array of model scores to plot (defaults to empty array)
-        - labels: 1D numpy array of model labels to plot (defaults to empty array)
+        - scores: 1D numpy array of model scores to plot (defaults to empty
+          array)
+        - labels: 1D numpy array of model labels to plot (defaults to empty
+          array)
     '''
 
-    def __init__(self, scores=np.array([]), labels=np.array([])):
+    def __init__(self, scores=np.array([]), labels=np.array([]), threshold=0.5):
         self._scores = scores
         self._labels = labels
+        self._threshold = threshold
+
+        pred_label = (scores > threshold) + 0
+        cal_1 = pred_label + labels
+        cal_2 = pred_label - labels
+        df = pd.DataFrame({'scores': scores, 'actual_label': labels,
+                           'pred_label': pred_label, 'group': ''})
+        df.at[cal_1==2, 'group'] = 'TP'
+        df.at[cal_1==0, 'group'] = 'TN'
+        df.at[cal_2==1, 'group'] = 'FP'
+        df.at[cal_2==-1, 'group'] = 'FN'
+        df['position'] = df['actual_label'] + \
+                         np.random.uniform(low=-0.3, high=0.3, size=len(df))
+        self._df = df
+        sns.set_style("white")
 
     def get_scores(self):
         '''
@@ -37,6 +54,23 @@ class binary_score_plot(object):
         '''
 
         return self._labels
+
+    def get_df(self):
+        '''
+        Get data for scatterplot
+        Output:
+            - pandas dataframe
+        '''
+
+        return self._df
+
+    def get_threshold(self):
+        '''
+        Output:
+            - threshold
+        '''
+
+        return self._threshold
 
     def set_scores(self, scores):
         '''
@@ -69,17 +103,41 @@ class binary_score_plot(object):
         scores = self.get_scores()
 
         plt.clf()
-        plt.subplot(121)
-        plt.hist(labels, range=(0, 1), bins=bins, histtype='step', lw=2, color='navy')
-        plt.xlabel('Actual Labels')
-        plt.ylabel('Frequency')
-
-        plt.subplot(122)
-        plt.hist(scores, range=(0, 1), bins=bins, histtype='step', lw=2, color='orange')
-        plt.xlabel('Model Scores')
-
-        plt.suptitle('Histograms of Actual Labels and Model Scores', fontsize=16)
+        plt.subplot(221)
+        sns.distplot(labels, kde=False)
+        plt.xlabel('Actual Label')
+        plt.xticks([0,1])
+        plt.subplot(222)
+        sns.distplot(scores, bins=30, kde=False)
+        plt.xlabel('Scores')
+        plt.xticks([0,0.25,0.5,0.75,1])
         plt.subplots_adjust(hspace=0.5)
+        plt.subplot(223)
+        sns.distplot(scores[labels==0], bins=30, kde=False)
+        plt.xlabel('Actual Label = 0')
+        plt.subplot(224)
+        sns.distplot(scores[labels==1], bins=30, kde=False)
+        plt.xlabel('Actual Label = 1')
+        plt.suptitle('Histograms of Model Scores by Actual Label', fontsize=16)
+        plt.show()
+
+    def plot_jitter(self):
+        '''
+        Make jitter plot
+        '''
+
+        df = self.get_df()
+        threshold = self.get_threshold()
+
+        plt.clf()
+        sns.scatterplot(x='position', y='scores', hue='group', s=10, alpha=0.8,
+                        data=df)
+        plt.hlines(y=threshold, xmin=-0.3, xmax=1.8, color='red')
+        plt.xticks([0,1])
+        plt.xlabel('Actual label')
+        plt.ylabel('Scores')
+        plt.suptitle('Scatterplot of Model Scores with Threshold = ' +
+                      str(threshold), fontsize=16)
         plt.show()
 
     def plot_pr_by_threshold(self):
@@ -105,7 +163,8 @@ class binary_score_plot(object):
 
         plt.xlabel('Threshold')
         plt.ylabel('Percent')
-        plt.title('Precision and Recall by Model Threshold', fontsize=14)
+        plt.suptitle('Precision and Recall by Model Threshold', fontsize=16)
+
         plt.show()
 
     def plot_roc(self):
@@ -127,13 +186,14 @@ class binary_score_plot(object):
         roc_auc = auc(fpr, tpr)
 
         plt.clf()
-        plt.plot(fpr, tpr, color='darkgreen', lw=2, label='AUC = %0.3f, Optimal Cutoff = %0.3f' %(roc_auc, cutoff))
+        plt.plot(fpr, tpr, color='darkgreen', lw=2,
+                 label='AUC = %0.3f' %(roc_auc))
         plt.plot([0, 1], [0, 1], color='red', lw=2, linestyle='--')
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title('Receiver Operating Characteristic')
+        plt.suptitle('Receiver Operating Characteristic', fontsize=16)
         plt.legend(loc="lower right")
 
         plt.show()
