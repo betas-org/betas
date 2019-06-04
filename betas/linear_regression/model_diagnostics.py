@@ -14,7 +14,7 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-from analysis_plot import analysis_plot
+import analysis_plot as plt
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -27,7 +27,7 @@ DF = pd.read_csv(address, sep=',', index_col=0)
 DF = DF.dropna() # remove missing data
 DF = DF.select_dtypes(exclude=['object']) # keep only numeric columns
 COLS = DF.columns
-MYCLASS = analysis_plot(DF)
+MYCLASS = plt.analysis_plot(DF)
 
 # Layout and Plots
 app.layout = html.Div([
