@@ -28,23 +28,3 @@ def classify(scores, labels, threshold=0.5):
     noise = np.random.uniform(low=-0.3, high=0.3, size=len(result))
     result['position'] = result['actual_label'] + noise
     return result
-
-def optimalThreshold(scores, labels, by='roc'):
-    '''
-    Calculate the optimal threshold by auc of either ROC or PR curve
-    Input:
-        - 1D numpy array of model scores
-        - 1D numpy array of actual labels
-        - Curve to use
-    '''
-    if by == 'roc':
-        fpr, tpr, thresholds = roc_curve(labels, scores)
-        tnr = 1 - fpr
-        tf = tpr - tnr
-        optimal_threshold = thresholds[abs(tf).argsort()[0]]
-    else:
-        precision, recall, thresholds = precision_recall_curve(labels, scores)
-        thresholds = np.append(thresholds, 1)
-        tf = precision - recall
-        optimal_threshold = thresholds[abs(tf).argsort()[0]]
-    return optimal_threshold

@@ -197,3 +197,27 @@ class binary_score_plot(object):
         plt.legend(loc="lower right")
 
         plt.show()
+
+    def optimal_threshold(self, by='roc'):
+        '''
+        Calculate the optimal threshold by auc of either ROC or PR curve
+        Input:
+            - 1D numpy array of model scores
+            - 1D numpy array of actual labels
+            - Curve to use
+        '''
+
+        labels = self.get_labels()
+        scores = self.get_scores()
+
+        if by == 'roc':
+            fpr, tpr, thresholds = roc_curve(labels, scores)
+            tnr = 1 - fpr
+            tf = tpr - tnr
+            optimal_threshold = round(thresholds[abs(tf).argsort()[0]], 2)
+        else:
+            precision, recall, thresholds = precision_recall_curve(labels, scores)
+            thresholds = np.append(thresholds, 1)
+            tf = precision - recall
+            optimal_threshold = round(thresholds[abs(tf).argsort()[0]], 2)
+        return optimal_threshold
