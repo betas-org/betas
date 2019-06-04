@@ -16,6 +16,7 @@ setup(
           'matplotlib',
           'seaborn',
           'scikit-learn',
+          'statsmodel',
           'bokeh',
           'dash'
       ],
