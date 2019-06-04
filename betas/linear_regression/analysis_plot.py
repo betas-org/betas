@@ -6,7 +6,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
-
+import copy
+plt.style.use('seaborn')
 
 class analysis_plot(object):
     '''
@@ -27,13 +28,15 @@ class analysis_plot(object):
             - response: A response variable (default=None)
         '''
         self.dataframe = dataframe
-        for pred in predictors:
-            if pred not in dataframe.columns:
-                raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+        if predictors is not None:
+            for pred in predictors:
+                if pred not in dataframe.columns:
+                    raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+                    return
+        if response is not None:
+            if response not in dataframe.columns:
+                raise ValueError('Input response variable not existed in the given dataframe')
                 return
-        if response not in dataframe.columns:
-            raise ValueError('Input response variable not existed in the given dataframe')
-            return
         self.predictors = predictors
         self.response = response
 
@@ -43,7 +46,7 @@ class analysis_plot(object):
         Output:
             - A pandas dataframe
         '''
-        return self.dataframe
+        return copy.deepcopy(self.dataframe)
 
     def get_predictors(self):
         '''
@@ -51,7 +54,7 @@ class analysis_plot(object):
         Output:
             - A list of string indicating the predictor variable(s)
         '''
-        return self.predictors
+        return copy.deepcopy(self.predictors)
 
     def get_response(self):
         '''
@@ -59,7 +62,7 @@ class analysis_plot(object):
         Output:
             - A string indicating the response variable
         '''
-        return self.response
+        return copy.deepcopy(self.response)
     
     def set_predictors(self, predictors):
         '''
@@ -93,18 +96,28 @@ class analysis_plot(object):
             - label: A categorical label for plot legend (default=None)
         '''
         dataframe = self.get_dataframe()
+        cols = self.get_predictors()
+        huelabel = self.get_response()
+        cols.append(huelabel)
         if label is not None: # priority: label argument
             huelabel = label
+        if huelabel is not None:
+            sns.pairplot(dataframe[cols], hue=huelabel, palette='Set1')
         else:
-            huelabel = self.get_response()
-        sns.pairplot(dataframe, hue=huelabel, palette='Set1')
+            sns.pairplot(dataframe[cols], palette='Set1')
 
-    def corr_heatmap(self):
+    def corr_heatmap(self, **kwargs):
         '''
         Create a heat map for observing the correlations among all predictors
         '''
         dataframe = self.get_dataframe()
+        if 'figsize' in kwargs:
+            figsize = kwargs['figsize']
+        else:
+            figsize = (10,10)
+        plt.figure(figsize=figsize)
         sns.heatmap(dataframe.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
+        
 
     def reg_plot(self, var_x, var_y):
         '''
@@ -131,10 +144,10 @@ class analysis_plot(object):
         Create a distribution plot with probability density function (PDF) curves
         Input:
             - var_x: A variable on x-axis
-            - var_y: A categoricle variable shown in plot legend
+            - var_y: A categorical variable shown in plot legend
         '''
         dataframe = self.get_dataframe()
-        sns.FacetGrid(dataframe, hue=var_y, height=4).map(sns.distplot, var_x).add_legend()
+        sns.FacetGrid(dataframe, hue=var_y, height=5).map(sns.distplot, var_x).add_legend()
 
     def reg(self, var_x=None, var_y=None, report=False):
         '''
@@ -204,7 +217,11 @@ class analysis_plot(object):
                 raise ValueError('No predictors or response assigned')
         resid_norm = model.get_influence().resid_studentized_internal
         qq_plt = ProbPlot(resid_norm)
-        qq_plt.qqplot(color='#2077B4', alpha=0.5, line='45', lw=0.5)
+        theo = qq_plt.theoretical_quantiles
+        sample = qq_plt.sample_quantiles
+        plt.scatter(theo, sample, alpha=0.5)
+        sns.regplot(theo, theo, scatter=False, ci=False, lowess=True,
+                   line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Normal Q-Q')
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')

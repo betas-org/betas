@@ -24,7 +24,7 @@ This tool is designed for **CSV** data file only.
 
 ## analysis_plot
 
-```
+```python
 class linear_regression.analysis_plot(dataframe, predictors=None, response=None)
 ```
 A class to create regression analysis plots based on a input dataframe, selected predictor variable(s) and a response variable.
