@@ -32,7 +32,16 @@ MYCLASS = analysis_plot(DF)
 # Layout and Plots
 app.layout = html.Div([
     html.H1('Linear Regression Model Diagnostics', style={'textAlign': 'center'}),
-    html.Div('Data Source: %s\n' % address),
+    html.Div('Residuals versus Predicted Plot:', style={'font-weight':'bold'}),
+    html.Div('Checking the assumption of linearity and homoscedasticity. If the residuals appear to be very large (big positive value or big negative value), the model does not meet the linear model assumption. To assess the assumption of linearity we want to ensure that the residuals are not too far away from 0.'),
+    html.Div('Normal Q-Q Plot:', style={'font-weight':'bold'}),
+    html.Div('Checking the normality assumption by comparing the residuals to "ideal" normal observations. If observations lie well along the 45-degree line in the QQ-plot, we may assume that normality holds here.'),
+    html.Div('Scale-Location Plot:', style={'font-weight':'bold'}),
+    html.Div('Checking the assumption of homoscedasticity(equal variance). If residuals are spread equally along the ranges of predictors, the assumption of equal variance (homoscedasticity) is satisfied. It’s good if you see a horizontal line with equally (randomly) spread points.'),
+    html.Div('Residuals vs Leverage Plot:', style={'font-weight':'bold'}),
+    html.Div('Checking if there are influential cases. Not all outliers are influential in linear regression analysis, we watch out for outlying values at the upper right corner or at the lower right corner, since the regression results will be altered if we exclude those cases.'),
+    
+    html.Div('Data Source: %s\n' % address, style={'font-weight':'bold'}),
     html.Div([
         html.Div([
             dcc.Dropdown(
@@ -53,7 +62,6 @@ app.layout = html.Div([
         'borderBottom': 'thin lightgrey solid',
         'backgroundColor': 'rgb(250, 250, 250)',
         'padding': '10px 5px'}),
-
     html.Div([
         dcc.Graph(id='residual-plot')
     ], style={'width': '49%', 'display': 'inline-block'}),
@@ -271,4 +279,4 @@ def update_resid_lever_plot(predictors, response):
     }
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True)
