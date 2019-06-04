@@ -6,7 +6,7 @@ bokeh serve --show app_bokeh.py
 
 import numpy as np
 import pandas as pd
-from tool import load_data, classify
+from tool import classify
 from os.path import dirname, join
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS
@@ -19,15 +19,33 @@ from bokeh.layouts import gridplot, column, row
 Scatterplot
 '''
 
-data_path = input('Path of Your Input File: ')
-# data_path = '/Users/allen/Documents/Data_515/binary_classification/bokeh_data.csv'
+data_path = input('Path or url of the input csv: ')
+# data_path = '~/Downloads/spam_output.csv'
 data = pd.read_csv(data_path)
+
+if data.shape[0] > 10000:
+    data = data.sample(10000)
 
 scores = np.array(data.scores)
 actual_label = np.array(data.actual_label)
 
+
 target = classify(scores, actual_label, 0.5)
-hline = ColumnDataSource(data=dict(x=[-0.3, 1.3], y=[0.5, 0.5]))
+fpr, tpr, thresholds = roc_curve(target.actual_label, target.scores)
+tnr = 1 - fpr
+tf = tpr - tnr
+optimal_cutoff = thresholds[abs(tf).argsort()[0]]
+roc_auc = auc(fpr, tpr)
+threshold = 0.5
+diff = thresholds - threshold
+x_coord = fpr[abs(diff).argsort()[0]]
+y_coord = tpr[abs(diff).argsort()[0]]
+target = classify(scores, actual_label, optimal_cutoff)
+
+
+
+hline = ColumnDataSource(data=dict(x=[-0.3, 1.3],
+                         y=[optimal_cutoff, optimal_cutoff]))
 TP = ColumnDataSource(data=dict(x=target['position'][target.group == 'TP'],
                                 y=target['scores'][target.group == 'TP']))
 TN = ColumnDataSource(data=dict(x=target['position'][target.group == 'TN'],
@@ -57,18 +75,6 @@ p_scatter.add_layout(legend, 'right')
 '''
 ROC curve
 '''
-scores, actual_label = load_data()
-target = classify(scores, actual_label, 0.5)
-fpr, tpr, thresholds = roc_curve(target.actual_label, target.scores)
-tnr = 1 - fpr
-tf = tpr - tnr
-optimal_cutoff = thresholds[abs(tf).argsort()[0]]
-roc_auc = auc(fpr, tpr)
-threshold = 0.5
-diff = thresholds - threshold
-x_coord = fpr[abs(diff).argsort()[0]]
-y_coord = tpr[abs(diff).argsort()[0]]
-
 pre_roc = PreText(text='Optimal Threshold by ROC: ' +
                   str(round(optimal_cutoff, 2)),
                   width=100, height=20)
