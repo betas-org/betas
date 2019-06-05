@@ -1,27 +1,39 @@
 import numpy as np
 import pandas as pd
+import unittest
 from binary_score_plot import binary_score_plot
 
+class TestBinaryScorePlot(unittest.TestCase):
+    """
+    Testing the plots in the binary_score_plot module
+    """
 
-def main():
-    '''
-    Runs some sample labels and scores through
-    the plot_pr_by_threshold() function,
-    the plot_hist() function,
-    and the plot_roc() function
-    of the binary_score_plot class.
-    '''
+    def test_threshold_assignment(self):
+        """
+        Testing the threshold assignment
+        """
 
-    df = pd.read_csv('spam_output.csv')
-    scores = df.scores
-    labels = df.actual_label
-    threshold = 0.55
+        df = pd.read_csv('spam_output.csv')
+        scores = df.scores
+        labels = df.actual_label
+        threshold = 0.55
 
-    bsp = binary_score_plot(scores, labels, threshold)
-    bsp.plot_hist()
-    bsp.plot_jitter()
-    bsp.plot_pr_by_threshold()
-    bsp.plot_roc()
+        bsp = binary_score_plot(scores, labels, threshold)
+        assigned_threshold = bsp._threshold
 
-if __name__ == '__main__':
-    main()
+        self.assertTrue(threshold == assigned_threshold)
+
+    def test_optimal_threshold_range(self):
+        """
+        Testing the optimal threshold range
+        """
+
+        df = pd.read_csv('spam_output.csv')
+        scores = df.scores
+        labels = df.actual_label
+
+        bsp = binary_score_plot(scores, labels, threshold)
+        opt_thresh = bsp.optimal_threshold(by='roc')
+
+        self.assertTrue(opt_thresh >= 0 and opt_thresh <= 1)
+
