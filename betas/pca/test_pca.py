@@ -23,6 +23,7 @@ class TestPcaEval(unittest.TestCase):
         features_1 = np.random.normal(size=100)
         features_1 = features_1.reshape(len(features_1), 1)
         features = features_1
+
         for i in range(2, 11):
             features = np.concatenate((features, features_1**i), axis=1)
 
@@ -41,9 +42,11 @@ class TestPcaEval(unittest.TestCase):
         train_features, test_features, train_labels, test_labels =\
             train_test_split(features, labels, random_state=0)
 
-        _fig, optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
+        optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
             train_features,
             train_labels,
             test_features,
-            test_labels)
-        self.assertAlmostEqual(1, optimal_dimensions)
+            test_labels,
+            plot_figure=False)
+
+        self.assertTrue(optimal_dimensions == 1)

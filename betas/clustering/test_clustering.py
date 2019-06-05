@@ -26,7 +26,7 @@ class TestKmeansEval(unittest.TestCase):
                                        cluster_std=0.001,
                                        random_state=0)
 
-        _fig, opt_clusters = \
-            clustering_evaluate.kmeans_viz_and_opt_clusters(x_train)
-
-        self.assertAlmostEqual(selected_n_clusters, opt_clusters)
+        opt_clusters = \
+            clustering_evaluate.kmeans_viz_and_opt_clusters(x_train,
+                                                            plot_figure=False)
+        self.assertTrue(selected_n_clusters == opt_clusters)

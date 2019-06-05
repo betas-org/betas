@@ -27,7 +27,7 @@ install:
 
 # the actual commands to run
 script:
-    - coverage run -m unittest discover
+    - coverage run -m unittest discover betas
 
 # generate a coverage report to send to back to user
 after_success:

@@ -8,6 +8,7 @@ import sklearn.cluster
 import matplotlib.pyplot as plt
 plt.style.use('seaborn')
 
+
 def get_cluster_vector(n_samples):
     """
     Function to create the vector of various cluster lenghts to evaluate
@@ -52,6 +53,7 @@ def get_cost_from_kmeans(n_clusters_vector, data):
         obj_vals.append(kmeans.inertia_)
     return obj_vals
 
+
 def visualize_kmeans(n_clusters_vector, obj_vals):
     """
     Function to visualize the results of running k-means++ on various
@@ -70,6 +72,7 @@ def visualize_kmeans(n_clusters_vector, obj_vals):
     plt.ylabel('Objective value from K-means++')
     return fig
 
+
 def get_optimal_num_clusters(n_clusters_vector, obj_vals):
     """
     Function to find the optimal number of clusters for the given dataset
@@ -79,7 +82,7 @@ def get_optimal_num_clusters(n_clusters_vector, obj_vals):
           of squared distances to the closest centroid for all observations
           in the training set) for all values of number of clusters
     Output:
-        - optimal_num_clusters: optimal number of clusters for the given dataset
+        - optimal_num_clusters: optimal number of clusters for the given data
     """
     optimal_num_clusters = n_clusters_vector[0]
     epsilon = 0.05
@@ -90,7 +93,7 @@ def get_optimal_num_clusters(n_clusters_vector, obj_vals):
     return optimal_num_clusters
 
 
-def kmeans_viz_and_opt_clusters(input_features):
+def kmeans_viz_and_opt_clusters(input_features, plot_figure=True):
     """
     Function to run k-means++ clustering algo for various number of
     clusters on the given input_features, visualize it and then
@@ -98,13 +101,16 @@ def kmeans_viz_and_opt_clusters(input_features):
     Input:
         - input_features: input dataset/features
     Output:
-        - optimal_num_clusters: optimal number of clusters for the given dataset
+        - optimal_num_clusters: optimal number of clusters for the given data
     """
     n_samples = input_features.shape[0]
     n_clusters_vector = get_cluster_vector(n_samples)
     obj_vals = get_cost_from_kmeans(n_clusters_vector, input_features)
 
-    plt_clust = visualize_kmeans(n_clusters_vector, obj_vals)
     optimal_num_clusters = get_optimal_num_clusters(n_clusters_vector,
                                                     obj_vals)
-    return plt_clust, optimal_num_clusters
+
+    if plot_figure:
+        plt_clust = visualize_kmeans(n_clusters_vector, obj_vals)
+        return plt_clust, optimal_num_clusters
+    return optimal_num_clusters
