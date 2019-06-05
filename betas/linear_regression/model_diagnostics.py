@@ -14,7 +14,7 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-from analysis_plot import analysis_plot as plt
+from .analysis_plot import analysis_plot as plt
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
