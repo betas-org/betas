@@ -5,7 +5,7 @@ Unit tests for pca.py
 import unittest
 import numpy as np
 from sklearn.model_selection import train_test_split
-from betas import pca.pca_evaluate as pca_evaluate
+import pca_evaluate
 
 
 class TestPcaEval(unittest.TestCase):
