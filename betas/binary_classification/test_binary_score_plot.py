@@ -32,7 +32,7 @@ class TestBinaryScorePlot(unittest.TestCase):
         scores = df.scores
         labels = df.actual_label
 
-        bsp = binary_score_plot(scores, labels, threshold)
+        bsp = binary_score_plot(scores, labels)
         opt_thresh = bsp.optimal_threshold(by='roc')
 
         self.assertTrue(opt_thresh >= 0 and opt_thresh <= 1)
