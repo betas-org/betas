@@ -5,7 +5,7 @@ import seaborn as sns
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 
 class binary_score_plot(object):
-    '''
+    """
     Class to construct plots to analyze
     performance of binary classifiers.
     Mainly acts as a wrapper for existing
@@ -16,7 +16,7 @@ class binary_score_plot(object):
           array)
         - labels: 1D numpy array of model labels to plot (defaults to empty
           array)
-    '''
+    """
 
     def __init__(self, scores=np.array([]), labels=np.array([]), threshold=0.5):
         self._scores = scores
@@ -38,66 +38,66 @@ class binary_score_plot(object):
         sns.set_style("white")
 
     def get_scores(self):
-        '''
+        """
         Get model scores to plot
         Output:
             - 1D numpy array of model scores
-        '''
+        """
 
         return self._scores
 
     def get_labels(self):
-        '''
+        """
         Get model labels to plot
         Output:
             - 1D numpy array of model labels
-        '''
+        """
 
         return self._labels
 
     def get_df(self):
-        '''
+        """
         Get data for scatterplot
         Output:
             - pandas dataframe
-        '''
+        """
 
         return self._df
 
     def get_threshold(self):
-        '''
+        """
         Output:
             - threshold
-        '''
+        """
 
         return self._threshold
 
     def set_scores(self, scores):
-        '''
+        """
         Set model scores to plot
         Input:
             - 1D numpy array of model scores
-        '''
+        """
 
         self._scores = scores
 
     def set_labels(self, labels):
-        '''
+        """
         Set model labels to plot
         Input:
             - 1D numpy array of model labels
-        '''
+        """
 
         self._labels = labels
 
     def plot_hist(self, bins=30):
-        '''
+        """
         Plot two histograms: one of
         the actual binary labels
         and one of the model scores
         Input:
             - number of histogram bins to use
-        '''
+        """
 
         labels = self.get_labels()
         scores = self.get_scores()
@@ -122,9 +122,9 @@ class binary_score_plot(object):
         plt.show()
 
     def plot_jitter(self):
-        '''
+        """
         Make jitter plot
-        '''
+        """
 
         df = self.get_df()
         threshold = self.get_threshold()
@@ -141,12 +141,12 @@ class binary_score_plot(object):
         plt.show()
 
     def plot_pr_by_threshold(self):
-        '''
+        """
         Plots model precision and recall
         by threshold, using matplotlib and seaborn
         allowing a user to visualize model performance
         at various thresholds
-        '''
+        """
 
         labels = self.get_labels()
         scores = self.get_scores()
@@ -168,9 +168,9 @@ class binary_score_plot(object):
         plt.show()
 
     def plot_roc(self):
-        '''
+        """
         Plots the true positive rate vs. the false positive rate
-        '''
+        """
 
         labels = self.get_labels()
         scores = self.get_scores()
@@ -199,13 +199,13 @@ class binary_score_plot(object):
         plt.show()
 
     def optimal_threshold(self, by='roc'):
-        '''
+        """
         Calculate the optimal threshold by auc of either ROC or PR curve
         Input:
             - 1D numpy array of model scores
             - 1D numpy array of actual labels
             - Curve to use
-        '''
+        """
 
         labels = self.get_labels()
         scores = self.get_scores()
