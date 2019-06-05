@@ -1,14 +1,10 @@
 """
-Module for testing the clustering_evaluate module, which
-evaluates the different number of clusters for a given
-dataset
+Unit tests for clustering.py
 """
 
 import unittest
-
 from sklearn.datasets.samples_generator import make_blobs
-import clustering_evaluate
-
+from betas import clustering.clustering_evaluate as clustering_evaluate
 
 class TestKmeansEval(unittest.TestCase):
     """

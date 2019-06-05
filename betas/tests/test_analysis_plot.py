@@ -1,11 +1,10 @@
 """
-Unittests for analysis_plot.py
+Unit tests for analysis_plot.py
 """
 
-import unittest
-import analysis_plot as plt
 import seaborn as sns
-
+import unittest
+from betas import linear_regression.analysis_plot as plt
 
 DF = sns.load_dataset('titanic')
 PREDS = [DF.columns[0]]
