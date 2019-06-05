@@ -6,7 +6,7 @@ import seaborn as sns
 import unittest
 from linear_regression import analysis_plot as plt
 
-DF = sns.load_dataset('titanic')
+DF = sns.load_dataset('iris')
 PREDS = [DF.columns[0]]
 RESP = DF.columns[1]
 MYPLOT = plt.analysis_plot(DF, PREDS, RESP)

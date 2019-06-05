@@ -41,6 +41,8 @@ Python
 
 [seaborn](https://seaborn.pydata.org) >= 0.9.0
 
+[scipy](http://scipy.github.io/devdocs/) == 1.2.0
+
 [scikit-learn](https://scikit-learn.org) >= 0.20.2
 
 [statsmodels](https://www.statsmodels.org) >= 0.9.0
