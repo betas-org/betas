@@ -19,6 +19,8 @@ class TestBinaryScorePlot(unittest.TestCase):
         """
 
         df = pd.read_csv('spam_output.csv')
+        # In virtual envi: Failure
+        # FileNotFoundError: [Errno 2] File b'spam_output.csv' does not exist: b'spam_output.csv'
         scores = df.scores
         labels = df.actual_label
         threshold = 0.55
@@ -34,6 +36,8 @@ class TestBinaryScorePlot(unittest.TestCase):
         """
 
         df = pd.read_csv('spam_output.csv')
+        # In virtual envi: Failure
+        # FileNotFoundError: [Errno 2] File b'spam_output.csv' does not exist: b'spam_output.csv'
         scores = df.scores
         labels = df.actual_label
 
