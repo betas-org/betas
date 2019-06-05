@@ -96,7 +96,7 @@ def kmeans_viz_and_opt_clusters(input_features):
     clusters on the given input_features, visualize it and then
     return the optimal number of clusters
     Input:
-        - X: input dataset/features
+        - input_features: input dataset/features
     Output:
         - optimal_num_clusters: optimal number of clusters for the given dataset
     """
