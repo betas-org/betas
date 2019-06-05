@@ -16,6 +16,7 @@ from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegressionCV
 plt.style.use('seaborn-white')
 
+
 def sigmoid(features):
     """
     Sigmoid/Logistic function
@@ -138,8 +139,9 @@ def plot_pca_errors(misclassification_err_train, misclassification_err_test,
 
     return fig
 
+
 def pca_viz_and_opt_dimensions(train_features, train_labels, test_features,
-                               test_labels):
+                               test_labels, plot_figure=True):
     """
     Function that would be called eventually on the training and test data
     to generate the analysis of all the error values from different PCA
@@ -151,7 +153,10 @@ def pca_viz_and_opt_dimensions(train_features, train_labels, test_features,
     error_train, error_test, dimensions = \
         run_pca_across_dimensions(train_features_std, train_labels,
                                   test_features_std, test_labels)
-    figure = plot_pca_errors(error_train, error_test, dimensions)
+    # In case we only want to figure out the optimal number of dimensions
+    # for PCA, we may not want to plot the graph
+    if plot_figure:
+        figure = plot_pca_errors(error_train, error_test, dimensions)
 
     optimal_dimensions = dimensions[0]
     min_error_train = error_train[0]
@@ -164,4 +169,6 @@ def pca_viz_and_opt_dimensions(train_features, train_labels, test_features,
             min_error_train = error_train[i]
             min_error_test = error_test[i]
 
-    return figure, optimal_dimensions
+    if plot_figure:
+        return figure, optimal_dimensions
+    return optimal_dimensions
