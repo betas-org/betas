@@ -103,3 +103,4 @@ betas/
 ```
 
 ## Installation
+`pip install betas`
