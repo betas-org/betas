@@ -1,170 +1,85 @@
 ![logo](../../docs/logo_white.png)
-# Principal Component Analysis (PCA) Evaluation
+# Clustering Evaluation
 
-Visuailize the the performance/evaluation of PCA for different number of dimensions on the input data
+Visuailize the the performance/evaluation of Clustering for different number of clusters on the given input data using k-means++
 
 ## Methods
-- `sigmoid`: Sigmoid/Logistic function
-- `get_classification_error`: Compute the misclassification error from the predicted labels and the actual ones
-- `scale_features`: Scale the training as well as test data
-- `get_pca_cv_results`: Run the PCA on the training data and then use it to find optimal lambda from the logistic regression cross validation function
-- `run_pca_across_dimensions`: Run the PCA algorithms for various number of dimensions and evaluate each one based on the computed missclassification error values
-- `plot_pca_errors`: Plot the misclassification error values for the various PCA runs for different dimensions
-- `visualize_pca`: Generate the analysis of all the error values from different PCA dimensions in order to decide the most suited number of dimensions for the given dataset
+- `get_cluster_vector`: Function to create the vector of various cluster lenghts to evaluate
+- `get_cost_from_kmeans`: Function to derive the objective values for k-means++ for the
+    various values of number of clusters that are input
+- `visualize_kmeans`: Function to visualize the results of running k-means++ on various
+    number of clusters for a given dataset to assess the optimal number of clusters
+- `get_optimal_num_clusters`: Function to find the optimal number of clusters for the given dataset
+- `kmeans_viz_and_opt_clusters`: Function to run k-means++ clustering algo for various number of
+    clusters on the given input_features, visualize it and then return the optimal number of clusters
 
 
 ## Methods Details
 
 ```python
-sigmoid(features)
+get_cluster_vector(n_samples)
 ```
-Sigmoid/Logistic function
+Function to create the vector of various cluster lenghts to evaluate
 
 Parameter:
-- features
+- n_samples: total number of samples/examples in the dataset
 
 Returns:
-- result: *narray*
- 
-    Computed sigmoid function result
+- n_clusters_vector: vector of various cluster lenghts to evaluate
+
 
 ```python
-get_misclassification_error(features, labels, beta)
+get_cost_from_kmeans(n_clusters_vector, data)
 ```
-Compute the misclassification error from the predicted labels and the actual ones
+Function to derive the objective values for k-means++ for the
+    various values of number of clusters that are input
 
 Parameter:
-- features
-- labels
-- beta
+- n_clusters_vector: vector of various cluster lenghts to evaluate
+- X: input dataset/features
 
 Returns:
-- error: *float*
-
-    Misclassification error
+- objVals: The list of final values of the inertia criterion (sum
+      of squared distances to the closest centroid for all observations
+      in the training set) for all values of number of clusters
 
 ```python
-scale_features(train_features, test_features)
+visualize_kmeans(n_clusters_vector, obj_vals)
 ```
-Scale the training as well as test data
+Function to visualize the results of running k-means++ on various
+number of clusters for a given dataset to assess the optimal number
+of clusters
 
 Parameter:
-- train_features:
-
-    Training features
-- test_features:
-
-    Test features
-    
-Returns:
-- train_features_std: *narray*
-
-     Standardized training features
-- test_features_std: *narray*
-
-    Standardized test features
+- n_clusters_vector: vector of various cluster lenghts to evaluate
+- objVals: The list of final values of the inertia criterion (sum
+   of squared distances to the closest centroid for all observations
+   in the training set) for all values of number of clusters
 
 ```python
-get_pca_and_cv_results(train_features_std, test_features_std, train_labels, dimension)
+get_optimal_num_clusters(n_clusters_vector, obj_vals)
 ```
-Run the PCA on the training data and then use it to find optimal lambda from the logistic regression cross validation function
+Function to find the optimal number of clusters for the given dataset
 
 Parameters:
-- train_features_std: *narray*
-
-    Standardized training features
-- test_features_std: *narray*
-
-    Standardized test features
-- train_labels: *narray*
-
-    Training labels
-- dimensions: *integer*
-
-    Number of components to run PCA on
+- n_clusters_vector: vector of various cluster lenghts to evaluate
+- objVals: The list of final values of the inertia criterion (sum
+   of squared distances to the closest centroid for all observations
+   in the training set) for all values of number of clusters
 
 Returns:
-- train_features_pca_std: *narray*
+- optimal_num_clusters: optimal number of clusters for the given dataset
 
-    Standardized training features with PCA
-- test_features_pca_std: *narray*
-
-    Standardized test features with PCA
-- lambda_star: *float*
-
-    Optimal penalty parameter $\lambda$
 
 ```python
-run_pca_across_dimensions(train_features_std, train_labels, test_features_std, test_labels)
+kmeans_viz_and_opt_clusters(input_features)
 ```
-Run the PCA algorithms for various number of dimensions and evaluate each one based on the computed missclassification error values
+Function to run k-means++ clustering algo for various number of
+clusters on the given input_features, visualize it and then
+return the optimal number of clusters
 
 Parameters:
-- train_features_std: *narray*
-
-    Standardized training features
-- train_labels: *narray*
-
-    Training labels
-- test_features_std: *narray*
-
-    Standardized test features
-- test_labels: *narray*
-
-    Test labels
+- input_features: input dataset/features
 
 Returns:
-- missclassification_err_train: *float*
-
-    Misclassification error on training set
-- missclassification_err_test: *float*
-
-    Misclassification error on test set
-- dimensions: *array*
-
-    A list of different dimensions
-
-```python
-plot_pca_errors(missclassification_err_train, missclassification_err_test, dimensions)
-```
-Plot the misclassification error values for the various PCA runs for different dimensions
-
-Parameters:
-- missclassification_err_train: *float*
-
-    Misclassification error on training set
-- missclassification_err_test: *float*
-
-    Misclassification error on test set
-- dimensions: *array*
-
-    A list of different dimensions
-
-Returns:
-- fig: *figure*
-
-    Figure for the misclassification error plot for PCA with different dimensions
-
-```python
-visualize_pca(train_features, train_labels, test_features, test_labels)
-```
-Generate the analysis of all the error values from different PCA dimensions in order to decide the most suited number of dimensions for the given dataset
-
-Parameters:
-- train_features: *narray*
-
-    Train features
-- train_labels: *narray*
-
-    Train labels
-- test_features: *narray*
-
-    Test features
-- test_labels: *narray*
-
-    Test labels
-
-Returns:
-- figure: *figure*
-
-    Figure for the misclassification error plot for PCA with different dimensions
+- optimal_num_clusters: optimal number of clusters for the given dataset
