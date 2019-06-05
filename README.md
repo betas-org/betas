@@ -22,9 +22,9 @@ Arjun Singh
 
 ## Data
 
-Data Set 1:
+Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/datasets/spam.data))
 
-Data Set 2:
+Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/College.csv))
 
 ## Software
 **Programming Languages**

@@ -3,7 +3,7 @@
 
 ## binary_score_plot
 
-```
+```python
 class binary_score_plot(self, scores=np.array([]), labels=np.array([]))
 ```
 A class to construct plots to analyze performance of binary classifiers. Mainly acts as a wrapper for exisiting metrics and plotting functions.
