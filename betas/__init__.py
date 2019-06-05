@@ -1,5 +1,5 @@
 from betas.binary_classification.binary_score_plot import binary_score_plot
-from betas.clustering.cluster_evaluate import *
+from betas.clustering.clustering_evaluate import get_cluster_vector, get_cost_from_kmeans, visualize_kmeans, get_optimal_num_clusters, kmeans_viz_and_opt_clusters
 from betas.linear_regression.analysis_plot import analysis_plot
-from betas.linear_regression.model_diagnostics import model_diagnostics
-from betas.pca.pca_evaluate import *
+# from betas.linear_regression.model_diagnostics import model_diagnostics
+from betas.pca.pca_evaluate import sigmoid, get_misclassification_error, scale_features, get_pca_and_cv_results, run_pca_across_dimensions, plot_pca_errors, pca_viz_and_opt_dimensions
