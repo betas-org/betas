@@ -4,7 +4,7 @@ Unit tests for analysis_plot.py
 
 import seaborn as sns
 import unittest
-import analysis_plot as plt
+from linear_regression import analysis_plot as plt
 
 DF = sns.load_dataset('titanic')
 PREDS = [DF.columns[0]]

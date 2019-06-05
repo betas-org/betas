@@ -5,7 +5,7 @@ Unit tests for binary_score_plt.py
 import numpy as np
 import pandas as pd
 import unittest
-import binary_score_plot as plt
+from binary_classification import binary_score_plot as plt
 binary_score_plot = plt.binary_score_plot
 
 class TestBinaryScorePlot(unittest.TestCase):

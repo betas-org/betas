@@ -4,7 +4,7 @@ Unit tests for clustering.py
 
 import unittest
 from sklearn.datasets.samples_generator import make_blobs
-import clustering_evaluate
+from clustering import clustering_evaluate
 
 class TestKmeansEval(unittest.TestCase):
     """
