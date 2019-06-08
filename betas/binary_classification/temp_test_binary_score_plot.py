@@ -1,13 +1,11 @@
 """
-Unit tests for binary_score_plt.py
+Unit tests for binary_score_plot.py
 """
 
 import numpy as np
 import pandas as pd
 import unittest
-from binary_classification import binary_score_plot as plt
-binary_score_plot = plt.binary_score_plot
-
+from binary_score_plot import binary_score_plot
 class TestBinaryScorePlot(unittest.TestCase):
     """
     Testing the plots in the binary_score_plot module
