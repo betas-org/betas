@@ -1,1 +1,2 @@
 from betas.binary_score_plot import binary_score_plot
+from betas.regression_analysis_plot import regression_analysis_plot

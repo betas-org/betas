@@ -6,7 +6,7 @@ bokeh serve --show app_bokeh.py
 
 import numpy as np
 import pandas as pd
-from tool import classify
+from binary_score_plot import binary_score_plot
 from os.path import dirname, join
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS
@@ -31,7 +31,8 @@ scores = np.array(data.scores)
 actual_label = np.array(data.actual_label)
 
 
-target = classify(scores, actual_label, 0.5)
+bsp = binary_score_plot(scores, actual_label, threshold=0.5)
+target = bsp.classify()
 fpr, tpr, thresholds = roc_curve(target.actual_label, target.scores)
 tnr = 1 - fpr
 tf = tpr - tnr
@@ -41,7 +42,9 @@ threshold = 0.5
 diff = thresholds - threshold
 x_coord = fpr[abs(diff).argsort()[0]]
 y_coord = tpr[abs(diff).argsort()[0]]
-target = classify(scores, actual_label, optimal_cutoff)
+
+bsp.set_threshold(optimal_cutoff)
+target = bsp.classify()
 
 
 
@@ -196,7 +199,10 @@ download = ColumnDataSource(data=dict(
 def update_data(attrname, old, new):
     val = slider.value
     hline.data = dict(x=[-0.3, 1.3], y=[val, val])
-    target = classify(scores, actual_label, val)
+
+    bsp = binary_score_plot(scores, actual_label, val)
+    target = bsp.classify()
+
     TP.data = dict(x=target['position'][target.group == 'TP'],
                    y=target['scores'][target.group == 'TP'])
     TN.data = dict(x=target['position'][target.group == 'TN'],
@@ -235,11 +241,9 @@ def update_data(attrname, old, new):
         group=target.group)
 
 
-
 slider = Slider(title='Threshold', start=0, end=1, value=optimal_cutoff,
                 step=0.01)
 slider.on_change('value', update_data)
-
 
 
 button = Button(label="Download", button_type="success")
