@@ -1,2 +1,0 @@
-from linear_regression import analysis_plot
-#from model_diagnostics import update_resid_plot, update_scale_loc_plot, update_resid_lever_plot

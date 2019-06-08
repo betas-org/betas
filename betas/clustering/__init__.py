@@ -1,2 +1,0 @@
-#from clustering_evaluate import get_cluster_vector, get_cost_from_kmeans, visualize_kmeans, get_optimal_num_clusters, kmeans_viz_and_opt_clusters
-from clustering import clustering_evaluate
