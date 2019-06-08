@@ -1,6 +1,6 @@
 from betas.binary_score_plot import binary_score_plot
 from betas.regression_analysis_plot import regression_analysis_plot
 from betas import pca_evaluate
-from betas import clustering
+from betas import clustering_evaluate
 
 #from betas.pca_evaluate import sigmoid, get_misclassification_error, scale_features, get_pca_and_cv_results, run_pca_across_dimensions, plot_pca_errors, pca_viz_and_opt_dimensions
