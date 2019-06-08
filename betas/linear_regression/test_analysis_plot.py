@@ -53,10 +53,26 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test if response matched and in dataframe columns
         """
-        self.assertIn(MYPLOT.get_response(), RESP, "Predictors no matched")
+        self.assertIn(MYPLOT.get_response(), RESP, "Predictors not matched")
         self.assertIn(MYPLOT.get_response(), DF.columns, "Predictors not in dataframe columns")
-
+    
     def test_set_predictors(self):
+        """
+        Test predictors matched
+        """
+        TESTPREDS = [DF.columns[1]]
+        MYPLOT.set_predictors(TESTPREDS)
+        self.assertEqual(MYPLOT.get_predictors(), TESTPREDS, "Predictors not matched")
+    
+    def test_set_response(self):
+        """
+        Test response matched
+        """
+        TESTRESP = DF.columns[2]
+        MYPLOT.set_response(TESTRESP)
+        self.assertEqual(MYPLOT.get_response(), TESTRESP, "Response not matched")
+    
+    def test_set_predictors_err(self):
         """
         Check set error if predictors not chosen from dataframe
         """
@@ -67,7 +83,7 @@ class TestAnalysisPlot(unittest.TestCase):
             self.assertEqual(err.args[0],
                              'Input predictor variable(s) not existed in the given dataframe')
 
-    def test_set_response(self):
+    def test_set_response_err(self):
         """
         Check set error if response not chosen from dataframe
         """
@@ -82,64 +98,43 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test matrix_plot with assigned label
         """
-        try:
-            MYPLOT.matrix_plot(label='species')
-        except:
-            self.fail('matrix_plot with assigned label does not work')
+        MYPLOT.matrix_plot(label='species')
 
     def test_matrix_plot_no_label(self):
         """
         Test matrix_plot without assigned label
         """
-        try:
-            MYPLOT.matrix_plot()
-        except:
-            self.fail('matrix_plot without assigned label does not work')
+        MYPLOT.matrix_plot()
 
     def test_corr_heatmap_figsize(self):
         """
         Test corr_heatmap with assigned figsize
         """
-        try:
-            MYPLOT.corr_heatmap(figsize=(10,15))
-        except:
-            self.fail('corr_heatmap with assigned figsize does not work')
+        MYPLOT.corr_heatmap(figsize=(10,15))
 
     def test_corr_heatmap_no_figsize(self):
         """
         Test corr_heatmap without assigned figsize
         """
-        try:
-            MYPLOT.corr_heatmap()
-        except:
-            self.fail('corr_heatmap without assigned figsize does not work')
+        MYPLOT.corr_heatmap()
 
     def test_reg_plot(self):
         """
         Test reg_plot
         """
-        try:
-            MYPLOT.reg_plot(DF.columns[0], DF.columns[1])
-        except:
-            self.fail('reg_plot does not work')
+        MYPLOT.reg_plot(DF.columns[0], DF.columns[1])
 
     def test_box_plot(self):
         """
         Test box_plot
         """
-        try:
-            MYPLOT.box_plot(DF.columns[0], DF.columns[1])
-        except:
-            self.fail('box_plot does not work')
+        MYPLOT.box_plot(DF.columns[0], DF.columns[1])
 
     def test_dist_plot(self):
         """
         Test dist_plot
         """
-        try:
-            MYPLOT.dist_plot(DF.columns[0], 'species')
-        except:
-            self.fail('dist_plot does not work')
+        MYPLOT.dist_plot(DF.columns[0], 'species')
 
     def test_reg_print_report(self):
         """
@@ -175,19 +170,13 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test resid_plot
         """
-        try:
-            MYPLOT.resid_plot()
-        except:
-            self.fail('resid_plot does not work')
+        MYPLOT.resid_plot()
 
     def test_resid_plot_assign_arg(self):
         """
         Test resid_plot, with input
         """
-        try:
-            MYPLOT.resid_plot(var_x=DF.columns[0], var_y=DF.columns[1])
-        except:
-            self.fail('resid_plot does not work')
+        MYPLOT.resid_plot(var_x=DF.columns[0], var_y=DF.columns[1])
 
     def test_resid_plot_arg_err(self):
         """
@@ -204,19 +193,13 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test qq_plot
         """
-        try:
-            MYPLOT.qq_plot()
-        except:
-            self.fail('qq_plot does not work')
+        MYPLOT.qq_plot()
 
     def test_qq_plot_assign_arg(self):
         """
         Test qq_plot, with input
         """
-        try:
-            MYPLOT.qq_plot(var_x=DF.columns[0], var_y=DF.columns[1])
-        except:
-            self.fail('qq_plot does not work')
+        MYPLOT.qq_plot(var_x=DF.columns[0], var_y=DF.columns[1])
 
     def test_qq_plot_arg_err(self):
         """
@@ -233,19 +216,13 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test scale_loc_plot
         """
-        try:
-            MYPLOT.scale_loc_plot()
-        except:
-            self.fail('scale_loc_plot does not work')
+        MYPLOT.scale_loc_plot()
 
     def test_scale_loc_plot_assign_arg(self):
         """
         Test scale_loc_plot, with input
         """
-        try:
-            MYPLOT.scale_loc_plot(var_x=DF.columns[0], var_y=DF.columns[1])
-        except:
-            self.fail('scale_loc_plot does not work')
+        MYPLOT.scale_loc_plot(var_x=DF.columns[0], var_y=DF.columns[1])
 
     def test_scale_loc_plot_arg_err(self):
         """
@@ -262,19 +239,13 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         Test resid_lever_plot
         """
-        try:
-            MYPLOT.resid_lever_plot()
-        except:
-            self.fail('resid_lever_plot does not work')
+        MYPLOT.resid_lever_plot()
 
     def test_resid_lever_plot_assign_arg(self):
         """
         Test resid_lever_plot, with input
         """
-        try:
-            MYPLOT.resid_lever_plot(var_x=DF.columns[0], var_y=DF.columns[1])
-        except:
-            self.fail('resid_lever_plot does not work')
+        MYPLOT.resid_lever_plot(var_x=DF.columns[0], var_y=DF.columns[1])
 
     def test_resid_lever_plot_arg_err(self):
         """

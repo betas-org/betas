@@ -32,11 +32,9 @@ class analysis_plot(object):
             for pred in predictors:
                 if pred not in dataframe.columns:
                     raise ValueError('Input predictor variable(s) not existed in the given dataframe')
-                    return
         if response is not None:
             if response not in dataframe.columns:
                 raise ValueError('Input response variable not existed in the given dataframe')
-                return
         self.predictors = predictors
         self.response = response
 
@@ -74,7 +72,6 @@ class analysis_plot(object):
         for pred in predictors:
             if pred not in dataframe.columns:
                 raise ValueError('Input predictor variable(s) not existed in the given dataframe')
-                return
         self.predictors = predictors
     
     def set_response(self, response):
@@ -86,7 +83,6 @@ class analysis_plot(object):
         dataframe = self.get_dataframe()
         if response not in dataframe.columns:
             raise ValueError('Input response variable not existed in the given dataframe')
-            return
         self.response = response
 
     def matrix_plot(self, label=None):
