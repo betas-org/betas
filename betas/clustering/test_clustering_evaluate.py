@@ -22,7 +22,7 @@ class TestKmeansEval(unittest.TestCase):
                                        cluster_std=0.001,
                                        random_state=0)
 
-        opt_clusters = \
+        plt_clust, opt_clusters = \
             clustering_evaluate.kmeans_viz_and_opt_clusters(x_train,
-                                                            plot_figure=False)
+                                                            plot_figure=True)
         self.assertTrue(selected_n_clusters == opt_clusters)

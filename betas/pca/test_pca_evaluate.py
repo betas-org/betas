@@ -41,12 +41,12 @@ class TestPcaEval(unittest.TestCase):
         train_features, test_features, train_labels, test_labels =\
             train_test_split(features, labels, random_state=0)
 
-        optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
+        fig, optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
             train_features,
             train_labels,
             test_features,
             test_labels,
-            plot_figure=False)
+            plot_figure=True)
 
         self.assertTrue(optimal_dimensions >= 1)
 
@@ -58,3 +58,7 @@ class TestPcaEval(unittest.TestCase):
 #    File "/home/travis/build/betas-org/betas/betas/pca/test_pca_evaluate.py", line 51, in test_pca
 #    self.assertTrue(optimal_dimensions == 1)
 #AssertionError: False is not true
+
+if __name__ == "__main__":
+    SUITE = unittest.TestLoader().loadTestsFromTestCase(TestPcaEval)
+    unittest.TextTestRunner(verbosity=2).run(SUITE)
