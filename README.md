@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-black.svg)
-
+![Version](https://img.shields.io/pypi/v/betas.svg)
 
 This package allows users to visualize model performance, model fit, or model assumptions with one line of code by creating an instance of a plotting class and reusing that instance for various plotting methods.
 
