@@ -1,1 +1,1 @@
-from binary_score_plot import binary_score_plot
+from betas.binary_score_plot import binary_score_plot
