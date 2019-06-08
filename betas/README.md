@@ -1,5 +1,5 @@
 # betas documentation
-![logo](../../docs/logo_white.png)
+![logo](../docs/logo_white.png)
 
 ## Linear Regression
 
