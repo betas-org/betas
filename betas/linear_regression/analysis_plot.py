@@ -97,10 +97,10 @@ class analysis_plot(object):
         '''
         dataframe = self.get_dataframe()
         cols = self.get_predictors()
-        huelabel = self.get_response()
-        cols.append(huelabel)
+        huelabel = None
         if label is not None: # priority: label argument
             huelabel = label
+            cols.append(huelabel)
         if huelabel is not None:
             sns.pairplot(dataframe[cols], hue=huelabel, palette='Set1')
         else:
@@ -171,7 +171,7 @@ class analysis_plot(object):
                 print(model.summary())
             return model
         except:
-            print("TypeError: Predictor/Response data type cannot be casted. Please select again")
+            raise TypeError('Predictor/Response data type cannot be casted. Please select again')
 
 
     def resid_plot(self, var_x=None, var_y=None):
@@ -261,7 +261,6 @@ class analysis_plot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        # [Improvement: Tell how to observe this plot]
         if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
             model = self.reg(var_x, var_y)
         else:
