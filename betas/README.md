@@ -304,9 +304,6 @@ plot_roc(self)
 Plot true positive rate vs false positive rate
 
 
-## probability_plot
-
-
 ## Principal Component Analysis (PCA) Evaluation
 
 Visuailize the the performance/evaluation of PCA for different number of dimensions on the input data
