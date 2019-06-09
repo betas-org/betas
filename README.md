@@ -22,11 +22,13 @@ Arjun Singh
 
 ## Data
 
-Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/datasets/spam.data))
+Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/))
 
-Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/College.csv))
+Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 Data Set 3: Iris - (Example dataset in `seaborn`)
+
+Data Set 4: The Auto dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 ## Software
 **Programming Languages**
