@@ -1,9 +1,21 @@
-# betas documentation
 ![logo](../docs/logo_white.png)
 
-## Linear Regression
+# Documentation
 
-### Model Diagnostics Tool
+- [Linear Regression](#linear-regression)
+  - [Model Diagnostics Tool](#model-diagnostics-tool)
+  - [analysis_plot](#analysis_plot)
+- [Binary Classification](#binary-classification)
+  - [Tool]
+  - [binary_score_plot](#binary_score_plot)
+- [Principal Component Analysis](#principal-component-analysis)
+  - [pca_evaluate](#pca_evaluate)
+- [Clustering](#clustering)
+  - [clustering_evaluate](#clustering_evaluate)
+
+# Linear Regression
+
+## Model Diagnostics Tool
 
 There are four plots to check linear regression model assumptions
 - Residuals VS fitted plot
@@ -24,7 +36,7 @@ python model_diagnostics.py
 **Limitation**
 This tool is designed for **CSV** data file only.
 
-### analysis_plot
+## analysis_plot
 
 ```python
 class linear_regression.analysis_plot(dataframe, predictors=None, response=None)
@@ -87,7 +99,7 @@ Set predictor variable(s)
 Parameters:
 - predictors: *array of string*
 
-A list of predictor variable(s)
+  A list of predictor variable(s)
 
 ```python
 set_response(self)
@@ -97,7 +109,7 @@ Set response variable
 Parameters:
 - response: *string*
 
-Response variable
+  Response variable
 
 ```python
 matrix_plot(self, label=None)
@@ -107,7 +119,7 @@ Create a matrix scatter plot
 Parameters:
 - label: *string*, *optional*
 
-A categorical label for plot legend, selected from dataframe column names
+  A categorical label for plot legend, selected from dataframe column names
 
 ```python
 corr_heatmap(self)
@@ -122,10 +134,10 @@ Create a scatter plot with regression line
 Parameters:
 - var_x: *string*
 
-A variable on x-axis, selected from dataframe column names
+  A variable on x-axis, selected from dataframe column names
 - var_y: *string*
 
-A variable on y-axis, selected from dataframe column names
+  A variable on y-axis, selected from dataframe column names
 
 ```python
 box_plot(self, var_x, var_y):
@@ -135,10 +147,10 @@ Create a box plot
 Parameters:
 - var_x: *string*
 
-A variable on x-axis, selected from dataframe column names
+  A variable on x-axis, selected from dataframe column names
 - var_y: *string*
 
-A variable on y-axis, selected from dataframe column names
+  A variable on y-axis, selected from dataframe column names
 
 ```python
 dist_plot(self, var_x, var_y):
@@ -148,10 +160,10 @@ Create a distribution plot with probability density function (PDF) curves
 Parameters:
 - var_x: *string*
 
-A variable on x-axis, selected from dataframe column names
+  A variable on x-axis, selected from dataframe column names
 - var_y: *string*
 
-A variable on y-axis, selected from dataframe column names
+  A variable on y-axis, selected from dataframe column names
 
 ```python
 reg(self, var_x, var_y, report=False):
@@ -161,12 +173,13 @@ Fit linear regress and print out regression model report
 Parameters:
 - var_x: *string*
 
-A variable on x-axis, selected from dataframe column names
+  A variable on x-axis, selected from dataframe column names
 - var_y: *string*
 
-A variable on y-axis, selected from dataframe column names
+  A variable on y-axis, selected from dataframe column names
 - report: *boolean*, *optional*
-A boolean indicating if print model report
+
+  A boolean indicating if print model report
 
 Returns:
 - A fitted linear regresion model
@@ -179,10 +192,10 @@ Create a residuals VS fitted plot
 Parameters:
 - var_x: *array of string*, *optional*
 
-A list of predictor variable(s), selected from dataframe column names
+  A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
 
-A response variable, selected from dataframe column names
+  A response variable, selected from dataframe column names
 
 ```python
 qq_plot(self, var_x=None, var_y=None):
@@ -192,24 +205,23 @@ Creates a normal qq plot
 Parameters:
 - var_x: *array of string*, *optional*
 
-A list of predictor variable(s), selected from dataframe column names
+  A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
 
-A response variable, selected from dataframe column names
+  A response variable, selected from dataframe column names
 
 ```python
 scale_loc_plot(self, var_x=None, var_y=None):
 ```
-Creates a scale-location plot
-Goal: Check if the residuals suffer from non-constant variance, i.e., heteroscedasticity
+Creates a scale-location plot.
 
 Parameters:
 - var_x: *array of string*, *optional*
 
-A list of predictor variable(s), selected from dataframe column names
+  A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
 
-A response variable, selected from dataframe column names
+  A response variable, selected from dataframe column names
 
 ```python
 resid_lever_plot(self, var_x=None, var_y=None):
@@ -219,15 +231,15 @@ Creates a residuals vs leverage plot
 Parameters:
 - var_x: *array of string*, *optional*
 
-A list of predictor variable(s), selected from dataframe column names
+  A list of predictor variable(s), selected from dataframe column names
 - var_y: *array of string*, *optional*
 
-A response variable, selected from dataframe column names
+  A response variable, selected from dataframe column names
 
 
-## Binary Classification
+# Binary Classification
 
-### binary_score_plot
+## binary_score_plot
 
 ```python
 class binary_score_plot(self, scores=np.array([]), labels=np.array([]))
@@ -271,7 +283,7 @@ Set model scores to plot
 Parameters:
 - scores: *array*
 
-1D numpy array of model scores
+  1D numpy array of model scores
 
 ```python
 set_labels(self, labels)
@@ -281,7 +293,7 @@ Set model labels to plot
 Parameters:
 - scores: *array*
 
-1D numpy array of model scores
+  1D numpy array of model scores
 
 ```python
 plot_hist(self, bins=30)
@@ -291,7 +303,7 @@ Plot two histograms, one with actual binary labels and one with model scores
 Parameters:
 - bins: *integer*, *optional*
 
-Number of histogram bins to use
+  Number of histogram bins to use
 
 ```python
 plot_pr_by_threshold(self)
@@ -304,7 +316,9 @@ plot_roc(self)
 Plot true positive rate vs false positive rate
 
 
-## Principal Component Analysis (PCA) Evaluation
+# Principal Component Analysis
+
+## pca_evaluate
 
 Visuailize the the performance/evaluation of PCA for different number of dimensions on the input data
 
@@ -346,7 +360,7 @@ Parameter:
 Returns:
 - error: *float*
 
-Misclassification error
+  Misclassification error
 
 ```python
 scale_features(train_features, test_features)
@@ -356,10 +370,10 @@ Scale the training as well as test data
 Parameter:
 - train_features:
 
-Training features
+  Training features
 - test_features:
 
-Test features
+  Test features
 
 Returns:
 - train_features_std: *narray*
@@ -377,27 +391,27 @@ Run the PCA on the training data and then use it to find optimal lambda from the
 Parameters:
 - train_features_std: *narray*
 
-Standardized training features
+  Standardized training features
 - test_features_std: *narray*
 
-Standardized test features
+  Standardized test features
 - train_labels: *narray*
 
-Training labels
+  Training labels
 - dimensions: *integer*
 
-Number of components to run PCA on
+  Number of components to run PCA on
 
 Returns:
 - train_features_pca_std: *narray*
 
-Standardized training features with PCA
+  Standardized training features with PCA
 - test_features_pca_std: *narray*
 
-Standardized test features with PCA
+  Standardized test features with PCA
 - lambda_star: *float*
 
-Optimal penalty parameter $\lambda$
+  Optimal penalty parameter $\lambda$
 
 ```python
 run_pca_across_dimensions(train_features_std, train_labels, test_features_std, test_labels)
@@ -407,13 +421,13 @@ Run the PCA algorithms for various number of dimensions and evaluate each one ba
 Parameters:
 - train_features_std: *narray*
 
-Standardized training features
+  Standardized training features
 - train_labels: *narray*
 
-Training labels
+  Training labels
 - test_features_std: *narray*
 
-Standardized test features
+  Standardized test features
 - test_labels: *narray*
 
 Test labels
@@ -421,13 +435,13 @@ Test labels
 Returns:
 - missclassification_err_train: *float*
 
-Misclassification error on training set
+  Misclassification error on training set
 - missclassification_err_test: *float*
 
-Misclassification error on test set
+  Misclassification error on test set
 - dimensions: *array*
 
-A list of different dimensions
+  A list of different dimensions
 
 ```python
 plot_pca_errors(missclassification_err_train, missclassification_err_test, dimensions)
@@ -437,13 +451,13 @@ Plot the misclassification error values for the various PCA runs for different d
 Parameters:
 - missclassification_err_train: *float*
 
-Misclassification error on training set
+  Misclassification error on training set
 - missclassification_err_test: *float*
 
-Misclassification error on test set
+  Misclassification error on test set
 - dimensions: *array*
 
-A list of different dimensions
+  A list of different dimensions
 
 Returns:
 - fig: *figure*
@@ -458,36 +472,35 @@ Generate the analysis of all the error values from different PCA dimensions in o
 Parameters:
 - train_features: *narray*
 
-Train features
+  Train features
 - train_labels: *narray*
 
-Train labels
+  Train labels
 - test_features: *narray*
 
-Test features
+  Test features
 - test_labels: *narray*
 
-Test labels
+  Test labels
 
 Returns:
 - figure: *figure*
 
-Figure for the misclassification error plot for PCA with different dimensions
+  Figure for the misclassification error plot for PCA with different dimensions
 
 
-## Clustering Evaluation
+# Clustering
+
+## clustering_evaluate
 
 Visuailize the the performance/evaluation of Clustering for different number of clusters on the given input data using k-means++
 
 ### Methods
-- `get_cluster_vector`: Function to create the vector of various cluster lenghts to evaluate
-- `get_cost_from_kmeans`: Function to derive the objective values for k-means++ for the
-various values of number of clusters that are input
-- `visualize_kmeans`: Function to visualize the results of running k-means++ on various
-number of clusters for a given dataset to assess the optimal number of clusters
-- `get_optimal_num_clusters`: Function to find the optimal number of clusters for the given dataset
-- `kmeans_viz_and_opt_clusters`: Function to run k-means++ clustering algo for various number of
-clusters on the given input_features, visualize it and then return the optimal number of clusters
+- `get_cluster_vector`: Create the vector of various cluster lenghts to evaluate
+- `get_cost_from_kmeans`: Derive the objective values for k-means++ for the various values of number of clusters that are input
+- `visualize_kmeans`: Visualize the results of running k-means++ on various number of clusters for a given dataset to assess the optimal number of clusters
+- `get_optimal_num_clusters`: Find the optimal number of clusters for the given dataset
+- `kmeans_viz_and_opt_clusters`: Run k-means++ clustering algo for various number of clusters on the given input_features, visualize it and then return the optimal number of clusters
 
 
 ### Methods Details
@@ -495,67 +508,71 @@ clusters on the given input_features, visualize it and then return the optimal n
 ```python
 get_cluster_vector(n_samples)
 ```
-Function to create the vector of various cluster lenghts to evaluate
+Create the vector of various cluster lenghts to evaluate
 
 Parameter:
-- n_samples: total number of samples/examples in the dataset
+- n_samples: *integer*
+
+  Total number of samples/examples in the dataset
 
 Returns:
-- n_clusters_vector: vector of various cluster lenghts to evaluate
-
+- Vector of various cluster lenghts to evaluate
 
 ```python
 get_cost_from_kmeans(n_clusters_vector, data)
 ```
-Function to derive the objective values for k-means++ for the
-various values of number of clusters that are input
+Derive the objective values for k-means++ for the various values of number of clusters that are input
 
 Parameter:
-- n_clusters_vector: vector of various cluster lenghts to evaluate
-- X: input dataset/features
+- n_clusters_vector:
+
+  Vector of various cluster lenghts to evaluate
+- X:
+
+  Input dataset/features
 
 Returns:
-- objVals: The list of final values of the inertia criterion (sum
-of squared distances to the closest centroid for all observations
-in the training set) for all values of number of clusters
+- The list of final values of the inertia criterion (sum of squared distances to the closest centroid for all observations in the training set) for all values of number of clusters
 
 ```python
 visualize_kmeans(n_clusters_vector, obj_vals)
 ```
-Function to visualize the results of running k-means++ on various
-number of clusters for a given dataset to assess the optimal number
-of clusters
+Visualize the results of running k-means++ on various number of clusters for a given dataset to assess the optimal number of clusters
 
 Parameter:
-- n_clusters_vector: vector of various cluster lenghts to evaluate
-- objVals: The list of final values of the inertia criterion (sum
-of squared distances to the closest centroid for all observations
-in the training set) for all values of number of clusters
+- n_clusters_vector:
+
+  Vector of various cluster lenghts to evaluate
+- objVals:
+
+  The list of final values of the inertia criterion (sum of squared distances to the closest centroid for all observations in the training set) for all values of number of clusters
 
 ```python
 get_optimal_num_clusters(n_clusters_vector, obj_vals)
 ```
-Function to find the optimal number of clusters for the given dataset
+Find the optimal number of clusters for the given dataset
 
 Parameters:
-- n_clusters_vector: vector of various cluster lenghts to evaluate
-- objVals: The list of final values of the inertia criterion (sum
-of squared distances to the closest centroid for all observations
-in the training set) for all values of number of clusters
+- n_clusters_vector:
+
+  Vector of various cluster lenghts to evaluate
+- objVals:
+
+  The list of final values of the inertia criterion (sum of squared distances to the closest centroid for all observations in the training set) for all values of number of clusters
 
 Returns:
-- optimal_num_clusters: optimal number of clusters for the given dataset
+- Optimal number of clusters for the given dataset
 
 
 ```python
 kmeans_viz_and_opt_clusters(input_features)
 ```
-Function to run k-means++ clustering algo for various number of
-clusters on the given input_features, visualize it and then
-return the optimal number of clusters
+Run k-means++ clustering algo for various number of clusters on the given input_features, visualize it and then return the optimal number of clusters
 
 Parameters:
-- input_features: input dataset/features
+- input_features:
+
+  Input dataset/features
 
 Returns:
-- optimal_num_clusters: optimal number of clusters for the given dataset
+- Optimal number of clusters for the given dataset
