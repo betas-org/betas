@@ -169,17 +169,18 @@ class TestAnalysisPlot(unittest.TestCase):
         Test linear regression model, no input, print report summary
         """
         with patch('builtins.print'):
-            model = MYPLOT.reg(report=True)
+            MYPLOT.reg(report=True)
             # string is the first line of report with no space
-            string = str(model.summary())[:78].replace(' ', '')
+            string = str(MYPLOT.get_model().summary())[:78].replace(' ',
+                                                                    '')
             self.assertEqual(string, 'OLSRegressionResults')
 
     def test_reg_assign_arg(self):
         """
         Test linear regression model, with input
         """
-        model = MYPLOT.reg(var_x=DF.columns[0], var_y=DF.columns[1])
-        string = str(model.summary())
+        MYPLOT.reg(var_x=DF.columns[0], var_y=DF.columns[1])
+        string = str(MYPLOT.get_model().summary())
         # assigned arguments should take priority in model fitting
         self.assertIn(str(DF.columns[0]), string)
         self.assertIn(str(DF.columns[1]), string)
@@ -189,8 +190,8 @@ class TestAnalysisPlot(unittest.TestCase):
         Check error for linear regression model, with input not being casted
         """
         try:
-            model = MYPLOT.reg(var_x=DF.columns[0], var_y='species')
-            string = str(model.summary())
+            MYPLOT.reg(var_x=DF.columns[0], var_y='species')
+            string = str(MYPLOT.get_model().summary())
             self.assertIn(MYPLOT.get_response(), string)
         except Exception as err:
             self.assertEqual(err.args[0],

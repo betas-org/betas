@@ -57,8 +57,10 @@ Plot types basically includes:
 - `get_dataframe`: Return the pandas dataframe
 - `get_predictors`: Return the list of predictor variable(s)
 - `get_response`: Return the response variable
+- `get_model`: Return linear regression OLS model
 - `set_predictors`: Set predictor variable(s)
 - `set_response`: Set response variable
+- `set_model`: Set linear regression OLS model
 - `matrix_plot`: Create a matrix scatter plot
 - `corr_heatmap`: Create a heat map for observing the correlations among all predictors
 - `reg_plot`: Create a scatter plot with regression line
@@ -92,6 +94,11 @@ get_response(self)
 Return the response variable
 
 ```python
+get_model(self)
+```
+Return linear regression OLS model
+
+```python
 set_predictors(self)
 ```
 Set predictor variable(s)
@@ -110,6 +117,16 @@ Parameters:
 - response: *string*
 
   Response variable
+
+```python
+set_model(self)
+```
+Set linear regression OLS model
+
+Parameters:
+- model: *OLS model*
+
+    A linear regression OLS model
 
 ```python
 matrix_plot(self, label=None)

@@ -42,6 +42,7 @@ class AnalysisPlot(object):
                                  'in the given dataframe')
         self.predictors = predictors
         self.response = response
+        self.model = None
 
     def get_dataframe(self):
         '''
@@ -67,6 +68,12 @@ class AnalysisPlot(object):
         '''
         return copy.deepcopy(self.response)
 
+    def get_model(self):
+        """
+        Return linear regression OLS model
+        """
+        return copy.deepcopy(self.model)
+
     def set_predictors(self, predictors):
         '''
         Set predictor variable(s)
@@ -91,6 +98,14 @@ class AnalysisPlot(object):
             raise ValueError('Input response variable not existed ' +
                              'in the given dataframe')
         self.response = response
+
+    def set_model(self, model):
+        """
+        Set linear regression OLS model
+        Input:
+            - model: A linear regression OLS model
+        """
+        self.model = model
 
     def matrix_plot(self, label=None):
         '''
@@ -172,10 +187,11 @@ class AnalysisPlot(object):
         try:
             model = sm.OLS(resp, sm.add_constant(pred))
             model = model.fit()
+            self.set_model(model)
             if report is True:
                 print(model.summary())
-            return model
         except Exception:
+            self.set_model(None)
             raise TypeError('Predictor/Response data type cannot ' +
                             'be casted. Please select again')
 
@@ -189,14 +205,15 @@ class AnalysisPlot(object):
         dataframe = self.get_dataframe()
         # priority: arguments var_x, var_y
         if var_x is not None and var_y is not None:
-            model = self.reg(var_x, var_y)
+            self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
             var_y = self.get_response()
             if var_x is not None and var_y is not None:
-                model = self.reg(var_x, var_y)
+                self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
+        model = self.get_model()
         fitted = model.fittedvalues
         sns.residplot(fitted, var_y, data=dataframe, lowess=True,
                       scatter_kws={'alpha': 0.5},
@@ -214,14 +231,15 @@ class AnalysisPlot(object):
         '''
         # priority: arguments var_x, var_y
         if var_x is not None and var_y is not None:
-            model = self.reg(var_x, var_y)
+            self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
             var_y = self.get_response()
             if var_x is not None and var_y is not None:
-                model = self.reg(var_x, var_y)
+                self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
+        model = self.get_model()
         resid_norm = model.get_influence().resid_studentized_internal
         qq_plt = ProbPlot(resid_norm)
         theo = qq_plt.theoretical_quantiles
@@ -244,14 +262,15 @@ class AnalysisPlot(object):
         '''
         # priority: arguments var_x, var_y
         if var_x is not None and var_y is not None:
-            model = self.reg(var_x, var_y)
+            self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
             var_y = self.get_response()
             if var_x is not None and var_y is not None:
-                model = self.reg(var_x, var_y)
+                self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
+        model = self.get_model()
         fitted = model.fittedvalues
         resid_norm = model.get_influence().resid_studentized_internal
         resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
@@ -272,14 +291,15 @@ class AnalysisPlot(object):
         '''
         # priority: arguments var_x, var_y
         if var_x is not None and var_y is not None:
-            model = self.reg(var_x, var_y)
+            self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
             var_y = self.get_response()
             if var_x is not None and var_y is not None:
-                model = self.reg(var_x, var_y)
+                self.reg(var_x, var_y)
             else:
                 raise ValueError('No predictors or response assigned')
+        model = self.get_model()
         model_leverage = model.get_influence().hat_matrix_diag
         resid_norm = model.get_influence().resid_studentized_internal
         plt.scatter(model_leverage, resid_norm, alpha=0.5)
