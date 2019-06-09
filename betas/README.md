@@ -16,6 +16,9 @@
 # Linear Regression
 
 ## Model Diagnostics Tool
+<p align="right">
+  <a href="#documentation">[Back to top]</a>
+</p>
 
 There are four plots to check linear regression model assumptions
 - Residuals VS fitted plot
@@ -24,6 +27,7 @@ There are four plots to check linear regression model assumptions
 - Residuals vs leverage plot
 
 **Tutorial**
+
 1. Run the following code to start:
 ```
 python model_diagnostics.py
@@ -37,6 +41,9 @@ python model_diagnostics.py
 This tool is designed for **CSV** data file only.
 
 ## analysis_plot
+<p align="right">
+  <a href="#documentation">[Back to top]</a>
+</p>
 
 ```python
 class analysis_plot.AnalysisPlot(dataframe, predictors=None, response=None)
@@ -257,6 +264,9 @@ Parameters:
 # Binary Classification
 
 ## binary_score_plot
+<p align="right">
+  <a href="#documentation">[Back to top]</a>
+</p>
 
 ```python
 class binary_score_plot.BinaryScorePlot(self, scores=np.array([]), labels=np.array([]))
@@ -336,6 +346,9 @@ Plot true positive rate vs false positive rate
 # Principal Component Analysis
 
 ## pca_evaluate
+<p align="right">
+  <a href="#documentation">[Back to top]</a>
+</p>
 
 Visuailize the the performance/evaluation of PCA for different number of dimensions on the input data
 
@@ -509,6 +522,9 @@ Returns:
 # Clustering
 
 ## clustering_evaluate
+<p align="right">
+  <a href="#documentation">[Back to top]</a>
+</p>
 
 Visuailize the the performance/evaluation of Clustering for different number of clusters on the given input data using k-means++
 
