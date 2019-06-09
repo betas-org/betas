@@ -150,8 +150,8 @@ class AnalysisPlot(object):
             - var_y: A categorical variable shown in plot legend
         '''
         dataframe = self.get_dataframe()
-        sns.FacetGrid(dataframe, hue=var_y, height=5)
-        sns.map(sns.distplot, var_x).add_legend()
+        sns.FacetGrid(dataframe, hue=var_y, height=5).map(sns.distplot,
+                                                          var_x).add_legend()
 
     def reg(self, var_x=None, var_y=None, report=False):
         '''
