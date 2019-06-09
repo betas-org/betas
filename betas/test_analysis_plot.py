@@ -5,7 +5,8 @@ Unit tests for analysis_plot.py
 import unittest
 from unittest.mock import patch
 import seaborn as sns
-from linear_regression import analysis_plot as plt
+
+from regression_analysis_plot import RegressionRegressionAnalysisPlot as plt
 
 # local
 # import analysis_plot as plt
@@ -13,10 +14,10 @@ from linear_regression import analysis_plot as plt
 DF = sns.load_dataset('iris')
 PREDS = [DF.columns[0]]
 RESP = DF.columns[1]
-MYPLOT = plt.AnalysisPlot(DF, predictors=PREDS, response=RESP)
+MYPLOT = plt.RegressionAnalysisPlot(DF, predictors=PREDS, response=RESP)
 
 
-class TestAnalysisPlot(unittest.TestCase):
+class TestRegressionAnalysisPlot(unittest.TestCase):
     """
     31 tests for analysis_plot
     """
@@ -27,7 +28,7 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         try:
             test_preds = PREDS + ['somename']
-            plt.AnalysisPlot(DF, predictors=test_preds)
+            plt.RegressionAnalysisPlot(DF, predictors=test_preds)
         except Exception as err:
             self.assertEqual(err.args[0],
                              'Input predictor variable(s) not ' +
@@ -39,7 +40,7 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         try:
             test_resp = 'somename'
-            plt.AnalysisPlot(DF, response=test_resp)
+            plt.RegressionAnalysisPlot(DF, response=test_resp)
         except Exception as err:
             self.assertEqual(err.args[0],
                              'Input response variable not existed in ' +
@@ -213,7 +214,7 @@ class TestAnalysisPlot(unittest.TestCase):
         Check error for resid_plot, with no assigned variables
         """
         try:
-            test_plot = plt.AnalysisPlot(DF)
+            test_plot = plt.RegressionAnalysisPlot(DF)
             test_plot.resid_plot()
         except Exception as err:
             self.assertEqual(err.args[0],
@@ -238,7 +239,7 @@ class TestAnalysisPlot(unittest.TestCase):
         Check error for qq_plot, with no assigned variables
         """
         try:
-            test_plot = plt.AnalysisPlot(DF)
+            test_plot = plt.RegressionAnalysisPlot(DF)
             test_plot.qq_plot()
         except Exception as err:
             self.assertEqual(err.args[0],
@@ -263,7 +264,7 @@ class TestAnalysisPlot(unittest.TestCase):
         Check error for scale_loc_plot, with no assigned variables
         """
         try:
-            test_plot = plt.AnalysisPlot(DF)
+            test_plot = plt.RegressionAnalysisPlot(DF)
             test_plot.scale_loc_plot()
         except Exception as err:
             self.assertEqual(err.args[0],
@@ -288,7 +289,7 @@ class TestAnalysisPlot(unittest.TestCase):
         Check error for resid_lever_plot, with no assigned variables
         """
         try:
-            test_plot = plt.AnalysisPlot(DF)
+            test_plot = plt.RegressionAnalysisPlot(DF)
             test_plot.resid_lever_plot()
         except Exception as err:
             self.assertEqual(err.args[0],
@@ -296,5 +297,5 @@ class TestAnalysisPlot(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    SUITE = unittest.TestLoader().loadTestsFromTestCase(TestAnalysisPlot)
+    SUITE = unittest.TestLoader().loadTestsFromTestCase(TestRegressionAnalysisPlot)
     unittest.TextTestRunner(verbosity=2).run(SUITE)

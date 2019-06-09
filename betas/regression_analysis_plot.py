@@ -12,7 +12,7 @@ from statsmodels.graphics.gofplots import ProbPlot
 plt.style.use('seaborn')
 
 
-class AnalysisPlot(object):
+class RegressionAnalysisPlot(object):
     '''
     A class to create regression analysis plots based on a input dataframe,
     selected predictor variable(s) and a response variable.

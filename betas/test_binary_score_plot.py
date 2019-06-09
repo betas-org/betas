@@ -6,7 +6,7 @@ import unittest
 import numpy as np
 
 # package build
-from binary_classification.binary_score_plot import BinaryScorePlot
+from binary_score_plot import BinaryScorePlot
 
 # local
 # from binary_score_plot import BinaryScorePlot

@@ -4,17 +4,14 @@ differ as we vary the number of dimensions of the input data
 """
 
 import numpy as np
-
 import matplotlib.pyplot as plt
+plt.style.use('seaborn-white')
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-
 from sklearn.metrics import accuracy_score
-
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegressionCV
-plt.style.use('seaborn-white')
 
 
 def sigmoid(features):
