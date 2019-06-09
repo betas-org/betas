@@ -1,15 +1,17 @@
+"""
+This module is designed for desmostraing binary score plots
+"""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 
-class binary_score_plot(object):
+class BinaryScorePlot(object):
     """
-    Class to construct plots to analyze
-    performance of binary classifiers.
-    Mainly acts as a wrapper for existing
-    metrics and plotting functions.
+    Class to construct plots to analyze performance of binary classifiers.
+    Mainly acts as a wrapper for existing metrics and plotting functions.
 
     Input:
         - scores: 1D numpy array of model scores to plot (defaults to empty
@@ -26,15 +28,15 @@ class binary_score_plot(object):
         pred_label = (scores > threshold) + 0
         cal_1 = pred_label + labels
         cal_2 = pred_label - labels
-        df = pd.DataFrame({'scores': scores, 'actual_label': labels,
-                           'pred_label': pred_label, 'group': ''})
-        df.at[cal_1==2, 'group'] = 'TP'
-        df.at[cal_1==0, 'group'] = 'TN'
-        df.at[cal_2==1, 'group'] = 'FP'
-        df.at[cal_2==-1, 'group'] = 'FN'
-        df['position'] = df['actual_label'] + \
-                         np.random.uniform(low=-0.3, high=0.3, size=len(df))
-        self._df = df
+        df_curr = pd.DataFrame({'scores': scores, 'actual_label': labels,
+                                'pred_label': pred_label, 'group': ''})
+        df_curr.at[cal_1 == 2, 'group'] = 'TP'
+        df_curr.at[cal_1 == 0, 'group'] = 'TN'
+        df_curr.at[cal_2 == 1, 'group'] = 'FP'
+        df_curr.at[cal_2 == -1, 'group'] = 'FN'
+        df_curr['position'] = df_curr['actual_label'] + \
+                              np.random.uniform(low=-0.3, high=0.3, size=len(df_curr))
+        self._df = df_curr
         sns.set_style("white")
 
     def get_scores(self):
@@ -106,17 +108,17 @@ class binary_score_plot(object):
         plt.subplot(221)
         sns.distplot(labels, kde=False)
         plt.xlabel('Actual Label')
-        plt.xticks([0,1])
+        plt.xticks([0, 1])
         plt.subplot(222)
-        sns.distplot(scores, bins=30, kde=False)
+        sns.distplot(scores, bins=bins, kde=False)
         plt.xlabel('Scores')
-        plt.xticks([0,0.25,0.5,0.75,1])
+        plt.xticks([0, 0.25, 0.5, 0.75, 1])
         plt.subplots_adjust(hspace=0.5)
         plt.subplot(223)
-        sns.distplot(scores[labels==0], bins=30, kde=False)
+        sns.distplot(scores[labels == 0], bins=bins, kde=False)
         plt.xlabel('Actual Label = 0')
         plt.subplot(224)
-        sns.distplot(scores[labels==1], bins=30, kde=False)
+        sns.distplot(scores[labels == 1], bins=bins, kde=False)
         plt.xlabel('Actual Label = 1')
         plt.suptitle('Histograms of Model Scores by Actual Label', fontsize=16)
         plt.show()
@@ -126,18 +128,18 @@ class binary_score_plot(object):
         Make jitter plot
         """
 
-        df = self.get_df()
+        df_curr = self.get_df()
         threshold = self.get_threshold()
 
         plt.clf()
         sns.scatterplot(x='position', y='scores', hue='group', s=10, alpha=0.8,
-                        data=df)
+                        data=df_curr)
         plt.hlines(y=threshold, xmin=-0.3, xmax=1.8, color='red')
-        plt.xticks([0,1])
+        plt.xticks([0, 1])
         plt.xlabel('Actual label')
         plt.ylabel('Scores')
         plt.suptitle('Scatterplot of Model Scores with Threshold = ' +
-                      str(threshold), fontsize=16)
+                     str(threshold), fontsize=16)
         plt.show()
 
     def plot_pr_by_threshold(self):
@@ -176,13 +178,13 @@ class binary_score_plot(object):
         scores = self.get_scores()
 
         fpr, tpr, thresholds = roc_curve(labels, scores)
-        i = np.arange(len(tpr))
-        roc = pd.DataFrame({'fpr': pd.Series(fpr, index=i),
-                            'tpr': pd.Series(tpr, index=i),
-                            '1-fpr': pd.Series(1-fpr, index=i),
-                            'tf': pd.Series(tpr - (1-fpr), index=i),
-                            'thresholds': pd.Series(thresholds, index=i)})
-        cutoff = float(roc.iloc[roc.tf.abs().argsort()[:1]]['thresholds'])
+#        i = np.arange(len(tpr))
+#        roc = pd.DataFrame({'fpr': pd.Series(fpr, index=i),
+#                            'tpr': pd.Series(tpr, index=i),
+#                            '1-fpr': pd.Series(1-fpr, index=i),
+#                            'tf': pd.Series(tpr - (1-fpr), index=i),
+#                            'thresholds': pd.Series(thresholds, index=i)})
+#        cutoff = float(roc.iloc[roc.tf.abs().argsort()[:1]]['thresholds'])
         roc_auc = auc(fpr, tpr)
 
         plt.clf()
@@ -198,7 +200,7 @@ class binary_score_plot(object):
 
         plt.show()
 
-    def optimal_threshold(self, by='roc'):
+    def optimal_threshold(self, by_mode='roc'):
         """
         Calculate the optimal threshold by auc of either ROC or PR curve
         Input:
@@ -210,14 +212,14 @@ class binary_score_plot(object):
         labels = self.get_labels()
         scores = self.get_scores()
 
-        if by == 'roc':
+        if by_mode == 'roc':
             fpr, tpr, thresholds = roc_curve(labels, scores)
             tnr = 1 - fpr
-            tf = tpr - tnr
-            optimal_threshold = round(thresholds[abs(tf).argsort()[0]], 2)
+            t_f = tpr - tnr
+            optimal_threshold = round(thresholds[abs(t_f).argsort()[0]], 2)
         else:
             precision, recall, thresholds = precision_recall_curve(labels, scores)
             thresholds = np.append(thresholds, 1)
-            tf = precision - recall
-            optimal_threshold = round(thresholds[abs(tf).argsort()[0]], 2)
+            t_f = precision - recall
+            optimal_threshold = round(thresholds[abs(t_f).argsort()[0]], 2)
         return optimal_threshold

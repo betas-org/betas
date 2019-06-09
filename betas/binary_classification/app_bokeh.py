@@ -1,8 +1,8 @@
-'''
+"""
 This module contains implementations of a bokeh dashboard of model scores and
 actual label. To use the dashboard, use the command
 bokeh serve --show app_bokeh.py
-'''
+"""
 
 import numpy as np
 import pandas as pd
@@ -15,20 +15,20 @@ from bokeh.models.widgets import Button, PreText
 from bokeh.plotting import figure, curdoc
 from bokeh.layouts import gridplot, column, row
 
-'''
+"""
 Scatterplot
-'''
+"""
 
-data_path = input('Path or url of the input csv: ')
-# data_path = '~/Downloads/spam_score_label.csv'
-data = pd.read_csv(data_path)
+PATH = input('Path or url of the input csv: ')
+# PATH = '~/Downloads/spam_score_label.csv'
+DATA = pd.read_csv(PATH)
 
-if data.shape[0] > 10000:
-    data = data.sample(10000)
+if DATA.shape[0] > 10000:
+    DATA = DATA.sample(10000)
 
 
-scores = np.array(data.scores)
-actual_label = np.array(data.actual_label)
+scores = np.array(DATA.scores)
+actual_label = np.array(DATA.actual_label)
 
 
 target = classify(scores, actual_label, 0.5)
@@ -45,15 +45,15 @@ target = classify(scores, actual_label, optimal_cutoff)
 
 
 
-hline = ColumnDataSource(data=dict(x=[-0.3, 1.3],
-                         y=[optimal_cutoff, optimal_cutoff]))
-TP = ColumnDataSource(data=dict(x=target['position'][target.group == 'TP'],
+hline = ColumnDataSource(DATA=dict(x=[-0.3, 1.3],
+                                   y=[optimal_cutoff, optimal_cutoff]))
+TP = ColumnDataSource(DATA=dict(x=target['position'][target.group == 'TP'],
                                 y=target['scores'][target.group == 'TP']))
-TN = ColumnDataSource(data=dict(x=target['position'][target.group == 'TN'],
+TN = ColumnDataSource(DATA=dict(x=target['position'][target.group == 'TN'],
                                 y=target['scores'][target.group == 'TN']))
-FP = ColumnDataSource(data=dict(x=target['position'][target.group == 'FP'],
+FP = ColumnDataSource(DATA=dict(x=target['position'][target.group == 'FP'],
                                 y=target['scores'][target.group == 'FP']))
-FN = ColumnDataSource(data=dict(x=target['position'][target.group == 'FN'],
+FN = ColumnDataSource(DATA=dict(x=target['position'][target.group == 'FN'],
                                 y=target['scores'][target.group == 'FN']))
 
 p_scatter = figure(plot_width=380, plot_height=280,
@@ -80,9 +80,9 @@ pre_roc = PreText(text='Optimal Threshold by ROC: ' +
                   str(round(optimal_cutoff, 2)),
                   width=100, height=20)
 
-roc_vline = ColumnDataSource(data=dict(x=[x_coord, x_coord], y=[0, y_coord]))
-roc_hline = ColumnDataSource(data=dict(x=[x_coord, 1], y=[y_coord, y_coord]))
-roc = ColumnDataSource(data=dict(x=fpr, y=tpr))
+roc_vline = ColumnDataSource(DATA=dict(x=[x_coord, x_coord], y=[0, y_coord]))
+roc_hline = ColumnDataSource(DATA=dict(x=[x_coord, 1], y=[y_coord, y_coord]))
+roc = ColumnDataSource(DATA=dict(x=fpr, y=tpr))
 
 p_roc = figure(plot_width=380, plot_height=280,
                title='ROC Curve of Model Scores')
@@ -92,9 +92,9 @@ p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
 p_roc.line('x', 'y', source=roc_hline, line_width=1.5, color='red',
            line_dash='dotdash')
 label_tpr = Label(x=0.4, y=0.3, text='TPR: ' +
-                str(round(y_coord, 3)), text_font_size='10pt')
+                  str(round(y_coord, 3)), text_font_size='10pt')
 label_tnr = Label(x=0.4, y=0.2, text='TNR: ' +
-                str(round(1-x_coord, 3)), text_font_size='10pt')
+                  str(round(1-x_coord, 3)), text_font_size='10pt')
 p_roc.xaxis.axis_label = 'False Positive Rate'
 p_roc.yaxis.axis_label = 'True Positive Rate'
 p_roc.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
@@ -119,23 +119,23 @@ pre_pr = PreText(text='Optimal Threshold by PR: ' +
                  width=100, height=20)
 
 
-pr_vline = ColumnDataSource(data=dict(x=[x_coord_pr, x_coord_pr],
+pr_vline = ColumnDataSource(DATA=dict(x=[x_coord_pr, x_coord_pr],
                                       y=[0, y_coord_pr]))
-pr_hline = ColumnDataSource(data=dict(x=[0, x_coord_pr],
+pr_hline = ColumnDataSource(DATA=dict(x=[0, x_coord_pr],
                                       y=[y_coord_pr, y_coord_pr]))
-pr = ColumnDataSource(data=dict(x=recall, y=precision))
+pr = ColumnDataSource(DATA=dict(x=recall, y=precision))
 
 p_pr = figure(plot_width=380, plot_height=280,
-               title='Precision and Recall Curve')
+              title='Precision and Recall Curve')
 p_pr.line('x', 'y', source=pr, line_width=2)
 p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
-           line_dash='dotdash')
+          line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
-           line_dash='dotdash')
+          line_dash='dotdash')
 label_pre = Label(x=0.4, y=0.3, text='Precision: ' +
-                str(round(y_coord_pr, 3)), text_font_size='10pt')
+                  str(round(y_coord_pr, 3)), text_font_size='10pt')
 label_rec = Label(x=0.4, y=0.2, text='Recall: ' +
-                str(round(x_coord_pr, 3)), text_font_size='10pt')
+                  str(round(x_coord_pr, 3)), text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
 p_pr.yaxis.axis_label = 'Precision'
 p_pr.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
@@ -163,10 +163,11 @@ p_hist.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_hist.xaxis.axis_label = 'Scores'
 p_hist.yaxis.axis_label = 'Frequency'
 
-'''
+"""
 Bar plot
-'''
-bar_data = ColumnDataSource(data=dict(
+"""
+
+bar_data = ColumnDataSource(DATA=dict(
     act=['0', '1'],
     hit=[target.group.value_counts()['TN'],
          target.group.value_counts()['TP']],
@@ -188,7 +189,7 @@ p_bar.yaxis.axis_label = 'Frequency'
 # p_roc.title.text_font_size = "20px"
 
 
-download = ColumnDataSource(data=dict(
+download = ColumnDataSource(DATA=dict(
     scores=target.scores,
     group=target.group))
 
@@ -213,8 +214,8 @@ def update_data(attrname, old, new):
     roc_vline.data = dict(x=[x_coord, x_coord], y=[0, y_coord])
     roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
     roc.data = dict(x=fpr, y=tpr)
-    label_tpr.text='TPR: ' + str(round(y_coord, 3))
-    label_tnr.text='TNR: ' + str(round(1-x_coord, 3))
+    label_tpr.text = 'TPR: ' + str(round(y_coord, 3))
+    label_tnr.text = 'TNR: ' + str(round(1-x_coord, 3))
 
     bar_data.data = dict(act=['0', '1'],
                          hit=[target.group.value_counts()['TN'],
@@ -225,14 +226,12 @@ def update_data(attrname, old, new):
     diff_pr = thresholds_pr - val
     x_coord_pr = recall[abs(diff_pr).argsort()[0]]
     y_coord_pr = precision[abs(diff_pr).argsort()[0]]
-    pr_vline.data=dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
-    pr_hline.data=dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
-    label_pre.text='Precision: ' + str(round(y_coord_pr, 3))
-    label_rec.text='Recall: ' + str(round(x_coord_pr, 3))
+    pr_vline.data = dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
+    pr_hline.data = dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
+    label_pre.text = 'Precision: ' + str(round(y_coord_pr, 3))
+    label_rec.text = 'Recall: ' + str(round(x_coord_pr, 3))
 
-    download.data=dict(
-        scores=target.scores,
-        group=target.group)
+    download.data = dict(scores=target.scores, group=target.group)
 
 
 

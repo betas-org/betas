@@ -22,10 +22,10 @@ class TestPcaEval(unittest.TestCase):
         features_1 = np.random.normal(size=100)
         features_1 = features_1.reshape(len(features_1), 1)
         features = features_1
-                
+
         for i in range(2, 11):
             features = np.concatenate((features, features_1**i), axis=1)
-                        
+
         features_2 = np.random.normal(loc=1, scale=0.1, size=100)
         features_2 = features_2.reshape(len(features_2), 1)
         for i in range(1, 11):
@@ -39,23 +39,15 @@ class TestPcaEval(unittest.TestCase):
         labels = np.random.randint(0, 2, size=100)
         train_features, test_features, train_labels, test_labels =\
                         train_test_split(features, labels, random_state=0)
-                                                
+
         optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
-                train_features,
-                train_labels,
-                test_features,
-                test_labels,
-                plot_figure=False)
-                                                    
+            train_features,
+            train_labels,
+            test_features,
+            test_labels,
+            plot_figure=False)
+
         self.assertTrue(optimal_dimensions >= 1)
-#        self.assertTrue(optimal_dimensions == 1)
-#This always gives test failure
-#FAIL: test_pca (pca.test_pca_evaluate.TestPcaEval)
-#----------------------------------------------------------------------
-#Traceback (most recent call last):
-#    File "/home/travis/build/betas-org/betas/betas/pca/test_pca_evaluate.py", line 51, in test_pca
-#    self.assertTrue(optimal_dimensions == 1)
-#AssertionError: False is not true
 
     def test_pca_plot_figure(self):
         """
@@ -93,15 +85,6 @@ class TestPcaEval(unittest.TestCase):
             plot_figure=True)
 
         self.assertTrue(optimal_dimensions >= 1)
-
-#        self.assertTrue(optimal_dimensions == 1)
-#This always gives test failure
-#FAIL: test_pca (pca.test_pca_evaluate.TestPcaEval)
-#----------------------------------------------------------------------
-#Traceback (most recent call last):
-#    File "/home/travis/build/betas-org/betas/betas/pca/test_pca_evaluate.py", line 51, in test_pca
-#    self.assertTrue(optimal_dimensions == 1)
-#AssertionError: False is not true
 
 if __name__ == "__main__":
     SUITE = unittest.TestLoader().loadTestsFromTestCase(TestPcaEval)

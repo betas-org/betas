@@ -4,8 +4,6 @@ This module contains core functions of betas
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics import precision_recall_curve, roc_curve, auc
-
 
 def classify(scores, labels, threshold=0.5):
     '''

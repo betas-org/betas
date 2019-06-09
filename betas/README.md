@@ -39,7 +39,7 @@ This tool is designed for **CSV** data file only.
 ## analysis_plot
 
 ```python
-class linear_regression.analysis_plot(dataframe, predictors=None, response=None)
+class analysis_plot.AnalysisPlot(dataframe, predictors=None, response=None)
 ```
 A class to create regression analysis plots based on a input dataframe, selected predictor variable(s) and a response variable.
 
@@ -242,7 +242,7 @@ Parameters:
 ## binary_score_plot
 
 ```python
-class binary_score_plot(self, scores=np.array([]), labels=np.array([]))
+class binary_score_plot.BinaryScorePlot(self, scores=np.array([]), labels=np.array([]))
 ```
 A class to construct plots to analyze performance of binary classifiers. Mainly acts as a wrapper for exisiting metrics and plotting functions.
 

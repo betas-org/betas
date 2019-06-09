@@ -18,12 +18,12 @@ branches:
 install:
     - pip install coverage
     - pip install coveralls
-    - pip install flake8
+    - pip install pylint
     - pip install -r requirements.txt
 
 # a list of commands to run before the main script
-#before_script:
-#    - flake8 codebases
+before_script:
+    - pylint betas
 
 # the actual commands to run
 script:

@@ -10,7 +10,7 @@ class TestKmeansEval(unittest.TestCase):
     """
     Testing the function to run k-means++ clustering algo
     """
-    
+
     def test_kmeans(self):
         """
         Testing the function to run k-means++ clustering algo for
@@ -22,7 +22,6 @@ class TestKmeansEval(unittest.TestCase):
                                        n_features=300,
                                        cluster_std=0.001,
                                        random_state=0)
-            
         opt_clusters = clustering_evaluate.kmeans_viz_and_opt_clusters(x_train, plot_figure=False)
         self.assertTrue(selected_n_clusters == opt_clusters)
 
@@ -37,5 +36,6 @@ class TestKmeansEval(unittest.TestCase):
                                        n_features=300,
                                        cluster_std=0.001,
                                        random_state=0)
-        plt_clust, opt_clusters = clustering_evaluate.kmeans_viz_and_opt_clusters(x_train, plot_figure=True)
+        plt_clust, opt_clusters = clustering_evaluate.kmeans_viz_and_opt_clusters(
+            x_train, plot_figure=True)
         self.assertTrue(selected_n_clusters == opt_clusters)

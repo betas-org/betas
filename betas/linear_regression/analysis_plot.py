@@ -1,15 +1,17 @@
-'''
+"""
 This module includes a class to create linear regression analysis plots
-'''
+"""
+
+import copy
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.graphics.gofplots import ProbPlot
-import copy
+
 plt.style.use('seaborn')
 
-class analysis_plot(object):
+class AnalysisPlot(object):
     '''
     A class to create regression analysis plots based on a input dataframe,
     selected predictor variable(s) and a response variable.
@@ -31,7 +33,8 @@ class analysis_plot(object):
         if predictors is not None:
             for pred in predictors:
                 if pred not in dataframe.columns:
-                    raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+                    raise ValueError('Input predictor variable(s) not ' +
+                                     'existed in the given dataframe')
         if response is not None:
             if response not in dataframe.columns:
                 raise ValueError('Input response variable not existed in the given dataframe')
@@ -61,7 +64,7 @@ class analysis_plot(object):
             - A string indicating the response variable
         '''
         return copy.deepcopy(self.response)
-    
+
     def set_predictors(self, predictors):
         '''
         Set predictor variable(s)
@@ -73,7 +76,7 @@ class analysis_plot(object):
             if pred not in dataframe.columns:
                 raise ValueError('Input predictor variable(s) not existed in the given dataframe')
         self.predictors = predictors
-    
+
     def set_response(self, response):
         '''
         Set response variable
@@ -110,10 +113,9 @@ class analysis_plot(object):
         if 'figsize' in kwargs:
             figsize = kwargs['figsize']
         else:
-            figsize = (10,10)
+            figsize = (10, 10)
         plt.figure(figsize=figsize)
         sns.heatmap(dataframe.corr(), annot=True, cmap="YlGnBu", linewidths=.5)
-        
 
     def reg_plot(self, var_x, var_y):
         '''
@@ -217,7 +219,7 @@ class analysis_plot(object):
         sample = qq_plt.sample_quantiles
         plt.scatter(theo, sample, alpha=0.5)
         sns.regplot(theo, theo, scatter=False, ci=False, lowess=True,
-                   line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
+                    line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Normal Q-Q')
         plt.xlabel('Theoretical Quantiles')
         plt.ylabel('Standardized Residuals')
