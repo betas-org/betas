@@ -69,20 +69,17 @@ betas/
         |- data.py
         |- download.js
         |- probability_plot.py
-        |- README.md
         |- sample_bokeh_data.csv
         |- test_binary_score_plot.py
         |- test_probability_plot.py
         |- tool.py
      |- linear_analysis/
         |- analysis_plot.py
-        |- README.md
         |- demo_analysis_plot.ipynb
         |- model_diagnostics.py
         |- sample_data.csv
         |- test_analysis_plot.py
      |- pca/
-        |- README.md
         |- pca_evaluate.py
         |- demo_pca_evaluate.ipynb
         |- test_pca.py
@@ -90,6 +87,7 @@ betas/
         |- clustering_evaluate.py
         |- demo_clustering_evaluate.ipynb
         |- test_clustering.py
+     |- README.md
   |- docs/
      |- Functional_Specification.pdf
      |- Project_Component_Specification.pdf
