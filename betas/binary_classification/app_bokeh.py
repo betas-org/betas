@@ -6,14 +6,14 @@ bokeh serve --show app_bokeh.py
 
 import numpy as np
 import pandas as pd
-from tool import classify
 from os.path import dirname, join
-from sklearn.metrics import precision_recall_curve, roc_curve, auc
-from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS, Plot
+from sklearn.metrics import precision_recall_curve, roc_curve
+from bokeh.models import ColumnDataSource, Legend, Slider
+from bokeh.models import Label, CustomJS, Plot
 from bokeh.models.tickers import FixedTicker
 from bokeh.models.widgets import Button, PreText, TextInput
 from bokeh.plotting import figure, curdoc
-from bokeh.layouts import gridplot, column, row
+from bokeh.layouts import gridplot
 from bokeh.models.glyphs import Quad
 
 
@@ -33,10 +33,10 @@ def classify(scores, labels, threshold=0.5):
     return result
 
 
-target = pd.DataFrame(dict(scores=[0.5,0.5,0.5,0.5],
-                           position=[1,0,0,1],
-                           actual_label=[0,0,0,0],
-                           group=['TP','TN','FP','FN']))
+target = pd.DataFrame(dict(scores=[0.5, 0.5, 0.5, 0.5],
+                           position=[1, 0, 0, 1],
+                           actual_label=[0, 0, 0, 0],
+                           group=['TP', 'TN', 'FP', 'FN']))
 
 # Scatterplot
 hline = ColumnDataSource(data=dict(x=[],
@@ -95,12 +95,12 @@ pr_hline = ColumnDataSource(data=dict(x=[], y=[]))
 pr = ColumnDataSource(data=dict(x=[], y=[]))
 
 p_pr = figure(plot_width=380, plot_height=280,
-               title='Precision and Recall Curve')
+              title='Precision and Recall Curve')
 p_pr.line('x', 'y', source=pr, line_width=2)
 p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
-           line_dash='dotdash')
+          line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
-           line_dash='dotdash')
+          line_dash='dotdash')
 label_pre = Label(x=0.4, y=0.3, text='', text_font_size='10pt')
 label_rec = Label(x=0.4, y=0.2, text='', text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
@@ -146,7 +146,8 @@ hist_source = ColumnDataSource(data=dict(left=[], top=[], right=[], bottom=[]))
 
 plot = Plot(title=None, plot_width=380, plot_height=180,
             min_border=0, toolbar_location=None)
-glyph = Quad(left="left", right="right", top="top", bottom="bottom", fill_color="#b3de69")
+glyph = Quad(left="left", right="right", top="top", bottom="bottom",
+             fill_color="#b3de69")
 plot.add_glyph(hist_source, glyph)
 
 
@@ -159,14 +160,15 @@ read_error_msg = PreText(text='', width=50, height=20)
 slider = Slider(title='Threshold', start=0, end=1, value=0.5, step=0.01)
 button = Button(label="Download", button_type="success")
 button.callback = CustomJS(args=dict(source=download),
-                           code=open(join(dirname(__file__), "download.js")).read())
+                           code=open(join(dirname(__file__),
+                                          "download.js")).read())
 
 
 def update_data(attrname, old, new):
     data_path = text_input.value
     try:
         df = pd.read_csv(data_path)
-        is_file_loaded = True
+#        is_file_loaded = True
         scores = np.array(df.scores)
         actual_label = np.array(df.actual_label)
         val = slider.value
@@ -189,27 +191,30 @@ def update_data(attrname, old, new):
         roc_vline.data = dict(x=[x_coord, x_coord], y=[0, y_coord])
         roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
         roc.data = dict(x=fpr, y=tpr)
-        label_tpr.text='TPR: ' + str(round(y_coord, 3))
-        label_tnr.text='TNR: ' + str(round(1-x_coord, 3))
+        label_tpr.text = 'TPR: ' + str(round(y_coord, 3))
+        label_tnr.text = 'TNR: ' + str(round(1-x_coord, 3))
 
         # PR curve
-        precision, recall, thresholds_pr = precision_recall_curve(actual_label, scores)
-        pr.data=dict(x=recall, y=precision)
+        precision, recall, thresholds_pr = precision_recall_curve(actual_label,
+                                                                  scores)
+        pr.data = dict(x=recall, y=precision)
         thresholds_pr = np.append(thresholds_pr, 1)
         diff_pr = thresholds_pr - val
         x_coord_pr = recall[abs(diff_pr).argsort()[0]]
         y_coord_pr = precision[abs(diff_pr).argsort()[0]]
-        pr_vline.data=dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
-        pr_hline.data=dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
-        label_pre.text='Precision: ' + str(round(y_coord_pr, 3))
-        label_rec.text='Recall: ' + str(round(x_coord_pr, 3))
+        pr_vline.data = dict(x=[x_coord_pr, x_coord_pr], y=[0, y_coord_pr])
+        pr_hline.data = dict(x=[0, x_coord_pr], y=[y_coord_pr, y_coord_pr])
+        label_pre.text = 'Precision: ' + str(round(y_coord_pr, 3))
+        label_rec.text = 'Recall: ' + str(round(x_coord_pr, 3))
 
         # hist, edges = np.histogram(scores, bins=30)
-        # hist_data = pd.DataFrame({'scores': hist, 'left': edges[:-1], 'right': edges[1:]})
+        # hist_data = pd.DataFrame({'scores': hist, 'left': edges[:-1],
+        #                           'right': edges[1:]})
         # p_hist.quad(bottom=0, top=hist_data['scores'],
         #             left=hist_data['left'], right=hist_data['right'],
         #             fill_color='steelblue', line_color='white')
-        # hist_source.data=dict(left=edges[:-1], top=hist, right=edges[1:], bottom=0)
+        # hist_source.data=dict(left=edges[:-1], top=hist, right=edges[1:],
+        #                       bottom=0)
 
         # Bar plot
         bar_data.data = dict(act=['0', '1'],
@@ -218,13 +223,12 @@ def update_data(attrname, old, new):
                              miss=[target.group.value_counts()['FP'],
                                    target.group.value_counts()['FN']])
 
-        download.data=dict(
-            scores=target.scores,
-            group=target.group)
+        download.data = dict(scores=target.scores, group=target.group)
     except FileNotFoundError:
         read_error_msg.text = 'File does not exist.'
-    except:
+    except Exception:
         read_error_msg.text = "Unexpected error"
+
 
 # Update
 text_input.on_change('value', update_data)
