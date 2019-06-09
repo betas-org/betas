@@ -5,11 +5,8 @@ Unit tests for analysis_plot.py
 import unittest
 from unittest.mock import patch
 import seaborn as sns
-
 import regression_analysis_plot as plt
 
-# local
-# import analysis_plot as plt
 
 DF = sns.load_dataset('iris')
 PREDS = [DF.columns[0]]

@@ -4,12 +4,8 @@ Unit tests for binary_score_plot.py
 
 import unittest
 import numpy as np
-
-# package build
 from binary_score_plot import BinaryScorePlot
 
-# local
-# from binary_score_plot import BinaryScorePlot
 
 # Test scores and labels, size = 20
 SCORES = np.array([0.54792232, 0.96933133, 0.99987806, 0.71340985, 0.71342704,

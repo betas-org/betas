@@ -4,7 +4,6 @@ Unit tests for clustering.py
 
 import unittest
 from sklearn.datasets.samples_generator import make_blobs
-
 import clustering_evaluate
 
 
