@@ -16,7 +16,7 @@ Yiming Liu
 
 Cathy Jia
 
-Monique Bi
+Mengying Bi
 
 Arjun Singh
 
@@ -26,10 +26,12 @@ Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStat
 
 Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/College.csv))
 
+Data Set 3: Iris - (Example dataset in `seaborn`)
+
 ## Software
 **Programming Languages**
 
-Python
+[Python](https://www.python.org)
 
 **Python Packages**
 
@@ -75,17 +77,14 @@ betas/
         |- tool.py
      |- linear_analysis/
         |- analysis_plot.py
-        |- demo_analysis_plot.ipynb
         |- model_diagnostics.py
         |- sample_data.csv
         |- test_analysis_plot.py
      |- pca/
         |- pca_evaluate.py
-        |- demo_pca_evaluate.ipynb
         |- test_pca.py
      |- clustering
         |- clustering_evaluate.py
-        |- demo_clustering_evaluate.ipynb
         |- test_clustering.py
      |- README.md
   |- docs/
@@ -94,6 +93,10 @@ betas/
      |- Technology_Review.pdf
      |- logo_black.png
      |- logo_white.png
+  |- example/
+     |- demo_analysis_plot.ipynb
+     |- demo_clustering_evaluate.ipynb
+     |- demo_pca_evaluate.ipynb
   |- environment.yml
   |- LICENSE.txt
   |- README.md
