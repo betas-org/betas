@@ -64,32 +64,31 @@ This package has the following structure:
 betas/
   |- betas/
      |- __init__.py
-     |- binary_classification/
-        |- app_bokeh.py
-        |- app_dash.py
-        |- binary_score_plot.py
-        |- data.py
-        |- download.js
-        |- probability_plot.py
-        |- sample_bokeh_data.csv
-        |- test_binary_score_plot.py
-        |- test_probability_plot.py
-        |- tool.py
-     |- linear_analysis/
-        |- analysis_plot.py
-        |- model_diagnostics.py
-        |- sample_data.csv
-        |- test_analysis_plot.py
-     |- pca/
-        |- pca_evaluate.py
-        |- test_pca.py
-     |- clustering
-        |- clustering_evaluate.py
-        |- test_clustering.py
+     |- binary_score_diagnostics.py
+     |- binary_score_plot.py
+     |- clustering_evaluate.py
+     |- download.js
+     |- pca_evaluate.py
      |- README.md
+     |- regression_analysis_plot.py
+     |- regression_diagnostics.py
+     |- setup.cfg
+     |- test_analysis_plot.py
+     |- test_binary_score_plot.py
+     |- test_clustering_evaluate.py
+     |- test_pca_evaluate.py
+     |- tool.py
+  |- data/
+     |- college.csv
+     |- spam.data.txt
+     |- spam.traintest.txt
+     |- spam_score_label.csv
+  |- dist/
+     |- betas-v1.0.tar.gz
   |- docs/
      |- Functional_Specification.pdf
      |- Project_Component_Specification.pdf
+     |- Project_Summary.pdf
      |- Technology_Review.pdf
      |- logo_black.png
      |- logo_white.png
