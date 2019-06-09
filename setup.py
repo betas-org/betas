@@ -17,6 +17,7 @@ setup(
           'seaborn',
           'scikit-learn',
           'statsmodels',
+          'scipy'
           'bokeh',
           'dash'
       ],
