@@ -37,6 +37,5 @@ class TestKmeansEval(unittest.TestCase):
                                        n_features=300,
                                        cluster_std=0.001,
                                        random_state=0)
-            
-       plt_clust, opt_clusters = clustering_evaluate.kmeans_viz_and_opt_clusters(x_train, plot_figure=True)
-       self.assertTrue(selected_n_clusters == opt_clusters)
+        plt_clust, opt_clusters = clustering_evaluate.kmeans_viz_and_opt_clusters(x_train, plot_figure=True)
+        self.assertTrue(selected_n_clusters == opt_clusters)
