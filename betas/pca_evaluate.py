@@ -12,6 +12,7 @@ from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegressionCV
 plt.style.use('seaborn')
 
+
 def sigmoid(features):
     """
     Sigmoid/Logistic function
