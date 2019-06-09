@@ -47,7 +47,7 @@ class TestPcaEval(unittest.TestCase):
                 test_labels,
                 plot_figure=False)
                                                     
-       self.assertTrue(optimal_dimensions >= 1)
+        self.assertTrue(optimal_dimensions >= 1)
 #        self.assertTrue(optimal_dimensions == 1)
 #This always gives test failure
 #FAIL: test_pca (pca.test_pca_evaluate.TestPcaEval)
@@ -93,6 +93,7 @@ class TestPcaEval(unittest.TestCase):
             plot_figure=True)
 
         self.assertTrue(optimal_dimensions >= 1)
+
 #        self.assertTrue(optimal_dimensions == 1)
 #This always gives test failure
 #FAIL: test_pca (pca.test_pca_evaluate.TestPcaEval)
