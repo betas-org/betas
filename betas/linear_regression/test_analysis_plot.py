@@ -27,8 +27,7 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         try:
             test_preds = PREDS + ['somename']
-            test_plot = plt.AnalysisPlot(DF, predictors=test_preds)
-            self.assertEqual(test_plot.get_predictors(), test_preds)
+            plt.AnalysisPlot(DF, predictors=test_preds)
         except Exception as err:
             self.assertEqual(err.args[0],
                              'Input predictor variable(s) not ' +
@@ -40,8 +39,7 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         try:
             test_resp = 'somename'
-            test_plot = plt.AnalysisPlot(DF, response=test_resp)
-            self.assertEqual(test_plot.get_response, test_resp)
+            plt.AnalysisPlot(DF, response=test_resp)
         except Exception as err:
             self.assertEqual(err.args[0],
                              'Input response variable not existed in ' +
@@ -60,8 +58,8 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         self.assertEqual(MYPLOT.get_predictors(), PREDS,
                          "Predictors not matched")
-        for PRED in MYPLOT.get_predictors():
-            self.assertIn(PRED, DF.columns,
+        for pred_my in MYPLOT.get_predictors():
+            self.assertIn(pred_my, DF.columns,
                           "Predictors not in dataframe columns")
 
     def test_get_response(self):
@@ -191,8 +189,6 @@ class TestAnalysisPlot(unittest.TestCase):
         """
         try:
             MYPLOT.reg(var_x=DF.columns[0], var_y='species')
-            string = str(MYPLOT.get_model().summary())
-            self.assertIn(MYPLOT.get_response(), string)
         except Exception as err:
             self.assertEqual(err.args[0],
                              'Predictor/Response data type cannot ' +
