@@ -61,9 +61,9 @@ class TestBinaryScorePlot(unittest.TestCase):
         bsp.plot_pr_by_threshold()
         bsp.plot_roc()
 
-    def test_optimal_threshold_range_roc(self):
+    def test_optimal_threshold_range(self):
         """
-        Testing the optimal threshold range by roc
+        Testing the optimal threshold range, default
         """
         bsp = binary_score_plot(SCORES, LABELS)
         opt_thresh = bsp.optimal_threshold()
