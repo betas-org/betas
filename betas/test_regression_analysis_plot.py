@@ -297,5 +297,6 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    SUITE = unittest.TestLoader().loadTestsFromTestCase(TestRegressionAnalysisPlot)
+    SUITE = unittest.TestLoader().loadTestsFromTestCase(\
+                                                        TestRegressionAnalysisPlot)
     unittest.TextTestRunner(verbosity=2).run(SUITE)
