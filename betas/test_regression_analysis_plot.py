@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 import seaborn as sns
 
-from regression_analysis_plot import RegressionRegressionAnalysisPlot as plt
+import regression_analysis_plot as plt
 
 # local
 # import analysis_plot as plt

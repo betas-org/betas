@@ -5,7 +5,7 @@ Unit tests for clustering.py
 import unittest
 from sklearn.datasets.samples_generator import make_blobs
 
-from clustering import clustering_evaluate
+import clustering_evaluate
 
 
 class TestKmeansEval(unittest.TestCase):
@@ -42,3 +42,8 @@ class TestKmeansEval(unittest.TestCase):
         plt_clust, opt_clusters = clustering_evaluate.kmeans_viz(
             x_train, plot_figure=True)
         self.assertTrue(selected_n_clusters == opt_clusters)
+
+
+if __name__ == "__main__":
+    SUITE = unittest.TestLoader().loadTestsFromTestCase(TestKmeansEval)
+    unittest.TextTestRunner(verbosity=2).run(SUITE)
