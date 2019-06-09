@@ -94,8 +94,9 @@ betas/
      |- Technology_Review.pdf
      |- logo_black.png
      |- logo_white.png
-  |- example/
+  |- examples/
      |- demo_analysis_plot.ipynb
+     |- demo_binary_score_plot.ipynb
      |- demo_clustering_evaluate.ipynb
      |- demo_pca_evaluate.ipynb
   |- environment.yml
