@@ -93,7 +93,7 @@ def get_optimal_num_clusters(n_clusters_vector, obj_vals):
     return optimal_num_clusters
 
 
-def kmeans_viz_and_opt_clusters(input_features, plot_figure=True):
+def kmeans_viz(input_features, plot_figure=True):
     """
     Function to run k-means++ clustering algo for various number of
     clusters on the given input_features, visualize it and then

@@ -11,6 +11,7 @@ from statsmodels.graphics.gofplots import ProbPlot
 
 plt.style.use('seaborn')
 
+
 class AnalysisPlot(object):
     '''
     A class to create regression analysis plots based on a input dataframe,
@@ -37,7 +38,8 @@ class AnalysisPlot(object):
                                      'existed in the given dataframe')
         if response is not None:
             if response not in dataframe.columns:
-                raise ValueError('Input response variable not existed in the given dataframe')
+                raise ValueError('Input response variable not existed ' +
+                                 'in the given dataframe')
         self.predictors = predictors
         self.response = response
 
@@ -74,7 +76,8 @@ class AnalysisPlot(object):
         dataframe = self.get_dataframe()
         for pred in predictors:
             if pred not in dataframe.columns:
-                raise ValueError('Input predictor variable(s) not existed in the given dataframe')
+                raise ValueError('Input predictor variable(s) not ' +
+                                 'existed in the given dataframe')
         self.predictors = predictors
 
     def set_response(self, response):
@@ -85,7 +88,8 @@ class AnalysisPlot(object):
         '''
         dataframe = self.get_dataframe()
         if response not in dataframe.columns:
-            raise ValueError('Input response variable not existed in the given dataframe')
+            raise ValueError('Input response variable not existed ' +
+                             'in the given dataframe')
         self.response = response
 
     def matrix_plot(self, label=None):
@@ -97,7 +101,8 @@ class AnalysisPlot(object):
         dataframe = self.get_dataframe()
         cols = self.get_predictors()
         huelabel = None
-        if label is not None: # priority: label argument
+        # priority: label argument
+        if label is not None:
             huelabel = label
             cols.append(huelabel)
         if huelabel is not None:
@@ -139,13 +144,14 @@ class AnalysisPlot(object):
 
     def dist_plot(self, var_x, var_y):
         '''
-        Create a distribution plot with probability density function (PDF) curves
+        Create a distribution plot with probability density function curves
         Input:
             - var_x: A variable on x-axis
             - var_y: A categorical variable shown in plot legend
         '''
         dataframe = self.get_dataframe()
-        sns.FacetGrid(dataframe, hue=var_y, height=5).map(sns.distplot, var_x).add_legend()
+        sns.FacetGrid(dataframe, hue=var_y, height=5)
+        sns.map(sns.distplot, var_x).add_legend()
 
     def reg(self, var_x=None, var_y=None, report=False):
         '''
@@ -153,10 +159,11 @@ class AnalysisPlot(object):
         Input:
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
-            - report: A boolean indicating if print model report (default=False)
+            - report: A boolean giving if print model report (default=False)
         '''
         dataframe = self.get_dataframe()
-        if var_x is not None and var_y is not None: # priority: arguments
+        # priority: arguments
+        if var_x is not None and var_y is not None:
             pred = dataframe[var_x]
             resp = dataframe[var_y]
         else:
@@ -168,9 +175,9 @@ class AnalysisPlot(object):
             if report is True:
                 print(model.summary())
             return model
-        except:
-            raise TypeError('Predictor/Response data type cannot be casted. Please select again')
-
+        except Exception:
+            raise TypeError('Predictor/Response data type cannot ' +
+                            'be casted. Please select again')
 
     def resid_plot(self, var_x=None, var_y=None):
         '''
@@ -180,7 +187,8 @@ class AnalysisPlot(object):
             - var_y: A response variable (default=None)
         '''
         dataframe = self.get_dataframe()
-        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+        # priority: arguments var_x, var_y
+        if var_x is not None and var_y is not None:
             model = self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
@@ -204,7 +212,8 @@ class AnalysisPlot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+        # priority: arguments var_x, var_y
+        if var_x is not None and var_y is not None:
             model = self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
@@ -233,7 +242,8 @@ class AnalysisPlot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+        # priority: arguments var_x, var_y
+        if var_x is not None and var_y is not None:
             model = self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
@@ -246,7 +256,8 @@ class AnalysisPlot(object):
         resid_norm = model.get_influence().resid_studentized_internal
         resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
         plt.scatter(fitted, resid_norm_abs_sqrt, alpha=0.5)
-        sns.regplot(fitted, resid_norm_abs_sqrt, scatter=False, ci=False, lowess=True,
+        sns.regplot(fitted, resid_norm_abs_sqrt, scatter=False,
+                    ci=False, lowess=True,
                     line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Scale-Location')
         plt.xlabel('Fitted values')
@@ -259,7 +270,8 @@ class AnalysisPlot(object):
             - var_x: A list of predictor variable(s) (default=None)
             - var_y: A response variable (default=None)
         '''
-        if var_x is not None and var_y is not None: # priority: arguments var_x, var_y
+        # priority: arguments var_x, var_y
+        if var_x is not None and var_y is not None:
             model = self.reg(var_x, var_y)
         else:
             var_x = self.get_predictors()
@@ -271,7 +283,8 @@ class AnalysisPlot(object):
         model_leverage = model.get_influence().hat_matrix_diag
         resid_norm = model.get_influence().resid_studentized_internal
         plt.scatter(model_leverage, resid_norm, alpha=0.5)
-        sns.regplot(model_leverage, resid_norm, scatter=False, ci=False, lowess=True,
+        sns.regplot(model_leverage, resid_norm, scatter=False,
+                    ci=False, lowess=True,
                     line_kws={'color': 'red', 'lw': 1, 'alpha': 1})
         plt.title('Residuals vs Leverage')
         plt.xlabel('Leverage')

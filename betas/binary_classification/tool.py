@@ -5,6 +5,7 @@ This module contains core functions of betas
 import numpy as np
 import pandas as pd
 
+
 def classify(scores, labels, threshold=0.5):
     '''
     Convert model scores to groups based on threshold and actual labels

@@ -9,7 +9,7 @@ import numpy as np
 from binary_classification.binary_score_plot import BinaryScorePlot
 
 # local
-#from binary_score_plot import BinaryScorePlot
+# from binary_score_plot import BinaryScorePlot
 
 # Test scores and labels, size = 20
 SCORES = np.array([0.54792232, 0.96933133, 0.99987806, 0.71340985, 0.71342704,
@@ -17,6 +17,7 @@ SCORES = np.array([0.54792232, 0.96933133, 0.99987806, 0.71340985, 0.71342704,
                    0.88095189, 0.48289547, 0.54198686, 0.80857878, 0.9975807,
                    0.93301802, 0.4716791, 0.96753287, 0.6641115, 0.9989481])
 LABELS = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
 
 class TestBinaryScorePlot(unittest.TestCase):
     """
@@ -79,6 +80,7 @@ class TestBinaryScorePlot(unittest.TestCase):
         opt_thresh = bsp.optimal_threshold(by_mode='other')
         self.assertTrue(opt_thresh >= 0)
         self.assertTrue(opt_thresh <= 1)
+
 
 if __name__ == "__main__":
     SUITE = unittest.TestLoader().loadTestsFromTestCase(TestBinaryScorePlot)

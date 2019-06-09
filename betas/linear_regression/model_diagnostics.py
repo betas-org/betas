@@ -25,15 +25,16 @@ ADDRESS = input('Please enter CSV data file url or path:\n' +
                 'Url example: www.someplace.com/mydata.csv\nPath ' +
                 'example: ./mydata.csv\n')
 DF = pd.read_csv(ADDRESS, sep=',', index_col=0)
-DF = DF.dropna() # remove missing data
-DF = DF.select_dtypes(exclude=['object']) # keep only numeric columns
+DF = DF.dropna()  # remove missing data
+DF = DF.select_dtypes(exclude=['object'])  # keep only numeric columns
 COLS = DF.columns
 MYCLASS = plt.AnalysisPlot(DF)
 
 # Layout and Plots
 APP.layout = html.Div([
-    html.H1('Linear Regression Model Diagnostics', style={'textAlign': 'center'}),
-    html.Div('Data Source: %s\n' % ADDRESS, style={'font-weight':'bold'}),
+    html.H1('Linear Regression Model Diagnostics',
+            style={'textAlign': 'center'}),
+    html.Div('Data Source: %s\n' % ADDRESS, style={'font-weight': 'bold'}),
     html.Div([
         html.Div([
             dcc.Dropdown(
@@ -70,30 +71,32 @@ APP.layout = html.Div([
         dcc.Graph(id='residual-leverage-plot')
     ], style={'width': '49%', 'display': 'inline-block'}),
 
-    html.Div('Residuals versus Predicted Plot:', style={'font-weight':'bold'}),
+    html.Div('Residuals versus Predicted Plot:',
+             style={'font-weight': 'bold'}),
     html.Div('Checking the assumption of linearity and homoscedasticity. ' +
-             'If the residuals appear to be very large (big positive value or ' +
-             'big negative value), the model does not meet the linear model ' +
-             'assumption. To assess the assumption of linearity we want to ' +
-             'ensure that the residuals are not too far away from 0.'),
-    html.Div('Normal Q-Q Plot:', style={'font-weight':'bold'}),
+             'If the residuals appear to be very large (big positive value ' +
+             'or big negative value), the model does not meet the linear ' +
+             'model assumption. To assess the assumption of linearity we ' +
+             'want to ensure that the residuals are not too far away from 0.'),
+    html.Div('Normal Q-Q Plot:', style={'font-weight': 'bold'}),
     html.Div('Checking the normality assumption by comparing the residuals ' +
-             'to "ideal" normal observations. If observations lie well along ' +
-             'the 45-degree line in the QQ-plot, we may assume that normality ' +
-             'holds here.'),
-    html.Div('Scale-Location Plot:', style={'font-weight':'bold'}),
+             'to "ideal" normal observations. If observations lie well ' +
+             'along the 45-degree line in the QQ-plot, we may assume that ' +
+             'normality holds here.'),
+    html.Div('Scale-Location Plot:', style={'font-weight': 'bold'}),
     html.Div('Checking the assumption of homoscedasticity(equal variance). ' +
-             'If residuals are spread equally along the ranges of predictors, ' +
-             'the assumption of equal variance (homoscedasticity) is satisfied. ' +
-             'It’s good if you see a horizontal line with equally (randomly) ' +
-             'spread points.'),
-    html.Div('Residuals vs Leverage Plot:', style={'font-weight':'bold'}),
+             'If residuals are spread equally along the ranges of ' +
+             'predictors, the assumption of equal variance ' +
+             '(homoscedasticity) is satisfied. It’s good if you see a ' +
+             'horizontal line with equally (randomly) spread points.'),
+    html.Div('Residuals vs Leverage Plot:', style={'font-weight': 'bold'}),
     html.Div('Checking if there are influential cases. Not all outliers are ' +
              'influential in linear regression analysis, we watch out for ' +
-             'outlying values at the upper right corner or at the lower right ' +
-             'corner, since the regression results will be altered if we ' +
-             'exclude those cases.')
+             'outlying values at the upper right corner or at the lower ' +
+             'right corner, since the regression results will be altered ' +
+             'if we exclude those cases.')
 ])
+
 
 @APP.callback(
     Output('residual-plot', 'figure'),
@@ -143,6 +146,7 @@ def update_resid_plot(predictors, response):
             hovermode='closest'
         )
     }
+
 
 @APP.callback(
     Output('qq-plot', 'figure'),
@@ -195,6 +199,7 @@ def update_qq_plot(predictors, response):
         )
     }
 
+
 @APP.callback(
     Output('scale-location-plot', 'figure'),
     [Input('predictors', 'value'), Input('response', 'value')])
@@ -244,6 +249,7 @@ def update_scale_loc_plot(predictors, response):
         )
     }
 
+
 @APP.callback(
     Output('residual-leverage-plot', 'figure'),
     [Input('predictors', 'value'), Input('response', 'value')])
@@ -291,6 +297,7 @@ def update_resid_lever_plot(predictors, response):
             hovermode='closest'
         )
     }
+
 
 if __name__ == '__main__':
     APP.run_server(debug=False)

@@ -13,7 +13,7 @@ from bokeh.models import ColumnDataSource, Legend, Slider, Label, CustomJS
 from bokeh.models.tickers import FixedTicker
 from bokeh.models.widgets import Button, PreText
 from bokeh.plotting import figure, curdoc
-from bokeh.layouts import gridplot, column, row
+from bokeh.layouts import gridplot, column
 
 """
 Scatterplot
@@ -42,8 +42,6 @@ diff = thresholds - threshold
 x_coord = fpr[abs(diff).argsort()[0]]
 y_coord = tpr[abs(diff).argsort()[0]]
 target = classify(scores, actual_label, optimal_cutoff)
-
-
 
 hline = ColumnDataSource(DATA=dict(x=[-0.3, 1.3],
                                    y=[optimal_cutoff, optimal_cutoff]))
@@ -234,16 +232,15 @@ def update_data(attrname, old, new):
     download.data = dict(scores=target.scores, group=target.group)
 
 
-
 slider = Slider(title='Threshold', start=0, end=1, value=optimal_cutoff,
                 step=0.01)
 slider.on_change('value', update_data)
 
 
-
 button = Button(label="Download", button_type="success")
 button.callback = CustomJS(args=dict(source=download),
-                           code=open(join(dirname(__file__), "download.js")).read())
+                           code=open(join(dirname(__file__),
+                                          "download.js")).read())
 
 grid = gridplot([[button, slider, column([pre_roc, pre_pr])],
                  [p_scatter, p_roc],

@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import precision_recall_curve, roc_curve, auc
 
+
 class BinaryScorePlot(object):
     """
     Class to construct plots to analyze performance of binary classifiers.
@@ -20,7 +21,7 @@ class BinaryScorePlot(object):
           array)
     """
 
-    def __init__(self, scores=np.array([]), labels=np.array([]), threshold=0.5):
+    def __init__(self, scores=np.array([]), labels=np.array([]), threshold=.5):
         self._scores = scores
         self._labels = labels
         self._threshold = threshold
@@ -35,7 +36,7 @@ class BinaryScorePlot(object):
         df_curr.at[cal_2 == 1, 'group'] = 'FP'
         df_curr.at[cal_2 == -1, 'group'] = 'FN'
         df_curr['position'] = df_curr['actual_label'] + \
-                              np.random.uniform(low=-0.3, high=0.3, size=len(df_curr))
+            np.random.uniform(low=-0.3, high=0.3, size=len(df_curr))
         self._df = df_curr
         sns.set_style("white")
 
@@ -189,7 +190,7 @@ class BinaryScorePlot(object):
 
         plt.clf()
         plt.plot(fpr, tpr, color='darkgreen', lw=2,
-                 label='AUC = %0.3f' %(roc_auc))
+                 label='AUC = %0.3f' % (roc_auc))
         plt.plot([0, 1], [0, 1], color='red', lw=2, linestyle='--')
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
@@ -218,7 +219,8 @@ class BinaryScorePlot(object):
             t_f = tpr - tnr
             optimal_threshold = round(thresholds[abs(t_f).argsort()[0]], 2)
         else:
-            precision, recall, thresholds = precision_recall_curve(labels, scores)
+            precision, recall, thresholds = precision_recall_curve(labels,
+                                                                   scores)
             thresholds = np.append(thresholds, 1)
             t_f = precision - recall
             optimal_threshold = round(thresholds[abs(t_f).argsort()[0]], 2)

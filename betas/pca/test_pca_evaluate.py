@@ -38,7 +38,7 @@ class TestPcaEval(unittest.TestCase):
 
         labels = np.random.randint(0, 2, size=100)
         train_features, test_features, train_labels, test_labels =\
-                        train_test_split(features, labels, random_state=0)
+            train_test_split(features, labels, random_state=0)
 
         optimal_dimensions = pca_evaluate.pca_viz_and_opt_dimensions(
             train_features,
@@ -85,6 +85,7 @@ class TestPcaEval(unittest.TestCase):
             plot_figure=True)
 
         self.assertTrue(optimal_dimensions >= 1)
+
 
 if __name__ == "__main__":
     SUITE = unittest.TestLoader().loadTestsFromTestCase(TestPcaEval)
