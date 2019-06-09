@@ -4,7 +4,7 @@
 
 - [Linear Regression](#linear-regression)
   - [Model Diagnostics Tool](#model-diagnostics-tool)
-  - [analysis_plot](#analysis_plot)
+  - [analysis_plot](#regression_analysis_plot)
 - [Binary Classification](#binary-classification)
   - [Tool]
   - [binary_score_plot](#binary_score_plot)
@@ -40,7 +40,7 @@ python model_diagnostics.py
 **Limitation**
 This tool is designed for **CSV** data file only.
 
-## analysis_plot
+## regression_analysis_plot
 <p align="right">
   <a href="#documentation">[Back to top]</a>
 </p>

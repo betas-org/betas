@@ -2,7 +2,7 @@
 #
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas)
-[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master&service=github)](https://coveralls.io/github/betas-org/betas?branch=master)
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-black.svg)
 ![Version](https://img.shields.io/pypi/v/betas.svg)
@@ -22,11 +22,13 @@ Arjun Singh
 
 ## Data
 
-Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/datasets/spam.data))
+Data Set 1: The Spam dataset ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/))
 
-Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/College.csv))
+Data Set 2: The College dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 Data Set 3: Iris - (Example dataset in `seaborn`)
+
+Data Set 4: The Auto dataset ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 ## Software
 **Programming Languages**
@@ -64,32 +66,31 @@ This package has the following structure:
 betas/
   |- betas/
      |- __init__.py
-     |- binary_classification/
-        |- app_bokeh.py
-        |- app_dash.py
-        |- binary_score_plot.py
-        |- data.py
-        |- download.js
-        |- probability_plot.py
-        |- sample_bokeh_data.csv
-        |- test_binary_score_plot.py
-        |- test_probability_plot.py
-        |- tool.py
-     |- linear_analysis/
-        |- analysis_plot.py
-        |- model_diagnostics.py
-        |- sample_data.csv
-        |- test_analysis_plot.py
-     |- pca/
-        |- pca_evaluate.py
-        |- test_pca.py
-     |- clustering
-        |- clustering_evaluate.py
-        |- test_clustering.py
+     |- binary_score_diagnostics.py
+     |- binary_score_plot.py
+     |- clustering_evaluate.py
+     |- download.js
+     |- pca_evaluate.py
      |- README.md
+     |- regression_analysis_plot.py
+     |- regression_diagnostics.py
+     |- setup.cfg
+     |- test_analysis_plot.py
+     |- test_binary_score_plot.py
+     |- test_clustering_evaluate.py
+     |- test_pca_evaluate.py
+     |- tool.py
+  |- data/
+     |- college.csv
+     |- spam.data.txt
+     |- spam.traintest.txt
+     |- spam_score_label.csv
+  |- dist/
+     |- betas-v1.0.tar.gz
   |- docs/
      |- Functional_Specification.pdf
      |- Project_Component_Specification.pdf
+     |- Project_Summary.pdf
      |- Technology_Review.pdf
      |- logo_black.png
      |- logo_white.png
