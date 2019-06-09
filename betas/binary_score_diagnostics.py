@@ -192,7 +192,7 @@ def update_data(attrname, old, new):
         roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
         roc.data = dict(x=fpr, y=tpr)
         label_tpr.text = 'TPR: ' + str(round(y_coord, 3))
-        label_tnr.text = 'TNR: ' + str(round(1-x_coord, 3))
+        label_tnr.text = 'TNR: ' + str(round(1 - x_coord, 3))
 
         # PR curve
         precision, recall, thresholds_pr = precision_recall_curve(actual_label,

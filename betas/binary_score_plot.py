@@ -139,8 +139,9 @@ class BinaryScorePlot(object):
         plt.xticks([0, 1])
         plt.xlabel('Actual label')
         plt.ylabel('Scores')
-        plt.suptitle('Scatterplot of Model Scores with Threshold = ' +
-                     str(threshold), fontsize=16)
+        title = 'Scatterplot of Model Scores with Threshold = '
+        title += str(threshold)
+        plt.suptitle(title, fontsize=16)
         plt.show()
 
     def plot_pr_by_threshold(self):

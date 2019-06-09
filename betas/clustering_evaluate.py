@@ -87,8 +87,8 @@ def get_optimal_num_clusters(n_clusters_vector, obj_vals):
     optimal_num_clusters = n_clusters_vector[0]
     epsilon = 0.05
     for i in range(1, len(n_clusters_vector)):
-        if obj_vals[i-1]-obj_vals[i] < epsilon:
-            optimal_num_clusters = n_clusters_vector[i-1]
+        if obj_vals[i - 1] - obj_vals[i] < epsilon:
+            optimal_num_clusters = n_clusters_vector[i - 1]
             break
     return optimal_num_clusters
 

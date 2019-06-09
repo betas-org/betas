@@ -34,12 +34,14 @@ class RegressionAnalysisPlot(object):
         if predictors is not None:
             for pred in predictors:
                 if pred not in dataframe.columns:
-                    raise ValueError('Input predictor variable(s) not ' +
-                                     'existed in the given dataframe')
+                    err = 'Input predictor variable(s) not existed '
+                    err += 'in the given dataframe'
+                    raise ValueError(err)
         if response is not None:
             if response not in dataframe.columns:
-                raise ValueError('Input response variable not existed ' +
-                                 'in the given dataframe')
+                err = 'Input response variable not existed '
+                err += 'in the given dataframe'
+                raise ValueError(err)
         self.predictors = predictors
         self.response = response
         self.model = None
@@ -83,8 +85,9 @@ class RegressionAnalysisPlot(object):
         dataframe = self.get_dataframe()
         for pred in predictors:
             if pred not in dataframe.columns:
-                raise ValueError('Input predictor variable(s) not ' +
-                                 'existed in the given dataframe')
+                err = 'Input predictor variable(s) not existed '
+                err += 'in the given dataframe'
+                raise ValueError(err)
         self.predictors = predictors
 
     def set_response(self, response):
@@ -95,8 +98,9 @@ class RegressionAnalysisPlot(object):
         '''
         dataframe = self.get_dataframe()
         if response not in dataframe.columns:
-            raise ValueError('Input response variable not existed ' +
-                             'in the given dataframe')
+            err = 'Input response variable not existed '
+            err += 'in the given dataframe'
+            raise ValueError(err)
         self.response = response
 
     def set_model(self, model):
@@ -192,8 +196,9 @@ class RegressionAnalysisPlot(object):
                 print(model.summary())
         except Exception:
             self.set_model(None)
-            raise TypeError('Predictor/Response data type cannot ' +
-                            'be casted. Please select again')
+            err = 'Predictor/Response data type cannot be casted. '
+            err += 'Please select again'
+            raise TypeError(err)
 
     def resid_plot(self, var_x=None, var_y=None):
         '''

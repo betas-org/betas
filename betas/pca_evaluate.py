@@ -17,7 +17,7 @@ def sigmoid(features):
     """
     Sigmoid/Logistic function
     """
-    return 1/(1+np.exp(-features))
+    return 1 / (1 + np.exp(-features))
 
 
 def get_misclassification_error(features, labels, beta):
@@ -60,7 +60,7 @@ def get_pca_and_cv_results(train_features_std, test_features_std,
                                  fit_intercept=False, intercept_scaling=0,
                                  solver='liblinear', max_iter=10000)
     lr_cv_model = lr_cv.fit(train_features_pca_std, train_labels)
-    lambda_star = 1/(2*train_features_pca_std.shape[0]*lr_cv_model.C_[0])
+    lambda_star = 1 / (2 * train_features_pca_std.shape[0] * lr_cv_model.C_[0])
 
     return train_features_pca_std, test_features_pca_std, lambda_star
 
@@ -98,7 +98,7 @@ def run_pca_across_dimensions(train_features_std, train_labels,
 
         lr_model = LogisticRegression(
             penalty='l2', tol=0.001,
-            C=1/(2*train_features_pca_std.shape[0]*lambda_star),
+            C=(1 / (2 * train_features_pca_std.shape[0] * lambda_star)),
             fit_intercept=False, intercept_scaling=0, solver='liblinear',
             max_iter=1000).fit(train_features_pca_std, train_labels)
 
@@ -146,24 +146,23 @@ def pca_viz_and_opt_dimensions(train_features, train_labels, test_features,
     """
     train_features_std, test_features_std = \
         scale_features(train_features, test_features)
-    error_train, error_test, dimensions = \
+    err_train, err_test, dimensions = \
         run_pca_across_dimensions(train_features_std, train_labels,
                                   test_features_std, test_labels)
     # In case we only want to figure out the optimal number of dimensions
     # for PCA, we may not want to plot the graph
     if plot_figure:
-        figure = plot_pca_errors(error_train, error_test, dimensions)
+        figure = plot_pca_errors(err_train, err_test, dimensions)
 
     optimal_dimensions = dimensions[0]
-    min_error_train = error_train[0]
-    min_error_test = error_test[0]
+    min_err_train = err_train[0]
+    min_err_test = err_test[0]
 
     for i in range(1, len(dimensions)):
-        if(error_train[i] < min_error_train and
-           error_test[i] < min_error_test):
+        if (err_train[i] < min_err_train and err_test[i] < min_err_test):
             optimal_dimensions = dimensions[i]
-            min_error_train = error_train[i]
-            min_error_test = error_test[i]
+            min_err_train = err_train[i]
+            min_err_test = err_test[i]
 
     if plot_figure:
         return figure, optimal_dimensions

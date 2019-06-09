@@ -30,9 +30,9 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
             test_preds = PREDS + ['somename']
             plt.RegressionAnalysisPlot(DF, predictors=test_preds)
         except Exception as err:
-            self.assertEqual(err.args[0],
-                             'Input predictor variable(s) not ' +
-                             'existed in the given dataframe')
+            msg = 'Input predictor variable(s) not existed '
+            msg += 'in the given dataframe'
+            self.assertEqual(err.args[0], msg)
 
     def test_init_response(self):
         """
@@ -42,9 +42,9 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
             test_resp = 'somename'
             plt.RegressionAnalysisPlot(DF, response=test_resp)
         except Exception as err:
-            self.assertEqual(err.args[0],
-                             'Input response variable not existed in ' +
-                             'the given dataframe')
+            msg = 'Input response variable not existed in the '
+            msg += 'given dataframe'
+            self.assertEqual(err.args[0], msg)
 
     def test_get_dataframe(self):
         """
@@ -98,9 +98,9 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
             test_preds = PREDS + ['somename']
             MYPLOT.set_predictors(test_preds)
         except Exception as err:
-            self.assertEqual(err.args[0],
-                             'Input predictor variable(s) not ' +
-                             'existed in the given dataframe')
+            msg = 'Input predictor variable(s) not existed in the '
+            msg += 'given dataframe'
+            self.assertEqual(err.args[0], msg)
 
     def test_set_response_err(self):
         """
@@ -110,9 +110,9 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
             test_resp = 'somename'
             MYPLOT.set_response(test_resp)
         except Exception as err:
-            self.assertEqual(err.args[0],
-                             'Input response variable not existed ' +
-                             'in the given dataframe')
+            msg = 'Input response variable not existed in the given '
+            msg += 'dataframe'
+            self.assertEqual(err.args[0], msg)
 
     def test_matrix_plot_label(self):
         """
@@ -191,9 +191,9 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
         try:
             MYPLOT.reg(var_x=DF.columns[0], var_y='species')
         except Exception as err:
-            self.assertEqual(err.args[0],
-                             'Predictor/Response data type cannot ' +
-                             'be casted. Please select again')
+            msg = 'Predictor/Response data type cannot be casted. '
+            msg += 'Please select again'
+            self.assertEqual(err.args[0], msg)
 
     def test_resid_plot(self):
         """
