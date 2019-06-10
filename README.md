@@ -49,7 +49,7 @@ Data Set 4: The Auto data ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 [seaborn](https://seaborn.pydata.org) >= 0.9.0
 
-[scipy](http://scipy.github.io/devdocs/) == 1.2.0
+[scipy](http://scipy.github.io/devdocs/) <= 1.2.0
 
 [scikit-learn](https://scikit-learn.org) >= 0.20.2
 
