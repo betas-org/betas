@@ -7,8 +7,7 @@ betas/clustering_evaluate.py
 betas/pca_evaluate.py
 betas/regression_analysis_plot.py
 betas/regression_diagnostics.py
-betas/test_analysis_plot.py
 betas/test_binary_score_plot.py
 betas/test_clustering_evaluate.py
 betas/test_pca_evaluate.py
-betas/tool.py
+betas/test_regression_analysis_plot.py
