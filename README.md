@@ -4,8 +4,11 @@
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas)
 [![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master&service=github)](https://coveralls.io/github/betas-org/betas?branch=master)
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
-![Version](https://img.shields.io/pypi/v/betas.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg?colorB=abcdef)
+![Version](https://img.shields.io/pypi/v/betas.svg?colorB=orange)
+![License](https://img.shields.io/badge/license-MIT-9cf.svg)
+![Contributors](https://img.shields.io/github/contributors/betas-org/betas.svg?colorB=blueviolet)
+![Code Size](https://img.shields.io/github/languages/code-size/betas-org/betas.svg?colorB=pink)
+
 
 ## Background
 Our project aim to create a simple and convenient visualization tool, Betas, for data scientists and data analysts to analyze model performance with visualizations in Python. Users are able to simply run one-line code to generate custom plots for analyzing linear regression model with assumptions diagnostics, computing model scores in binary classification, and presenting performance for principal component analysis (PCA) and clustering. This tool also helps users to fit machine learning models to datasets without a detailed understanding of how the models work. Betas package is pip installable and easy to use by following our example IPython notebooks, in which we are using the Spam dataset and College dataset as demonstration. In addition, we have two interactive web dashboard designed for model diagnostics in linear regression and binary classification.
