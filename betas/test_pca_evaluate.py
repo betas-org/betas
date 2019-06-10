@@ -90,4 +90,3 @@ class TestPcaEval(unittest.TestCase):
 if __name__ == "__main__":
     SUITE = unittest.TestLoader().loadTestsFromTestCase(TestPcaEval)
     unittest.TextTestRunner(verbosity=2).run(SUITE)
-    
