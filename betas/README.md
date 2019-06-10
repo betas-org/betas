@@ -3,10 +3,10 @@
 # Documentation
 
 - [Linear Regression](#linear-regression)
-  - [Model Diagnostics Tool](#model-diagnostics-tool)
+  - [Regression Diagnostics Dashboard](#regression-diagnostics-dashboard)
   - [analysis_plot](#regression_analysis_plot)
 - [Binary Classification](#binary-classification)
-  - [Tool]
+  - [Binary Score Diagnostics Dashboard](#binary-score-diagnostics-dashboard)
   - [binary_score_plot](#binary_score_plot)
 - [Principal Component Analysis](#principal-component-analysis)
   - [pca_evaluate](#pca_evaluate)
@@ -15,7 +15,7 @@
 
 # Linear Regression
 
-## Model Diagnostics Tool
+## Regression Diagnostics Dashboard
 <p align="right">
   <a href="#documentation">[Back to top]</a>
 </p>
@@ -30,7 +30,7 @@ There are four plots to check linear regression model assumptions
 
 1. Run the following code to start:
 ```
-python model_diagnostics.py
+python regression_diagnostics.py
 ```
 2. Input your desinated CSV data file url or local path
 3. Open <http://127.0.0.1:8050/> to use the model diagnostics tool
@@ -262,6 +262,23 @@ Parameters:
 
 
 # Binary Classification
+
+## Binary Score Diagnostics Dashboard
+<p align="right">
+<a href="#documentation">[Back to top]</a>
+</p>
+
+This dashboard helps users better understand the distribution of modeled scores
+
+**Tutorial**
+
+1. Run the following code to start:
+```
+bokeh serve --show binary_score_diagnostics.py
+```
+2. Input your desinated data path
+3. Adjust plots by threshold slider
+4. Use `Ctrl C` to terminate
 
 ## binary_score_plot
 <p align="right">

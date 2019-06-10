@@ -6,8 +6,8 @@
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![Version](https://img.shields.io/pypi/v/betas.svg?colorB=orange)
 ![License](https://img.shields.io/badge/license-MIT-9cf.svg)
-![Contributors](https://img.shields.io/github/contributors/betas-org/betas.svg?colorB=blueviolet)
 ![Code Size](https://img.shields.io/github/languages/code-size/betas-org/betas.svg?colorB=pink)
+![Contributors](https://img.shields.io/github/contributors/betas-org/betas.svg?colorB=blueviolet)
 
 
 ## Background

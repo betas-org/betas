@@ -1,7 +1,7 @@
 '''
 This module contains implementations of a bokeh dashboard of model scores and
 actual label. To use the dashboard, use the command
-bokeh serve --show app_bokeh.py
+bokeh serve --show binary_score_diagnostics.py
 '''
 
 import numpy as np

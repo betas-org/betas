@@ -123,8 +123,10 @@ class RegressionAnalysisPlot(object):
         # priority: label argument
         if label is not None:
             huelabel = label
-            cols.append(huelabel)
+        else:
+            huelabel = self.get_response()
         if huelabel is not None:
+            cols.append(huelabel)
             sns.pairplot(dataframe[cols], hue=huelabel, palette='Set1')
         else:
             sns.pairplot(dataframe[cols], palette='Set1')
