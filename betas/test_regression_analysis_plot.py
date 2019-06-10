@@ -16,7 +16,7 @@ MYPLOT = plt.RegressionAnalysisPlot(DF, predictors=PREDS, response=RESP)
 
 class TestRegressionAnalysisPlot(unittest.TestCase):
     """
-    31 tests for analysis_plot
+    32 tests for analysis_plot
     """
 
     def test_init_predictors(self):
@@ -123,6 +123,14 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
         Test matrix_plot without assigned label
         """
         MYPLOT.matrix_plot()
+        self.assertEqual(1, 1)
+    
+    def test_matrix_plot_no_huelabel(self):
+        """
+        Test matrix_plot without showing huelabel
+        """
+        TESTPLOT = plt.RegressionAnalysisPlot(DF, predictors=PREDS)
+        TESTPLOT.matrix_plot()
         self.assertEqual(1, 1)
 
     def test_corr_heatmap_figsize(self):
