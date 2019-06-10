@@ -38,7 +38,7 @@ class BinaryScorePlot(object):
         df_curr['position'] = df_curr['actual_label'] + \
             np.random.uniform(low=-0.3, high=0.3, size=len(df_curr))
         self._df = df_curr
-        sns.set_style("white")
+        sns.set_style("darkgrid")
 
     def get_scores(self):
         """
@@ -108,19 +108,19 @@ class BinaryScorePlot(object):
         plt.clf()
         plt.subplot(221)
         sns.distplot(labels, kde=False)
-        plt.xlabel('Actual Label')
+        plt.xlabel('Actual Label', fontsize=12)
         plt.xticks([0, 1])
         plt.subplot(222)
         sns.distplot(scores, bins=bins, kde=False)
-        plt.xlabel('Scores')
+        plt.xlabel('Scores', fontsize=12)
         plt.xticks([0, 0.25, 0.5, 0.75, 1])
         plt.subplots_adjust(hspace=0.5)
         plt.subplot(223)
         sns.distplot(scores[labels == 0], bins=bins, kde=False)
-        plt.xlabel('Actual Label = 0')
+        plt.xlabel('Actual Label = 0', fontsize=12)
         plt.subplot(224)
         sns.distplot(scores[labels == 1], bins=bins, kde=False)
-        plt.xlabel('Actual Label = 1')
+        plt.xlabel('Actual Label = 1', fontsize=12)
         plt.suptitle('Histograms of Model Scores by Actual Label', fontsize=16)
         plt.show()
 
@@ -137,8 +137,8 @@ class BinaryScorePlot(object):
                         data=df_curr)
         plt.hlines(y=threshold, xmin=-0.3, xmax=1.8, color='red')
         plt.xticks([0, 1])
-        plt.xlabel('Actual label')
-        plt.ylabel('Scores')
+        plt.xlabel('Actual label', fontsize=14)
+        plt.ylabel('Scores', fontsize=14)
         title = 'Scatterplot of Model Scores with Threshold = '
         title += str(threshold)
         plt.suptitle(title, fontsize=16)
@@ -165,8 +165,8 @@ class BinaryScorePlot(object):
         leg = plt.legend(('Precision', 'Recall'), frameon=True)
         leg.get_frame().set_edgecolor('k')
 
-        plt.xlabel('Threshold')
-        plt.ylabel('Percent')
+        plt.xlabel('Threshold', fontsize=14)
+        plt.ylabel('Percent', fontsize=14)
         plt.suptitle('Precision and Recall by Model Threshold', fontsize=16)
 
         plt.show()
@@ -178,15 +178,7 @@ class BinaryScorePlot(object):
 
         labels = self.get_labels()
         scores = self.get_scores()
-
         fpr, tpr, thresholds = roc_curve(labels, scores)
-#        i = np.arange(len(tpr))
-#        roc = pd.DataFrame({'fpr': pd.Series(fpr, index=i),
-#                            'tpr': pd.Series(tpr, index=i),
-#                            '1-fpr': pd.Series(1-fpr, index=i),
-#                            'tf': pd.Series(tpr - (1-fpr), index=i),
-#                            'thresholds': pd.Series(thresholds, index=i)})
-#        cutoff = float(roc.iloc[roc.tf.abs().argsort()[:1]]['thresholds'])
         roc_auc = auc(fpr, tpr)
 
         plt.clf()
@@ -195,8 +187,8 @@ class BinaryScorePlot(object):
         plt.plot([0, 1], [0, 1], color='red', lw=2, linestyle='--')
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
+        plt.xlabel('False Positive Rate', fontsize=14)
+        plt.ylabel('True Positive Rate', fontsize=14)
         plt.suptitle('Receiver Operating Characteristic', fontsize=16)
         plt.legend(loc="lower right")
 

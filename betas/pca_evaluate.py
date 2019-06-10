@@ -132,6 +132,7 @@ def plot_pca_errors(misclassification_err_train, misclassification_err_test,
     plt.xlabel('Dimensions')
     plt.ylabel('Misclassification Error')
     plt.legend()
+    plt.show()
 
     return fig
 
