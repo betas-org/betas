@@ -1,7 +1,7 @@
 '''
 This module contains implementations of a bokeh dashboard of model scores and
 actual label. To use the dashboard, use the command
-bokeh serve --show app_bokeh.py
+bokeh serve --show binary_score_diagnostics.py
 '''
 
 import numpy as np
@@ -96,10 +96,10 @@ p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_roc.line('x', 'y', source=roc_hline, line_width=1.5, color='red',
            line_dash='dotdash')
-label_tpr = Label(x=0.4, y=0.3, text='TPR: ' +
+label_tpr = Label(x=0.4, y=0.3, text='TPR: ' + \
                   str(round(y_coord, 3)), text_font_size='10pt')
-label_tnr = Label(x=0.4, y=0.2, text='TNR: ' +
-                  str(round(1-x_coord, 3)), text_font_size='10pt')
+label_tnr = Label(x=0.4, y=0.2, text='TNR: ' + \
+                  str(round(1 - x_coord, 3)), text_font_size='10pt')
 p_roc.xaxis.axis_label = 'False Positive Rate'
 p_roc.yaxis.axis_label = 'True Positive Rate'
 p_roc.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
@@ -128,9 +128,9 @@ p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
           line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
           line_dash='dotdash')
-label_pre = Label(x=0.4, y=0.3, text='Precision: ' +
+label_pre = Label(x=0.4, y=0.3, text='Precision: ' + \
                   str(round(y_coord_pr, 3)), text_font_size='10pt')
-label_rec = Label(x=0.4, y=0.2, text='Recall: ' +
+label_rec = Label(x=0.4, y=0.2, text='Recall: ' + \
                   str(round(x_coord_pr, 3)), text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
 p_pr.yaxis.axis_label = 'Precision'
@@ -221,7 +221,7 @@ def update_data(attrname, old, new):
         roc_hline.data = dict(x=[x_coord, 1], y=[y_coord, y_coord])
         roc.data = dict(x=fpr, y=tpr)
         label_tpr.text = 'TPR: ' + str(round(y_coord, 3))
-        label_tnr.text = 'TNR: ' + str(round(1-x_coord, 3))
+        label_tnr.text = 'TNR: ' + str(round(1 - x_coord, 3))
 
         # PR
         precision, recall, thresholds_pr = precision_recall_curve(labels,
@@ -264,9 +264,8 @@ def update_data(attrname, old, new):
 text_input.on_change('value', update_data)
 slider.on_change('value', update_data)
 button = Button(label="Download", button_type="success")
-button.callback = CustomJS(
-                    args=dict(source=download),
-                    code=open(join(dirname(__file__), "download.js")).read())
+button.callback = CustomJS(args=dict(source=download),code=open(
+                                join(dirname(__file__), "download.js")).read())
 
 
 grid = gridplot([[text_input, slider],
