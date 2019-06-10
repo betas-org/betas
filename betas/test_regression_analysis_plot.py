@@ -124,7 +124,7 @@ class TestRegressionAnalysisPlot(unittest.TestCase):
         """
         MYPLOT.matrix_plot()
         self.assertEqual(1, 1)
-    
+
     def test_matrix_plot_no_huelabel(self):
         """
         Test matrix_plot without showing huelabel

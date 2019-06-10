@@ -265,7 +265,7 @@ text_input.on_change('value', update_data)
 slider.on_change('value', update_data)
 button = Button(label="Download", button_type="success")
 button.callback = CustomJS(args=dict(source=download), code=open(
-                                join(dirname(__file__), "download.js")).read())
+                           join(dirname(__file__), "download.js")).read())
 
 
 grid = gridplot([[text_input, slider],
