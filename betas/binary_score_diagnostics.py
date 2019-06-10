@@ -96,10 +96,10 @@ p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
            line_dash='dotdash')
 p_roc.line('x', 'y', source=roc_hline, line_width=1.5, color='red',
            line_dash='dotdash')
-label_tpr = Label(x=0.4, y=0.3, text='TPR: ' + \
-                  str(round(y_coord, 3)), text_font_size='10pt')
-label_tnr = Label(x=0.4, y=0.2, text='TNR: ' + \
-                  str(round(1 - x_coord, 3)), text_font_size='10pt')
+label_tpr = Label(x=0.4, y=0.3, text='TPR: ' + str(
+                  round(y_coord, 3)), text_font_size='10pt')
+label_tnr = Label(x=0.4, y=0.2, text='TNR: ' + str(
+                  round(1 - x_coord, 3)), text_font_size='10pt')
 p_roc.xaxis.axis_label = 'False Positive Rate'
 p_roc.yaxis.axis_label = 'True Positive Rate'
 p_roc.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
@@ -128,10 +128,10 @@ p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
           line_dash='dotdash')
 p_pr.line('x', 'y', source=pr_hline, line_width=1.5, color='red',
           line_dash='dotdash')
-label_pre = Label(x=0.4, y=0.3, text='Precision: ' + \
-                  str(round(y_coord_pr, 3)), text_font_size='10pt')
-label_rec = Label(x=0.4, y=0.2, text='Recall: ' + \
-                  str(round(x_coord_pr, 3)), text_font_size='10pt')
+label_pre = Label(x=0.4, y=0.3, text='Precision: ' + str(
+                  round(y_coord_pr, 3)), text_font_size='10pt')
+label_rec = Label(x=0.4, y=0.2, text='Recall: ' + str(
+                  round(x_coord_pr, 3)), text_font_size='10pt')
 p_pr.xaxis.axis_label = 'Recall'
 p_pr.yaxis.axis_label = 'Precision'
 p_pr.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
@@ -264,7 +264,7 @@ def update_data(attrname, old, new):
 text_input.on_change('value', update_data)
 slider.on_change('value', update_data)
 button = Button(label="Download", button_type="success")
-button.callback = CustomJS(args=dict(source=download),code=open(
+button.callback = CustomJS(args=dict(source=download), code=open(
                                 join(dirname(__file__), "download.js")).read())
 
 
