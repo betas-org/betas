@@ -189,6 +189,8 @@ download = ColumnDataSource(data=dict(
 def update_data(attrname, old, new):
     try:
         df = pd.read_csv(text_input.value)
+        if len(df) > 5000:
+            df = df.sample(n=5000, random_state=0)
         scores = np.array(df.scores)
         labels = np.array(df.labels)
         val = slider.value
