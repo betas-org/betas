@@ -1,6 +1,6 @@
 """
-Basic Dash to present linear regression model assumptions diagnostics
-To run: python model_diagnostics.py
+A basic dashboard to present linear regression model assumptions diagnostics
+To run: python regression_diagnostics.py
 """
 
 import pandas as pd
@@ -21,10 +21,11 @@ APP = dash.Dash(__name__, external_stylesheets=EXTERNAL_STYLESHEETS)
 LOWESS = sm.nonparametric.lowess
 
 # Read csv dataset
-ADDRESS = input('Please enter CSV data file url or path:\n\
-                Url example: www.someplace.com/mydata.csv\nPath \
-                example: ./mydata.csv\n')
-DF = pd.read_csv(ADDRESS, sep=',', index_col=0)
+OPTION = 'Please enter a CSV data file url or local path:\n'
+OPTION += 'Url example: www.someplace.com/mydata.csv\n'
+OPTION += 'Local path example: ./mydata.csv\n'
+ADDRESS = input(OPTION)
+DF = pd.read_csv(ADDRESS, sep=',')
 DF = DF.dropna()  # remove missing data
 DF = DF.select_dtypes(exclude=['object'])  # keep only numeric columns
 COLS = DF.columns
@@ -55,6 +56,7 @@ APP.layout = html.Div([
         'borderBottom': 'thin lightgrey solid',
         'backgroundColor': 'rgb(250, 250, 250)',
         'padding': '10px 5px'}),
+
     html.Div([
         dcc.Graph(id='residual-plot')
     ], style={'width': '49%', 'display': 'inline-block'}),
@@ -100,13 +102,13 @@ APP.layout = html.Div([
 
 @APP.callback(
     Output('residual-plot', 'figure'),
-    [Input('predictors', 'value'),
-     Input('response', 'value')])
+    [Input('predictors', 'value'), Input('response', 'value')])
 def update_resid_plot(predictors, response):
     """
     Residual Plot
     """
-    model = MYCLASS.reg(predictors, response)
+    MYCLASS.reg(var_x=predictors, var_y=response)
+    model = MYCLASS.get_model()
     fitted = model.fittedvalues
     resid = model.resid
     smooth = LOWESS(resid, fitted)
@@ -150,13 +152,13 @@ def update_resid_plot(predictors, response):
 
 @APP.callback(
     Output('qq-plot', 'figure'),
-    [Input('predictors', 'value'),
-     Input('response', 'value')])
+    [Input('predictors', 'value'), Input('response', 'value')])
 def update_qq_plot(predictors, response):
     """
     Normal QQ Plot
     """
-    model = MYCLASS.reg(predictors, response)
+    MYCLASS.reg(predictors, response)
+    model = MYCLASS.get_model()
     resid_norm = model.get_influence().resid_studentized_internal
     qq_res = ProbPlot(resid_norm)
     theo = qq_res.theoretical_quantiles
@@ -207,7 +209,8 @@ def update_scale_loc_plot(predictors, response):
     """
     Scale-Location Plot
     """
-    model = MYCLASS.reg(predictors, response)
+    MYCLASS.reg(predictors, response)
+    model = MYCLASS.get_model()
     fitted = model.fittedvalues
     resid_norm = model.get_influence().resid_studentized_internal
     resid_norm_abs_sqrt = np.sqrt(np.abs(resid_norm))
@@ -257,7 +260,8 @@ def update_resid_lever_plot(predictors, response):
     """
     Residual vs Leverage Plot
     """
-    model = MYCLASS.reg(predictors, response)
+    MYCLASS.reg(predictors, response)
+    model = MYCLASS.get_model()
     model_leverage = model.get_influence().hat_matrix_diag
     resid_norm = model.get_influence().resid_studentized_internal
     smooth = LOWESS(resid_norm, model_leverage)

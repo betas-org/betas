@@ -1,3 +1,8 @@
+"""
+A basic dashboard to explore binary score plots
+To run: bokeh serve --show binary_score_diagnostics.py
+"""
+
 import numpy as np
 import pandas as pd
 from os.path import dirname, join

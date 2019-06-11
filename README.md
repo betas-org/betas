@@ -113,4 +113,4 @@ betas/
 
 ## License Information
 
-[MIT License] (https://github.com/betas-org/betas/blob/master/LICENSE.txt)
+[MIT License](https://github.com/betas-org/betas/blob/master/LICENSE.txt)
