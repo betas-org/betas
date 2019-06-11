@@ -1,9 +1,3 @@
-'''
-This module contains implementations of a bokeh dashboard of model scores and
-actual label. To use the dashboard, use the command
-bokeh serve --show binary_score_diagnostics.py
-'''
-
 import numpy as np
 import pandas as pd
 from os.path import dirname, join
@@ -60,7 +54,7 @@ FP = ColumnDataSource(data=dict(x=target['position'][target.group == 'FP'],
 FN = ColumnDataSource(data=dict(x=target['position'][target.group == 'FN'],
                                 y=target['scores'][target.group == 'FN']))
 
-p_scatter = figure(plot_width=380, plot_height=280,
+p_scatter = figure(plot_width=380, plot_height=260,
                    title='Scatterplot of Model Scores')
 r0 = p_scatter.circle('x', 'y', source=TP, size=3, color='navy')
 r1 = p_scatter.circle('x', 'y', source=TN, size=3, color='green')
@@ -89,7 +83,7 @@ roc_vline = ColumnDataSource(data=dict(x=[x_coord, x_coord], y=[0, y_coord]))
 roc_hline = ColumnDataSource(data=dict(x=[x_coord, 1], y=[y_coord, y_coord]))
 roc = ColumnDataSource(data=dict(x=fpr, y=tpr))
 
-p_roc = figure(plot_width=380, plot_height=280,
+p_roc = figure(plot_width=380, plot_height=260,
                title='ROC Curve of Model Scores')
 p_roc.line('x', 'y', source=roc, line_width=2)
 p_roc.line('x', 'y', source=roc_vline, line_width=1.5, color='red',
@@ -121,7 +115,7 @@ pr_hline = ColumnDataSource(data=dict(x=[0, x_coord_pr],
                                       y=[y_coord_pr, y_coord_pr]))
 pr = ColumnDataSource(data=dict(x=recall, y=precision))
 
-p_pr = figure(plot_width=380, plot_height=280,
+p_pr = figure(plot_width=380, plot_height=260,
               title='Precision and Recall Curve')
 p_pr.line('x', 'y', source=pr, line_width=2)
 p_pr.line('x', 'y', source=pr_vline, line_width=1.5, color='red',
@@ -167,7 +161,7 @@ p_bar.yaxis.axis_label = 'Frequency'
 hist, edges = np.histogram(target.scores, bins=30)
 hist_data = ColumnDataSource(data=dict(scores=hist, left=edges[:-1],
                                        right=edges[1:]))
-p_hist = figure(plot_width=380, plot_height=180)
+p_hist = figure(plot_width=380, plot_height=160)
 p_hist.quad(bottom=0, top='scores', left='left', right='right',
             source=hist_data, fill_color='steelblue', line_color='white')
 p_hist.title.text_font_size = "20px"
