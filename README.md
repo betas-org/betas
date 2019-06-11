@@ -2,7 +2,7 @@
 ###
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas)
-[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master&service=github)](https://coveralls.io/github/betas-org/betas?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![Version](https://img.shields.io/pypi/v/betas.svg?colorB=orange)
 ![License](https://img.shields.io/badge/license-MIT-9cf.svg)
@@ -28,13 +28,14 @@ Arjun Singh
 
 Data Set 1: The Spam data ([Source](https://web.stanford.edu/~hastie/ElemStatLearn/))
 
-Data Set 2: The College data ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
+Data Set 2: The Breast Cancer data ([Source](https://github.com/scikit-learn/scikit-learn/tree/master/sklearn/datasets/data))
 
-Data Set 3: The Iris data ([Source](https://github.com/mwaskom/seaborn-data))
+Data Set 3: The College data ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 Data Set 4: The Auto data ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 ## Software
+
 **Programming Languages**
 
 [Python](https://www.python.org)
@@ -59,23 +60,19 @@ Data Set 4: The Auto data ([Source](http://www-bcf.usc.edu/~gareth/ISL/))
 
 [bokeh](https://bokeh.pydata.org) >= 1.0.4
 
-## License Information
-
-MIT License
-
-
 ## Structure
-This package has the following structure:
+This package has the following structure. See betas library [documentation](https://github.com/betas-org/betas/blob/master/betas/README.md) for details.
+
 ```
 betas/
   |- betas/
+     |- README.md
      |- __init__.py
      |- binary_score_diagnostics.py
      |- binary_score_plot.py
      |- clustering_evaluate.py
      |- download.js
      |- pca_evaluate.py
-     |- README.md
      |- regression_analysis_plot.py
      |- regression_diagnostics.py
      |- setup.cfg
@@ -83,17 +80,17 @@ betas/
      |- test_binary_score_plot.py
      |- test_clustering_evaluate.py
      |- test_pca_evaluate.py
-     |- tool.py
   |- data/
      |- college.csv
      |- spam.data.txt
      |- spam.traintest.txt
      |- spam_score_label.csv
   |- dist/
-     |- betas-v1.0.tar.gz
+     |- betas-v1.1.tar.gz
   |- docs/
+     |- Final_Presentation.pdf
      |- Functional_Specification.pdf
-     |- Project_Component_Specification.pdf
+     |- Component_Specification.pdf
      |- Project_Summary.pdf
      |- Technology_Review.pdf
      |- logo_black.png
@@ -113,3 +110,7 @@ betas/
 
 ## Installation
 `pip install betas`
+
+## License Information
+
+[MIT License] (https://github.com/betas-org/betas/blob/master/LICENSE.txt)
