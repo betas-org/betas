@@ -2,7 +2,7 @@
 ###
 
 [![Build Status](https://travis-ci.org/betas-org/betas.svg?branch=master)](https://travis-ci.org/betas-org/betas)
-[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master)](https://coveralls.io/github/betas-org/betas?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/betas-org/betas/badge.svg?branch=master&service=github)](https://coveralls.io/github/betas-org/betas?branch=master)
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![Version](https://img.shields.io/pypi/v/betas.svg?colorB=orange)
 ![License](https://img.shields.io/badge/license-MIT-9cf.svg)
