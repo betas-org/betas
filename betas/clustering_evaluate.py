@@ -67,7 +67,7 @@ def visualize_kmeans(n_clusters_vector, obj_vals):
     """
     fig = plt.figure(figsize=(10, 5))
     plt.plot(n_clusters_vector, obj_vals)
-    plt.title('Misclassification Error vs PCA Dimensions')
+    plt.title('Objective value from K-means++ vs Number of Clusters')
     plt.xlabel('Number of Clusters')
     plt.ylabel('Objective value from K-means++')
     plt.show()
