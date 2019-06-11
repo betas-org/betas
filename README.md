@@ -88,9 +88,9 @@ betas/
   |- dist/
      |- betas-v1.1.tar.gz
   |- docs/
+     |- Component_Specification.pdf
      |- Final_Presentation.pdf
      |- Functional_Specification.pdf
-     |- Component_Specification.pdf
      |- Project_Summary.pdf
      |- Technology_Review.pdf
      |- logo_black.png
@@ -100,11 +100,10 @@ betas/
      |- demo_binary_score_plot.ipynb
      |- demo_clustering_evaluate.ipynb
      |- demo_pca_evaluate.ipynb
-  |- environment.yml
   |- LICENSE.txt
   |- README.md
+  |- environment.yml
   |- requirements.txt
-  |- setup.cfg
   |- setup.py
 ```
 
