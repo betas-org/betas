@@ -86,7 +86,7 @@ betas/
      |- spam.traintest.txt
      |- spam_score_label.csv
   |- dist/
-     |- betas-v1.1.tar.gz
+     |- betas-v1.3.tar.gz
   |- docs/
      |- Component_Specification.pdf
      |- Final_Presentation.pdf
