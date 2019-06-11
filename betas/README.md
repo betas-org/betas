@@ -276,9 +276,10 @@ This dashboard helps users better understand the distribution of modeled scores
 ```
 bokeh serve --show binary_score_diagnostics.py
 ```
-2. Input your desinated data path
-3. Adjust plots by threshold slider
-4. Use `Ctrl C` to terminate
+2. Have a csv file with column names 'scores' and 'labels' ready
+3. Input your desinated data path
+4. Adjust plots by threshold slider
+5. Use `Ctrl C` to terminate
 
 ## binary_score_plot
 <p align="right">
