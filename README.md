@@ -96,7 +96,7 @@ betas/
      |- logo_black.png
      |- logo_white.png
   |- examples/
-     |- demo_analysis_plot.ipynb
+     |- demo_regression_analysis_plot.ipynb
      |- demo_binary_score_plot.ipynb
      |- demo_clustering_evaluate.ipynb
      |- demo_pca_evaluate.ipynb
