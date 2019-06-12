@@ -13,8 +13,9 @@ from bokeh.models.widgets import Button, PreText, TextInput
 from bokeh.plotting import figure, curdoc
 from bokeh.layouts import gridplot, column
 
-
-# Scatterplot
+"""
+Generate sample data
+"""
 scores = np.concatenate((np.random.uniform(low=0.9, high=1, size=100),
                          np.random.uniform(low=0.8, high=0.9, size=50),
                          np.random.uniform(low=0.7, high=0.8, size=25),
@@ -47,7 +48,10 @@ def classify(scores, labels, threshold=0.5):
 
 target = classify(scores, labels, 0.65)
 
-# Scatterplot
+
+"""
+Construct scatterplot
+"""
 hline = ColumnDataSource(data=dict(x=[-0.3, 1.3],
                          y=[0.7, 0.7]))
 TP = ColumnDataSource(data=dict(x=target['position'][target.group == 'TP'],
@@ -77,7 +81,9 @@ legend = Legend(items=[('TP', [r0]), ('TN', [r1]), ('FP', [r2]), ('FN', [r3])],
 p_scatter.add_layout(legend, 'right')
 
 
-# ROC curve
+"""
+Construct ROC curve
+"""
 fpr, tpr, thresholds = roc_curve(target.actual_label, target.scores)
 roc_auc = auc(fpr, tpr)
 threshold = 0.7
@@ -108,7 +114,9 @@ p_roc.add_layout(label_tpr)
 p_roc.add_layout(label_tnr)
 
 
-# Precision and recall curve
+"""
+Construct precision and recall curve
+"""
 precision, recall, thresholds_pr = precision_recall_curve(labels, scores)
 thresholds_pr = np.append(thresholds_pr, 1)
 diff_pr = thresholds_pr - 0.7
@@ -140,7 +148,9 @@ p_pr.add_layout(label_pre)
 p_pr.add_layout(label_rec)
 
 
-# Bar plot
+"""
+Construct bar plot
+"""
 bar_data = ColumnDataSource(data=dict(
     act=['0', '1'],
     hit=[target.group.value_counts()['TN'],
@@ -162,7 +172,9 @@ p_bar.xaxis.axis_label = 'Actual Label'
 p_bar.yaxis.axis_label = 'Frequency'
 
 
-# Histogram
+"""
+Construct histogram
+"""
 hist, edges = np.histogram(target.scores, bins=30)
 hist_data = ColumnDataSource(data=dict(scores=hist, left=edges[:-1],
                                        right=edges[1:]))
@@ -174,8 +186,9 @@ p_hist.xaxis.ticker = FixedTicker(ticks=np.arange(0, 1.1, 0.1))
 p_hist.xaxis.axis_label = 'Scores'
 p_hist.yaxis.axis_label = 'Frequency'
 
-
-# Data input
+"""
+Construct input widgets
+"""
 text_input = TextInput(value='', title='Data path: ')
 slider = Slider(title='Threshold', start=0, end=1, value=0.7, step=0.01)
 error_msg = PreText(text='')
